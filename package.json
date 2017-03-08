@@ -1,0 +1,16 @@
+{
+  "name": "tweet-sentiment-analyzer",
+  "version": "1.0.0",
+  "description": "linguistic analysis to detect emotional tones in tweets",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "tweets",
+    "sentiment",
+    "tone"
+  ],
+  "author": "Andrew Fechner, John Packel, Aamir Yousuf, Todd MacIntyre",
+  "license": "ISC"
+}
