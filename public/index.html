@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html ng-app="sentiment.ly">
+  <head>
+    <meta charset='utf-8' />
+    <title>Sentiment.ly</title>
+       <!-- later add CSS:  <link rel="stylesheet" type="text/css" href=.....   /> -->
+  </head>
+  <body ng-controller="mainController">
+    <div style="text-align: center">
+    <h1>Sentiment.ly - Twitter users analyzed</h1>
+    <div ng-view></div>  <!-- where our html view templates will be loaded into  -->
+
+      <br>
+      What Twitter handle do you want analyzed?<br><br>
+      <form ng-submit="searchRequest(input)"> <!-- calls factory function that makes POST req w/ input value (twitter handle)  -->
+        @&nbsp<input type="text" ng-model="searchRequestInput" placeholder="e.g., Journey4John" required>
+        <input type="Submit">
+      </form>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.js"></script>
+    <script src="app.js"></script>  <!-- Angular controller js file if separate from app.js  -->
+  </body>
+</html>
