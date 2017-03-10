@@ -12,5 +12,8 @@
     "tone"
   ],
   "author": "Andrew Fechner, John Packel, Aamir Yousuf, Todd MacIntyre",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "watson-developer-cloud": "^2.25.1"
+  }
 }
