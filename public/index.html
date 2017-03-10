@@ -5,17 +5,18 @@
     <title>Sentiment.ly</title>
        <!-- later add CSS:  <link rel="stylesheet" type="text/css" href=.....   /> -->
   </head>
-  <body ng-controller="mainController">
+  <body ng-controller="sentimentController">  <!-- main controller - for search (but not separate view)  /> -->
     <div style="text-align: center">
     <h1>Sentiment.ly - Twitter users analyzed</h1>
-    <div ng-view></div>  <!-- where our html view templates will be loaded into  -->
+    <div ng-view style="text-align: center"></div>  <!-- where our html view templates will be loaded into  -->
 
       <br>
       What Twitter handle do you want analyzed?<br><br>
-      <form ng-submit="searchRequest(input)"> <!-- calls factory function that makes POST req w/ input value (twitter handle)  -->
+      <form ng-submit="searchRequest()"> <!-- calls factory function that makes POST req w/ input value (twitter handle)  -->
         @&nbsp<input type="text" ng-model="searchRequestInput" placeholder="e.g., Journey4John" required>
         <input type="Submit">
-      </form>
+      </form><br>
+      <hr style="width: 40%">
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.js"></script>
