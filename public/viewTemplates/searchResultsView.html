@@ -1,0 +1,39 @@
+<div ng-controller="resultsViewController">
+  <h2>
+    Tweet Analysis
+  </h2>
+  <h3>
+    Emotional tone
+  </h3>
+  <h4>
+    <ul>
+     <li> Joy: has shades of enjoyment, satisfaction and pleasure - {{ results.joy  }} </li>
+     <li> Fear: shows a response to impending danger - {{ results.fear  }} </li>
+     <li> Sadness: indicates a feeling of loss and disadvantage - {{ results.sadness  }} </li>
+     <li>  Disgust: an emotional response of revulsion to something considered offensive or unpleasant - {{ results.disgust  }} </li>
+     <li> Anger: evoked due to injustice, conflict, humiliation, negligence or betrayal - {{ results.anger   }} </li>
+    </ul>
+  </h4>
+  <h3>
+    Social tone
+  </h3>
+  <h4>
+    <ul>
+     <li> Openness: open to experience a variety of activities - {{ results.openness  }} </li>
+     <li> Conscientiousness: tendency to act in an organized or thoughtful way - {{ results.conscientiousness  }} </li>
+     <li> Extraversion: tendency to seek stimulation in the company of others - {{ results.extraversion  }} </li>
+     <li> Agreeableness: tendency to be compassionate and cooperative - {{ results.agreeableness  }} </li>
+     <li> Neuroticism: extent a person's emotion is sensitive to the environment - {{ results.neuroticism   }} </li>
+    </ul>
+  </h4>
+  <h3>
+    Language tone
+  </h3>
+  <h4>
+    <ul>
+     <li> Analytical: reasoning and analytical attitude about things - {{ results.analytical  }} </li>
+     <li> Confidence: degree of certainty - {{ results.confidence  }} </li>
+     <li> Tentative: degree of inhibition - {{ results.tentative  }} </li>
+    </ul>
+  </h4>
+</div>
