@@ -4,21 +4,21 @@ var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var mongoose = require('mongoose');
 
+var env = require('./../.env');
+
 // Initialize express
 var app = express();
 
-// // make connection to mongoose database
-// var username = process.env.username;
+// make connection to mongoose database
+// var username = process.env.username; // switch to these when using environment variables set up on deployed host
 // var password = process.env.password;
-// if (process.env.username && process.env.password) {
-//   mongoose.connect(`mongodb://${user}:${pass}@urlocation`);
-// } else {
-//   mongoose.connect('mongodb://localhost/databaseName');
-// }
+var username = env.username;
+var password = env.password;
+mongoose.connect(`mongodb://${username}:${password}@ds127730.mlab.com:27730/sentiment_db`);
 
 // use middleware
 app.use(bodyParser.json());
-app.use(morgan('combined'));
+app.use(morgan('dev'));
 
 // server static files in public
 app.use(express.static('public'));
