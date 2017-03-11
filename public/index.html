@@ -8,7 +8,6 @@
   <body ng-controller="mainController">
     <div style="text-align: center">
     <h1>Sentiment.ly - Twitter users analyzed</h1>
-    <div ng-view></div>  <!-- where our html view templates will be loaded into  -->
 
       <br>
       What Twitter handle do you want analyzed?<br><br>
@@ -17,6 +16,34 @@
         <input type="Submit">
       </form>
     </div>
+
+<!-- searchResultsView.html template gets injected here  -->
+<div ng-view style="text-align: center"></div>
+
+
+    <div style="text-align: center">
+      <br><br>
+      <hr style="width: 20%">
+      <h2>
+        Saved Analyses
+      </h2>
+      <h4 style="font-style: italic">
+        Click on an item to view results
+      </h4>
+      <h4>
+        <table align="center" ng-controller="savedResultsViewController" border="3">
+          <tr>
+            <th>Twitter handle</th>
+            <th>Time of search</th>
+          </tr>
+          <tr ng-repeat="result in results" >
+            <td> {{ result.handle }} </td>
+            <td> {{ result.timestamp }} </td>
+          </tr>
+        </table>
+      </h4>
+    </div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.js"></script>
     <script src="app.js"></script>  <!-- Angular controller js file if separate from app.js  -->
