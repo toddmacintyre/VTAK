@@ -55,7 +55,7 @@ var getAverage = function(sentences) {
     averageValues.Agreeableness += sentence.tone_categories[2].tones[3].score;
     averageValues.EmotionalRange += sentence.tone_categories[2].tones[4].score;
   });
-  for (var key in sentences) {
+  for (var key in averageValues) {
     averageValues[key] = averageValues[key]/sentences.length;
   };
 }
