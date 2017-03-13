@@ -11,7 +11,7 @@ angular.module('sentiment.ly',[savedController])
     "Joy":0,
     "Sadness":0,
     "Analytical":0,
-    "Content":0,
+    "Confident":0,
     "Tentative":0,
     "Openness":0,
     "Conscientiousness":0,
@@ -68,8 +68,8 @@ angular.module('sentiment.ly',[savedController])
     $http({
       method: 'POST',
       url: '/api/handle',
-      headers: { 'Content-Type': 'application/json' }, /*should be text instead of JSON?*/
-      data: {handle: $scope.searchRequestInput} /*should be text instead of JSON?*/
+      headers: { 'Content-Type': 'application/json' },
+      data: {handle: $scope.searchRequestInput}
     })
     .then (
       $scope.showResults = false;

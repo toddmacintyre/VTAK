@@ -32,7 +32,7 @@ var averageValues = {
   "Joy":0,
   "Sadness":0,
   "Analytical":0,
-  "Content":0,
+  "Confident":0,
   "Tentative":0,
   "Openness":0,
   "Conscientiousness":0,
@@ -50,7 +50,7 @@ var getAverage = function(sentences) {
     averageValues.Joy += sentence.tone_categories[0].tones[3].score;
     averageValues.Sadness += sentence.tone_categories[0].tones[4].score;
     averageValues.Analytical += sentence.tone_categories[1].tones[0].score;
-    averageValues.Content += sentence.tone_categories[1].tones[1].score;
+    averageValues.Confident += sentence.tone_categories[1].tones[1].score;
     averageValues.Tentative += sentence.tone_categories[1].tones[2].score;
     averageValues.Openness += sentence.tone_categories[2].tones[0].score;
     averageValues.Conscientiousness += sentence.tone_categories[2].tones[1].score;
