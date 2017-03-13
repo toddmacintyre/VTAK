@@ -16,5 +16,5 @@ options: { method: 'GET',
     'access-token-secret': 'uti3oZX7LmgaFHsea8Sk64acoW7gd4NrVBSbe8E6nmhm0',
    	'postman-token': 'b8538c8f-a604-f5ec-32d3-20aa4de2e51c',
      'cache-control': 'no-cache' } 
-  };
+  }
 }
