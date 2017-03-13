@@ -9,15 +9,18 @@ var tone_analyzer = watson.tone_analyzer({
   version_date: '2016-05-19'
 });
 
-exports.getTone = function(tweetString){
+exports.getTone = function(tweetString, callback) {
   tone_analyzer.tone({ text: tweetString },
     function(err, tone) {
-      if (err)
+      if (err) {
         console.log(err);
-      else
+        callback(err);
+      } else {
         console.log(JSON.stringify(tone, null, 2));
         getAverage(tone);
-        return JSON.stringify(averageValues);
+        // return JSON.stringify(averageValues);
+        callback(err, JSON.stringify(averageValues));
+      }
   });
 }
 
