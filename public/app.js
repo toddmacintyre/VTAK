@@ -40,12 +40,14 @@ angular.module('sentiment.ly',[savedController])
     var getArchives = function() {
       $http({
         method: 'GET',
-        url: '/api/:timestamp',
-        /* rest TBD*/
+        url: '/api/archives',
       })
       .then (function(data) {
-        archives.lastFiveSearches = data /*TBD data structure*/;
-      })
+        archives.lastFiveSearches = [];
+        for (var i=0; i<5; i++) {
+          archives.lastFiveSearches.push(data /*TBD data structure*/[i]);
+        }
+      });
     };
 
     return {
@@ -57,6 +59,11 @@ angular.module('sentiment.ly',[savedController])
 
 .controller('sentimentController', function ($scope,$http,tone,archives) {
 
+  $scope.averageValues = {};
+  $scope.showResults = false;
+  $scope.showArchives = false;
+  $scope.archivesData = [];
+
   $scope.searchRequest = function() {
     $http({
       method: 'POST',
@@ -65,27 +72,31 @@ angular.module('sentiment.ly',[savedController])
       data: {handle: $scope.searchRequestInput} /*should be text instead of JSON?*/
     })
     .then (
+      $scope.showResults = false;
       tone.grabValues(data /*TBD data structure*/);
       $scope.averageValues = tone.averageValues;
-      archives.getArchives(); /* Repopulates array for saved searches, to be rendered*/
+      $scope.showResults = true;
+      archives.getArchives();
+      $scope.showArchives = false;
+      $scope.archivesData = archives.lastFiveSearches;
+      $scope.showArchives = true;
   )};
-
-})
-
-.controller('savedController', function ($scope,$http,tone,archives) {
 
   $scope.getSaved = function() {
     $http({
-      method: 'POST',
-      url: '/api/:timestamp',
-      headers: { 'Content-Type': 'application/json' }, /*should be text instead of JSON?*/
-      data: { savedSearch: $scope.savedSearch }. /*should be text instead of JSON?*/
+      method: 'GET',
+      url: '/api/'+scope.savedSearch
     })
     .then (
+      $scope.showResults = false;
       tone.grabValues(data /*TBD data structure*/);
+      $scope.averageValues = tone.averageValues;
+      $scope.showResults = true;
   )};
+
+  archives.getArchives();
+  $scope.archivesData = archives.lastFiveSearches;
+  $scope.showArchives = true;
 
 })
 
-// Trying to figure out how to get result of savedController grabValues to trigger re-render on
-// sentimentController.  Parent-child relationship?
