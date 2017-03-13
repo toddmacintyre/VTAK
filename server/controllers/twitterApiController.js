@@ -12,7 +12,7 @@ module.exports = {
 			} else {
 				var responseObject = JSON.parse(body);
 				var finalString =  tweetParser(responseObject)
-				callback(finalString);
+				callback(error, finalString);
 			}
 		})
 	}

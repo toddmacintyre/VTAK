@@ -1,19 +1,21 @@
 var mongoose = require('mongoose'); // do we need to require this again?
+var Promise = require('bluebird');
 var twitterOptions = require('./APIOptions/twitterOptions.js');
 var twitterController = require('./controllers/twitterApiController.js');
 var watson = require('./watson.js');
+
+// Promisify API calls
 var promiseTwitter = Promise.promisify(twitterController.getRequestTwitter);
+var promiseWatson = Promise.promisify(watson.getTone);
 
 // var router = require('express').Router();
 module.exports = function(app, express) {
-
-	let avgerageValues = {};
 
 	app.post('/api/handle', function(req, res) {
 		promiseTwitter(twitterOptions, req.body.handle)
 			.then(function(result) {
 				//  invoke watson API call here
-				watson.getTone(result)
+				promiseWatson(result)
 					// does this return promise to be resolved or actual value?
 					.then(function(result) {
 						res.send(result);
@@ -22,6 +24,10 @@ module.exports = function(app, express) {
 						console.error(err);
 						res.status(400).send('whoops');
 					});
+			})
+			.catch(function(err) {
+				console.error(err);
+				res.status(400).send('whoops');
 			});
 	});
 
