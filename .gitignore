@@ -1,6 +1,8 @@
 # environment variables
 .env
 
+.DS_store
+
 
 ### github recomendations ###
 
