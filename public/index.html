@@ -5,9 +5,9 @@
     <title>Sentiment.ly</title>
        <!-- later add CSS:  <link rel="stylesheet" type="text/css" href=.....   /> -->
   </head>
-  <body ng-controller="mainController">
+  <body ng-controller="sentimentController">
     <div style="text-align: center">
-    <h1>Sentiment.ly - Twitter users analyzed</h1>
+    <h1 style="color: green">Sentiment.ly - Twitter users analyzed</h1>
 
       <br>
       What Twitter handle do you want analyzed?<br><br>
@@ -16,13 +16,49 @@
         <input type="Submit">
       </form>
     </div>
-
-<!-- searchResultsView.html template gets injected here  -->
-<div ng-view style="text-align: center"></div>
-
+      <hr style="width: 20%">
+    <div style="text-align: center">
+      <h2>
+        Tweet Analysis
+      </h2>
+      <h3>
+        Emotional tone
+      </h3>
+      <h4>
+        <ul>
+         <li> Joy: has shades of enjoyment, satisfaction and pleasure - {{ averageValues.Joy  }} </li>
+         <li> Fear: shows a response to impending danger - {{ averageValues.Fear  }} </li>
+         <li> Sadness: indicates a feeling of loss and disadvantage - {{ averageValues.Sadness  }} </li>
+         <li> Disgust: an emotional response of revulsion to something considered offensive or unpleasant - {{ averageValues.Disgust  }} </li>
+         <li> Anger: evoked due to injustice, conflict, humiliation, negligence or betrayal - {{ averageValues.Anger   }} </li>
+        </ul>
+      </h4>
+      <h3>
+        Social tone
+      </h3>
+      <h4>
+        <ul>
+         <li> Openness: open to experience a variety of activities - {{ averageValues.Openness  }} </li>
+         <li> Conscientiousness: tendency to act in an organized or thoughtful way - {{ averageValues.Conscientiousness  }} </li>
+         <li> Extraversion: tendency to seek stimulation in the company of others - {{ averageValues.Extraversion  }} </li>
+         <li> Agreeableness: tendency to be compassionate and cooperative - {{ averageValues.Agreeableness  }} </li>
+         <li> Neuroticism: extent a person's emotion is sensitive to the environment - {{ averageValues.Neuroticism   }} </li>
+        </ul>
+      </h4>
+      <h3>
+        Language tone
+      </h3>
+      <h4>
+        <ul>
+         <li> Analytical: reasoning and analytical attitude about things - {{ averageValues.Analytical  }} </li>
+         <li> Confidence: degree of certainty - {{ averageValues.Confidence  }} </li>
+         <li> Tentative: degree of inhibition - {{ averageValues.Tentative  }} </li>
+        </ul>
+      </h4>
+    </div>
 
     <div style="text-align: center">
-      <br><br>
+      <br>
       <hr style="width: 20%">
       <h2>
         Saved Analyses
