@@ -3,8 +3,8 @@ var watson = require('watson-developer-cloud');
 
 // Below functions required per IBM documentation
 var tone_analyzer = watson.tone_analyzer({
-  username: '7b83a855-f3bc-40f1-a797-7b5ea417cb53',
-  password: 'nnCUkUP2DAeU',
+  username: process.env.watson_username,
+  password: process.env.watson_password,
   version: 'v3',
   version_date: '2016-05-19'
 });
@@ -58,7 +58,7 @@ var getAverage = function(sentences) {
     averageValues.Agreeableness += sentence.tone_categories[2].tones[3].score;
     averageValues.EmotionalRange += sentence.tone_categories[2].tones[4].score;
   });
-  for (var key in sentences) {
+  for (var key in averageValues) {
     averageValues[key] = averageValues[key]/sentences.length;
   };
 }

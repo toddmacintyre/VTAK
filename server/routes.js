@@ -9,6 +9,7 @@ var promiseTwitter = Promise.promisify(twitterController.getRequestTwitter);
 var promiseWatson = Promise.promisify(watson.getTone);
 
 // var router = require('express').Router();
+
 module.exports = function(app, express) {
 
 	app.post('/api/handle', function(req, res) {
