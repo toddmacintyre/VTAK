@@ -1,6 +1,6 @@
 // Need to agree upon module and scope variable names
 
-angular.module('sentiment.ly',[savedController])
+angular.module('sentiment.ly',[])
 
 .factory('tone', function() {
 
@@ -22,7 +22,7 @@ angular.module('sentiment.ly',[savedController])
 
   var grabValues = function(data) {
     for (var key in tone.averageValues) {
-      tone.averageValues[key] = /*TBD data structure*/[key];
+      tone.averageValues[key] = data[key];   // Doublecheck data structure
     }
   };
 
@@ -45,7 +45,7 @@ angular.module('sentiment.ly',[savedController])
       .then (function(data) {
         archives.lastFiveSearches = [];
         for (var i=0; i<5; i++) {
-          archives.lastFiveSearches.push(data /*TBD data structure*/[i]);
+          archives.lastFiveSearches.push(data[i]);  //Doublecheck data structure
         }
       });
     };
@@ -73,7 +73,7 @@ angular.module('sentiment.ly',[savedController])
     })
     .then (
       $scope.showResults = false;
-      tone.grabValues(data /*TBD data structure*/);
+      tone.grabValues(results.data);  // Doublecheck data structure
       $scope.averageValues = tone.averageValues;
       $scope.showResults = true;
       archives.getArchives();
@@ -85,11 +85,11 @@ angular.module('sentiment.ly',[savedController])
   $scope.getSaved = function() {
     $http({
       method: 'GET',
-      url: '/api/'+scope.savedSearch
+      url: '/api/'+$scope.savedSearch
     })
     .then (
       $scope.showResults = false;
-      tone.grabValues(data /*TBD data structure*/);
+      tone.grabValues(results.data);   // Doublecheck data structure
       $scope.averageValues = tone.averageValues;
       $scope.showResults = true;
   )};
