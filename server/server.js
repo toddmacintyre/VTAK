@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 
 // server static files in public
-app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static(path.join(__dirname, '../public')));
 
 var port = process.env.PORT || 8222;
 // var port = 8222; // tested & listening properly (before mongoose connected)
