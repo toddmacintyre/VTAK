@@ -4,26 +4,26 @@ var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var mongoose = require('mongoose');
 
-var env = require('./../.env');
+var env = require('dotenv').config();
 
 // Initialize express
 var app = express();
 
 // make connection to mongoose database
-// var username = process.env.username; // switch to these when using environment variables set up on deployed host
-// var password = process.env.password;
-var username = env.username;
-var password = env.password;
+var username = process.env.mlab_username;
+var password = process.env.mlab_password;
 mongoose.connect(`mongodb://${username}:${password}@ds127730.mlab.com:27730/sentiment_db`);
 
 // use middleware
 app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({extended: true})); // in case we need this later (from Shortly-Angular sprint)
 app.use(morgan('dev'));
 
 // server static files in public
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/../public'));
 
 var port = process.env.PORT || 8222;
+// var port = 8222; // tested & listening properly (before mongoose connected)
 app.listen(port, function() {
   console.log('listening on port' + port);
 });
