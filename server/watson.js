@@ -5,8 +5,8 @@ var watson = require('watson-developer-cloud');
 // Below functions required per IBM documentation
 var tone_analyzer = watson.tone_analyzer({
 
-  username: process.env.watson_username, // dotenv not working, so we'll module exports in the .env file for now
-  password: process.env.watson_password,
+  // username: process.env.watson_username, // dotenv not working, so we'll module exports in the .env file for now
+  // password: process.env.watson_password,
   version: 'v3',
   version_date: '2016-05-19'
 });
