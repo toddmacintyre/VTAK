@@ -32,6 +32,7 @@ module.exports = {
         request(optionsTwitter.options, function(error, response, body) {
             if (error) {
                 console.log(error, 'error in twitter API get request');
+                callback(error);
                 // throw new Error(error);
             } else {
             	// console.log(body, "herioioioioioio")
