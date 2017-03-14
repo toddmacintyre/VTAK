@@ -7,64 +7,69 @@ console.log('envVars.watson_username', envVars.watson_username); // to test that
 // Below functions required per IBM documentation
 var tone_analyzer = watson.tone_analyzer({
 
-  username: envVars.watson_username,
-  password: envVars.watson_password,
-  version: 'v3',
-  version_date: '2016-05-19'
+    username: envVars.watson_username,
+    password: envVars.watson_password,
+    version: 'v3',
+    version_date: '2016-05-19'
 });
 
 exports.getTone = function(tweetString, callback) {
-  tone_analyzer.tone({ text: tweetString },
-    function(err, tone) {
-      if (err) {
-        console.log(err);
-        callback(err);
-      } else {
-        console.log(JSON.stringify(tone, null, 2));
-        getAverage(tone);
-        // return JSON.stringify(averageValues);
-        callback(err, JSON.stringify(averageValues));
-      }
-  });
+    tone_analyzer.tone({
+            text: tweetString
+        },
+        function(err, tone) {
+            if (err) {
+                console.log(err);
+                callback(err);
+            } else {
+                // console.log(JSON.stringify(tone, null, 2),'THISISIS');
+                getAverage(tone);
+                // return JSON.stringify(averageValues);
+                callback(err, JSON.stringify(averageValues));
+            }
+        });
 }
 
 // This object will be what is ultimately returned
 var averageValues = {
-  "Anger":0,
-  "Disgust":0,
-  "Fear":0,
-  "Joy":0,
-  "Sadness":0,
-  "Analytical":0,
-  "Confident":0,
-  "Tentative":0,
-  "Openness":0,
-  "Conscientiousness":0,
-  "Extraversion":0,
-  "Agreeableness":0,
-  "EmotionalRange":0
+    "Anger": 0,
+    "Disgust": 0,
+    "Fear": 0,
+    "Joy": 0,
+    "Sadness": 0,
+    "Analytical": 0,
+    "Confident": 0,
+    "Tentative": 0,
+    "Openness": 0,
+    "Conscientiousness": 0,
+    "Extraversion": 0,
+    "Agreeableness": 0,
+    "EmotionalRange": 0
 }
 
 // This is the helper function that will calculate and assign values to the averageValues object
 var getAverage = function(sentences) {
-  sentences.forEach(function(sentence) {
-    averageValues.Anger += sentence.tone_categories[0].tones[0].score;
-    averageValues.Disgust += sentence.tone_categories[0].tones[1].score;
-    averageValues.Fear += sentence.tone_categories[0].tones[2].score;
-    averageValues.Joy += sentence.tone_categories[0].tones[3].score;
-    averageValues.Sadness += sentence.tone_categories[0].tones[4].score;
-    averageValues.Analytical += sentence.tone_categories[1].tones[0].score;
-    averageValues.Confident += sentence.tone_categories[1].tones[1].score;
-    averageValues.Tentative += sentence.tone_categories[1].tones[2].score;
-    averageValues.Openness += sentence.tone_categories[2].tones[0].score;
-    averageValues.Conscientiousness += sentence.tone_categories[2].tones[1].score;
-    averageValues.Extraversion += sentence.tone_categories[2].tones[2].score;
-    averageValues.Agreeableness += sentence.tone_categories[2].tones[3].score;
-    averageValues.EmotionalRange += sentence.tone_categories[2].tones[4].score;
-  });
-  for (var key in averageValues) {
-    averageValues[key] = averageValues[key]/sentences.length;
-  };
+    console.log(sentences['sentences_tone'], typeof sentences['sentences_tone'], "SENTENCEZZZZZZ");
+    sentences['sentences_tone'].forEach(function(sentence) {
+        if (sentence.tone_categories[0] !== undefined || sentence.tone_categories[1] !== undefined || sentence.tone_categories[2] !== undefined) {
+            averageValues.Anger += sentence.tone_categories[0].tones[0].score;
+            averageValues.Disgust += sentence.tone_categories[0].tones[1].score;
+            averageValues.Fear += sentence.tone_categories[0].tones[2].score;
+            averageValues.Joy += sentence.tone_categories[0].tones[3].score;
+            averageValues.Sadness += sentence.tone_categories[0].tones[4].score;
+            averageValues.Analytical += sentence.tone_categories[1].tones[0].score;
+            averageValues.Confident += sentence.tone_categories[1].tones[1].score;
+            averageValues.Tentative += sentence.tone_categories[1].tones[2].score;
+            averageValues.Openness += sentence.tone_categories[2].tones[0].score;
+            averageValues.Conscientiousness += sentence.tone_categories[2].tones[1].score;
+            averageValues.Extraversion += sentence.tone_categories[2].tones[2].score;
+            averageValues.Agreeableness += sentence.tone_categories[2].tones[3].score;
+            averageValues.EmotionalRange += sentence.tone_categories[2].tones[4].score;
+        }
+    });
+    for (var key in averageValues) {
+        averageValues[key] = averageValues[key] / sentences.length;
+    };
 }
 
 /* sample response

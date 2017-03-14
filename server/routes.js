@@ -13,6 +13,7 @@ var promiseWatson = Promise.promisify(watson.getTone);
 module.exports = function(app, express) {
 
 	app.post('/api/handle', function(req, res) {
+		console.log(req.body, "I'M HERERERE")
 		promiseTwitter(twitterOptions, req.body.handle)
 			.then(function(result) {
 				//  invoke watson API call here
