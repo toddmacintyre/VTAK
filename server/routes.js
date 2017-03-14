@@ -43,7 +43,7 @@ module.exports = function(app, express) {
 		});
 	});
 
-	app.get('/api/archivess', function(req,res) {
+	app.get('/api/archives', function(req,res) {
 		Tweet.find({}).exec(function(err, archive){
 			res.send(archive);
 		});

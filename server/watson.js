@@ -1,7 +1,6 @@
 // Requires IBM's Watson's npm module (already required in package.json)
 var watson = require('watson-developer-cloud');
 require('./server.js');
-// var env = require('dotenv').config(); // will use this later but not working now so require('./.env') for now
 var envVars = require('../env.json');
 console.log('envVars.watson_username', envVars.watson_username); // to test that the env variables are exporting
 
