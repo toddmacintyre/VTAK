@@ -4,8 +4,8 @@ var request = require('request');
 
 module.exports = {
 	getRequestTwitter: function(optionsTwitter, handle, callback) {
-		optionsTwitter.qs['screen_name'] = handle;
-		request(optionsTwitter, function(error, response, body) {
+		optionsTwitter.options.qs['screen_name'] = handle;
+		request(optionsTwitter.options, function(error, response, body) {
 			if(error) {
 				console.log(error, 'error in twitter API get request');
 				// throw new Error(error);

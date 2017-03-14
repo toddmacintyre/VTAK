@@ -10,4 +10,4 @@ var tweetSchema = mongoose.Schema({
 
 var Tweet = mongoose.model('Tweet', tweetSchema);
 
-module.export = Tweet;
+module.exports = Tweet; // updated this from module.export
