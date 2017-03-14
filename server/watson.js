@@ -1,10 +1,12 @@
 // Requires IBM's Watson's npm module (already required in package.json)
 var watson = require('watson-developer-cloud');
-
+// require('./server.js');
+// console.log('process.env.watson_username', process.env.watson_username);
 // Below functions required per IBM documentation
 var tone_analyzer = watson.tone_analyzer({
-  username: process.env.watson_username,
-  password: process.env.watson_password,
+
+  // username: process.env.watson_username, // dotenv not working, so we'll module exports in the .env file for now
+  // password: process.env.watson_password,
   version: 'v3',
   version_date: '2016-05-19'
 });
