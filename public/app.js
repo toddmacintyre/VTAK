@@ -81,11 +81,12 @@ angular.module('sentiment.ly',[])
       $scope.archivesData = archives.lastFiveSearches;
       $scope.showArchives = true;
     });
+  };
 
   $scope.getSaved = function() {
     $http({
       method: 'GET',
-      url: '/api/'+$scope.savedSearch
+      url: '/api/timestamp/'+$scope.savedSearch
     })
     .then (function(results) {
       $scope.showResults = false;
@@ -99,3 +100,4 @@ angular.module('sentiment.ly',[])
   $scope.showArchives = true;
 
   };
+});

@@ -1,5 +1,5 @@
 // var env = require('dotenv'); // will use this later but not working now so require('./.env') for now
-var envVars = require('../.env');
+var envVars = require('../../env.json');
 
 module.exports = {
 options: { method: 'GET',
