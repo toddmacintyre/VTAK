@@ -71,7 +71,7 @@ angular.module('sentiment.ly',[savedController])
       headers: { 'Content-Type': 'application/json' }, /*should be text instead of JSON?*/
       data: {handle: $scope.searchRequestInput} /*should be text instead of JSON?*/
     })
-    .then (
+    .then (function(results) {
       $scope.showResults = false;
       tone.grabValues(data /*TBD data structure*/);
       $scope.averageValues = tone.averageValues;
@@ -80,23 +80,22 @@ angular.module('sentiment.ly',[savedController])
       $scope.showArchives = false;
       $scope.archivesData = archives.lastFiveSearches;
       $scope.showArchives = true;
-  )};
+    });
 
   $scope.getSaved = function() {
     $http({
       method: 'GET',
       url: '/api/'+scope.savedSearch
     })
-    .then (
+    .then (function(results) {
       $scope.showResults = false;
       tone.grabValues(data /*TBD data structure*/);
       $scope.averageValues = tone.averageValues;
       $scope.showResults = true;
-  )};
+  });
 
   archives.getArchives();
   $scope.archivesData = archives.lastFiveSearches;
   $scope.showArchives = true;
 
-})
-
+  };

@@ -2,18 +2,17 @@ var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-var path = require('path');
 var mongoose = require('mongoose');
 
 var env = require('dotenv').config();
-
+module.exports = env;
 // Initialize express
 var app = express();
 
 // make connection to mongoose database
-var username = process.env.mlab_username;
-var password = process.env.mlab_password;
-mongoose.connect(`mongodb://${username}:${password}@ds127730.mlab.com:27730/sentiment_db`);
+// var username = process.env.mlab_username;
+// var password = process.env.mlab_password;
+// mongoose.connect(`mongodb://${username}:${password}@ds127730.mlab.com:27730/sentiment_db`);
 
 // use middleware
 app.use(bodyParser.json());
