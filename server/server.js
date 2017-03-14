@@ -4,7 +4,6 @@ var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var mongoose = require('mongoose');
 
-// var env = require('dotenv').config(); // will use this later but not working now so require('./.env') for now
 var envVars = require('../env.json');
 
 // Initialize express
