@@ -71,7 +71,7 @@ angular.module('sentiment.ly',[])
       headers: { 'Content-Type': 'application/json' },
       data: {handle: $scope.searchRequestInput}
     })
-    .then (
+    .then (function(results) {
       $scope.showResults = false;
       tone.grabValues(results.data);  // Doublecheck data structure
       $scope.averageValues = tone.averageValues;
@@ -80,23 +80,22 @@ angular.module('sentiment.ly',[])
       $scope.showArchives = false;
       $scope.archivesData = archives.lastFiveSearches;
       $scope.showArchives = true;
-  )};
+    });
 
   $scope.getSaved = function() {
     $http({
       method: 'GET',
       url: '/api/'+$scope.savedSearch
     })
-    .then (
+    .then (function(results) {
       $scope.showResults = false;
       tone.grabValues(results.data);   // Doublecheck data structure
       $scope.averageValues = tone.averageValues;
       $scope.showResults = true;
-  )};
+  });
 
   archives.getArchives();
   $scope.archivesData = archives.lastFiveSearches;
   $scope.showArchives = true;
 
-})
-
+  };

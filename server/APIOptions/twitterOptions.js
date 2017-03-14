@@ -12,7 +12,7 @@ options: { method: 'GET',
      screen_name: 'jpackel',
      count: '20' },
   headers:
-   {'access-token': process.env.twitter_access_token,
+   {'access-token': process.env.twitter_access_token, // dotenv not working, so we'll module exports in the .env file for now
     'access-token-secret': process.env.twitter_access_token_secret,
    	'postman-token': 'b8538c8f-a604-f5ec-32d3-20aa4de2e51c',
     'cache-control': 'no-cache' }
