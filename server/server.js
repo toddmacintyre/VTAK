@@ -5,7 +5,7 @@ var morgan = require('morgan');
 var mongoose = require('mongoose');
 
 // var env = require('dotenv').config(); // will use this later but not working now so require('./.env') for now
-var envVars = require('./.env');
+var envVars = require('../env.json');
 
 // Initialize express
 var app = express();
@@ -23,7 +23,7 @@ app.use(morgan('dev'));
 // server static files in public
 app.use(express.static(path.join(__dirname, '../public')));
 
-var port = process.env.PORT || 8222;
+var port = process.env.PORT || envVars.PORT || 8222;
 // var port = 8222; // tested & listening properly (before mongoose connected)
 app.listen(port, function() {
   console.log(`listening on port: ${port}`);

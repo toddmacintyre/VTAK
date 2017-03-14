@@ -17,7 +17,6 @@ module.exports = function(app, express) {
 			.then(function(result) {
 				//  invoke watson API call here
 				promiseWatson(result)
-					// does this return promise to be resolved or actual value?
 					.then(function(result) {
 						res.send(result);
 					})
@@ -32,7 +31,7 @@ module.exports = function(app, express) {
 			});
 	});
 
-	app.get('api/:timestamp', function(req, res) {
+	app.get('/api/timestamp/:timestamp', function(req, res) {
 		let timestamp = req.params.timestamp;
 		Tweet.findOne({'timestamp': timestamp}, function(err, tweet) {
 			if (err) {
@@ -44,9 +43,9 @@ module.exports = function(app, express) {
 		});
 	});
 
-	app.get('api/archives', function(req,res){
+	app.get('/api/archivess', function(req,res) {
 		Tweet.find({}).exec(function(err, archive){
 			res.send(archive);
 		});
-	})
+	});
 };
