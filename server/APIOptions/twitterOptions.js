@@ -1,3 +1,6 @@
+// var env = require('dotenv'); // will use this later but not working now so require('./.env') for now
+var envVars = require('../.env');
+
 module.exports = {
 options: { method: 'GET',
   url: 'https://api.twitter.com/1.1/statuses/user_timeline.json',
@@ -12,8 +15,8 @@ options: { method: 'GET',
      screen_name: 'jpackel',
      count: '20' },
   headers:
-   {'access-token': process.env.twitter_access_token, // dotenv not working, so we'll module exports in the .env file for now
-    'access-token-secret': process.env.twitter_access_token_secret,
+   {'access-token': envVars.twitter_access_token,
+    'access-token-secret': envVars.twitter_access_token_secret,
    	'postman-token': 'b8538c8f-a604-f5ec-32d3-20aa4de2e51c',
     'cache-control': 'no-cache' }
   }
