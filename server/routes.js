@@ -3,7 +3,7 @@ var Promise = require('bluebird');
 var twitterOptions = require('./APIOptions/twitterOptions.js');
 var twitterController = require('./controllers/twitterApiController.js');
 var watson = require('./watson.js');
-var Tweet = require('./DB/models/tweetmodel.js'); // this fixes "ReferenceError: Tweet is not defined"
+var Tweet = require('./controllers/dbController.js');
 
 // Promisify API calls
 var promiseTwitter = Promise.promisify(twitterController.getRequestTwitter);
@@ -20,6 +20,9 @@ module.exports = function(app, express) {
 				//  invoke watson API call here
 				promiseWatson(result)
 					.then(function(result) {
+						console.log('\n\nin routes.js. promiseWatson result obj = ', result, '\n\n'); // see format below
+						// invoke dbController here, sending handle & watson results
+						Tweet.saveToDB(req.body.handle, result);
 						res.send(result);
 					})
 					.catch(function(err) {
@@ -33,24 +36,47 @@ module.exports = function(app, express) {
 			});
 	});
 
+	// what we had: Tweet.findOne({'timestamp': timestamp}, function(err, tweet) { // we want this to call the dbController, which connects to model, not model directly (similar to Shortly-Angular); also updated from callback to promise
 	app.get('/api/timestamp/:timestamp', function(req, res) {
 		let timestamp = req.params.timestamp;
-		Tweet.findOne({'timestamp': timestamp}, function(err, tweet) {
-			console.log('in routes.js, app.get(api/archives/:timestamp), line 39. timestamp queried = ', timestamp);
-      console.log('in routes.js, app.get(api/archives/:timestamp), line 39. findOne data returned from db = ', tweet);
-			if (err) {
-				console.error(err);
+		console.log('in routes.js, app.get(api/archives/:timestamp), line 42. timestamp queried = ', timestamp);
+		Tweet.findResultsByTimestamp(timestamp)
+		  .then(function(findOneResult) {
+      console.log('in routes.js, app.get(api/archives/:timestamp), line 46. findOne data returned from db = ', findOneResult);
+			if (findOneResult === null) {
+				console.log('in routes.js, app.get(api/archives/:timestamp), line 48. findOneResult returned null');
 				res.status(400).send('whoops');
-			} else {
-				res.send(tweet);
-			}
-		});
+			  } else {
+				res.send(findOneResult);
+			  }
+		 });
 	});
 
+  // what we had: Tweet.find({}).exec(function(err, archive){ // we want this to call the dbController, which connects to model, not model directly (similar to Shortly-Angular); line 7 updated
 	app.get('/api/archives', function(req,res) {
-		Tweet.find({}).exec(function(err, archive){
-			console.log('in routes.js, app.get(api/archives), line 50. archive data returned from db = ', archive);
-			res.send(archive);
-		});
-	});
+		Tweet.getArchives() // bug here, it's returning no result: TypeError: Cannot read property 'then' of undefined
+      .then(function(archivesResults) {
+			console.log('in routes.js, app.get(api/archives/:timestamp), line 46. findOne data returned from db = ', findOneResult);
+			if (archivesResults === null) {
+				console.log('in routes.js, app.get(/api/archives), line 48. archivesResults returned null');
+				res.status(400).send('whoops');
+				} else {
+				res.send(archivesResults);
+				}
+	  });
+  });
 };
+
+// promiseWatson result obj =  { Anger: 0.10487240677966098,
+//   Disgust: 0.07544283050847456,
+//   Fear: 0.11776201694915257,
+//   Joy: 0.3082714576271186,
+//   Sadness: 0.2667793728813559,
+//   Analytical: 0.13726845762711865,
+//   Confident: 0.10520130508474576,
+//   Tentative: 0.10431433898305084,
+//   Openness: 0.32089301694915257,
+//   Conscientiousness: 0.3026000677966102,
+//   Extraversion: 0.4355325762711864,
+//   Agreeableness: 0.44270649152542374,
+//   EmotionalRange: 0.3916283898305084 }

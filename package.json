@@ -25,6 +25,7 @@
     "express": "^4.15.2",
     "mongoose": "^4.9.0",
     "morgan": "^1.8.1",
+    "q": "^1.4.1",
     "watson-developer-cloud": "^2.25.1"
   }
 }
