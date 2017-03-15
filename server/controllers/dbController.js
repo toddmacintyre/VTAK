@@ -8,7 +8,7 @@ var saveASearch = Q.nbind(savedSearch.create, savedSearch);
 
 module.exports = {
   saveToDB: function(handle, watsonResults) {
-    console.log('in dbController, saveToDB, line 11. about to call saveASearch. handle...watsonResults = \n\n', handle, '...', watsonResults);
+   console.log('in dbController, saveToDB, line 11. about to call saveASearch. handle...watsonResults = \n\n', handle, '...', watsonResults);
     saveASearch({
       handle: handle,
       watsonResults: watsonResults  // watsonResults value is object returned from promiseWatson in routes.js line 23
