@@ -22,7 +22,7 @@ module.exports = {
         // request.post(options2, function(error, response, body) {
         //     console.log(body, "BEARERRR TOKENNNNNN"); // <<<< This is your BEARER TOKEN !!!
         //     // optionsTwitter.options.headers['Authorization'] = body;
-        // });  
+        // });
 
         //** This request above was to get bearer token, we needed to run it only once **//
         //** Didn't delete it as we might need it again **//
@@ -39,7 +39,7 @@ module.exports = {
                 // var responseObject = JSON.parse(body);
                 var responseObject = body;
                 var finalString = tweetParser(responseObject)
-                console.log(finalString, "FINAL STRININININIGIGIGI")
+                console.log("\n\nin twitterApiController, FINAL STRINGINININIGIGIGI is: ", finalString);
                 callback(error, finalString);
             }
         })
@@ -52,5 +52,7 @@ var tweetParser = function(twitterResponseArray) {
     twitterResponseArray.forEach(function(tweetObject) {
         stringForWatson += tweetObject.text + ". ";
     })
+    // getting error when using Postman for api/handle: "TypeError: twitterResponseArray.forEach is not a function"
+    console.log('in twitterApiController, tweetParser func, line 55. after forEach, stringForWatson = ', stringForWatson);
     return stringForWatson;
 };

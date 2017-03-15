@@ -82,6 +82,7 @@ angular.module('sentiment.ly',[])
       data: {handle: $scope.searchRequestInput}
     })
     .then (function(results) {
+      console.log('in app.js, searchRequest, line 76. results.data = ', results.data);
       $scope.showResults = false;
       tone.grabValues(results.data);  // Doublecheck data structure
       $scope.averageValues = tone.averageValues;
