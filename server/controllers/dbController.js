@@ -8,7 +8,7 @@ var saveASearch = Q.nbind(savedSearch.create, savedSearch);
 
 module.exports = {
   saveToDB: function(handle, watsonResults) {
-    console.log('in dbController, saveToDB, line 11. about to call saveASearch');
+    console.log('in dbController, saveToDB, line 11. about to call saveASearch\n\n');
     saveASearch({
       handle: handle,
       watsonResults: watsonResults  // watsonResults value is object returned from promiseWatson in routes.js line 23
@@ -16,7 +16,7 @@ module.exports = {
   },
 
   findResultsByTimestamp: function(timestamp) {
-    console.log('in dbController, findResultsByTimestamp, line 19. about to call findOne');
+    console.log('in dbController, findResultsByTimestamp, line 19. about to call findOne\n\n');
     findOne({timestamp: timestamp}, 'handle watsonResults timestamp', function (err, result) {
        if (err) {console.error(err)}
        console.log('database findOne query returned: ', result)
@@ -24,10 +24,11 @@ module.exports = {
   },
 
   getArchives: function() {
-    console.log('in dbController, getArchives, line 25. about to call findAllSearches');
+    console.log('in dbController, getArchives, line 25. about to call findAllSearches\n\n');
     findAllSearches( { } ), 'handle watsonResults timestamp', function (err, result) {
        if (err) {console.error(err)}
-       console.log('in dbController, getArchives, line 28. database findAllSearches query returned: ', result)
+      //  console.log('in dbController, getArchives, line 28. database findAllSearches query returned: ', result, '\n\n')
+         console.log('in dbController, getArchives, line 28. database findAllSearches query returned');
     };
   }
 };
