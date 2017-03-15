@@ -68,11 +68,13 @@ var getAverage = function (sentences) {
     }
   });
   for (var key in averageValues) {
-    averageValues[key] = averageValues[key] / sentences['sentences_tone'].length;
+    averageValues[key] = Math.round(((averageValues[key] / sentences['sentences_tone'].length) + 0.00001)*100)/100;
   };
 }
 
 /* sample response
+
+Math.round((num + 0.00001) * 100) / 100
 
 Sentence Mode Category Access:
 Emotion Tone

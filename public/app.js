@@ -36,6 +36,7 @@ angular.module('sentiment.ly',[])
 .factory('archives', function ($http) {
 
     var lastFiveSearches = [];
+    var archivedSearches = []
 
     var getArchives = function() {
       $http({
@@ -63,9 +64,11 @@ angular.module('sentiment.ly',[])
   $scope.averageValues = {};
   $scope.showResults = false;
   $scope.showArchives = false;
+  $scope.spinner = false;
   $scope.archivesData = [];
 
   $scope.searchRequest = function() {
+    $scope.spinner = true;
     $http({
       method: 'POST',
       url: '/api/handle',
@@ -76,6 +79,7 @@ angular.module('sentiment.ly',[])
       $scope.showResults = false;
       tone.grabValues(results.data);  // Doublecheck data structure
       $scope.averageValues = tone.averageValues;
+      $scope.spinner = false;
       $scope.showResults = true;
       archives.getArchives();
       $scope.showArchives = false;
@@ -84,15 +88,18 @@ angular.module('sentiment.ly',[])
     });
   };
 
-  $scope.getSaved = function() {
+  $scope.getSaved = function(archive) {
     $http({
-      method: 'GET',
-      url: '/api/timestamp/'+$scope.savedSearch
+      method: 'POST',
+      url: '/api/timestamp/'+$archive.timestamp,
+      headers: { 'Content-Type': 'application/json' }
     })
     .then (function(results) {
       $scope.showResults = false;
+      $scope.spinner = true;
       tone.grabValues(results.data);   // Doublecheck data structure
       $scope.averageValues = tone.averageValues;
+      $scope.spinner = false;
       $scope.showResults = true;
   });
 
