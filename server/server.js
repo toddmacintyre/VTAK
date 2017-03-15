@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 var port = process.env.PORT || envVars.PORT || 8222;
 // var port = 8222; // tested & listening properly (before mongoose connected)
 app.listen(port, function() {
-  console.log(`listening on port: ${port}`);
+  console.log(`\n\nlistening on port: ${port}`);
 });
 
 // Hook up routes
