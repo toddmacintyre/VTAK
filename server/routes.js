@@ -3,7 +3,6 @@ var Promise = require('bluebird');
 var twitterOptions = require('./APIOptions/twitterOptions.js');
 var twitterController = require('./controllers/twitterApiController.js');
 var watson = require('./watson.js');
-// var Tweet = require('./DB/models/tweetmodel.js'); // this fixes "ReferenceError: Tweet is not defined"
 var Tweet = require('./controllers/dbController.js');
 
 // Promisify API calls
@@ -23,7 +22,7 @@ module.exports = function(app, express) {
 					.then(function(result) {
 						console.log('\n\nin routes.js. promiseWatson result obj = ', result, '\n\n'); // see format below
 						// invoke dbController here, sending handle & watson results
-						Tweet.saveToDB(req.body.handle, result); // or need to set req.body.handle to variable in 18?
+						Tweet.saveToDB(req.body.handle, result);
 						res.send(result);
 					})
 					.catch(function(err) {
@@ -55,7 +54,7 @@ module.exports = function(app, express) {
 
   // what we had: Tweet.find({}).exec(function(err, archive){ // we want this to call the dbController, which connects to model, not model directly (similar to Shortly-Angular); line 7 updated
 	app.get('/api/archives', function(req,res) {
-		Tweet.getArchives()
+		Tweet.getArchives() // bug here, it's returning no result: TypeError: Cannot read property 'then' of undefined
       .then(function(archivesResults) {
 			console.log('in routes.js, app.get(api/archives/:timestamp), line 46. findOne data returned from db = ', findOneResult);
 			if (archivesResults === null) {
