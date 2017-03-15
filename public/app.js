@@ -21,8 +21,8 @@ angular.module('sentiment.ly',[])
   };
 
   var grabValues = function(data) {
-    for (var key in tone.averageValues) {
-      tone.averageValues[key] = data[key];   // Doublecheck data structure
+    for (var key in averageValues) {
+      averageValues[key] = data[key];   // Doublecheck data structure
     }
   };
 
@@ -43,9 +43,9 @@ angular.module('sentiment.ly',[])
         url: '/api/archives',
       })
       .then (function(data) {
-        archives.lastFiveSearches = [];
+        lastFiveSearches = [];
         for (var i=0; i<5; i++) {
-          archives.lastFiveSearches.push(data[i]);  //Doublecheck data structure
+          lastFiveSearches.push(data[i]);  //Doublecheck data structure
         }
       });
     };
