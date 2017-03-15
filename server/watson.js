@@ -33,43 +33,59 @@ exports.getTone = function (tweetString, callback) {
 
 // This object will be what is ultimately returned
 var averageValues = {
-  "Anger": 0,
-  "Disgust": 0,
-  "Fear": 0,
-  "Joy": 0,
-  "Sadness": 0,
-  "Analytical": 0,
-  "Confident": 0,
-  "Tentative": 0,
-  "Openness": 0,
-  "Conscientiousness": 0,
-  "Extraversion": 0,
-  "Agreeableness": 0,
-  "EmotionalRange": 0
+  "Anger":{"score": 0,"count":0},
+  "Disgust":{"score": 0,"count":0},
+  "Fear":{"score": 0,"count":0},
+  "Joy":{"score": 0,"count":0},
+  "Sadness":{"score": 0,"count":0},
+  "Analytical":{"score": 0,"count":0},
+  "Confident":{"score": 0,"count":0},
+  "Tentative":{"score": 0,"count":0},
+  "Openness":{"score": 0,"count":0},
+  "Conscientiousness":{"score": 0,"count":0},
+  "Extraversion":{"score": 0,"count":0},
+  "Agreeableness":{"score": 0,"count":0},
+  "Emotional Range":{"score": 0,"count":0}
 }
 
 // This is the helper function that will calculate and assign values to the averageValues object
 var getAverage = function (sentences) {
-  sentences['sentences_tone'].forEach(function (sentence, index) {
-    if (sentence.tone_categories[0] !== undefined || sentence.tone_categories[1] !== undefined || sentence.tone_categories[2] !== undefined) {
-      averageValues.Anger += sentence.tone_categories[0].tones[0].score;
-      averageValues.Disgust += sentence.tone_categories[0].tones[1].score;
-      averageValues.Fear += sentence.tone_categories[0].tones[2].score;
-      averageValues.Joy += sentence.tone_categories[0].tones[3].score;
-      averageValues.Sadness += sentence.tone_categories[0].tones[4].score;
-      averageValues.Analytical += sentence.tone_categories[1].tones[0].score;
-      averageValues.Confident += sentence.tone_categories[1].tones[1].score;
-      averageValues.Tentative += sentence.tone_categories[1].tones[2].score;
-      averageValues.Openness += sentence.tone_categories[2].tones[0].score;
-      averageValues.Conscientiousness += sentence.tone_categories[2].tones[1].score;
-      averageValues.Extraversion += sentence.tone_categories[2].tones[2].score;
-      averageValues.Agreeableness += sentence.tone_categories[2].tones[3].score;
-      averageValues.EmotionalRange += sentence.tone_categories[2].tones[4].score;
-    }
-  });
+  // console.log(sentences['sentences_tone'][0].tone_categories, "herioioioioioioio");
+  sentences['sentences_tone'].forEach(function(sentence){
+    negateZero(sentence);
+  })
   for (var key in averageValues) {
-    averageValues[key] = averageValues[key] / sentences['sentences_tone'].length;
+    averageValues[key]['score'] = averageValues[key].score / averageValues[key].count;
   };
+}
+
+var negateZero = function(sentence){
+    sentence.tone_categories.forEach(function(tones){
+      // console.log(tones,"tones909090909090");
+      tones.tones.forEach(function(tone, index){
+        // console.log(tone.score, tone.tone_name, "tonioioioi909090909090@@@");
+        if(tone.score!==0 && tone.score!== undefined){
+          averageValues[tone.tone_name].score += tone.score;
+          averageValues[tone.tone_name].count +=1;
+          console.log(tone.score, tone.tone_name, "tonioioioi909090909090@@@");
+        }
+      })
+    })
+
+  //***** For Testing Various Console.Logs
+  // console.log(averageValues["Anger"], averageValues["Anger"].score/averageValues["Anger"].count);
+  // console.log(averageValues["Disgust"], averageValues["Disgust"].score/averageValues["Disgust"].count);
+  // console.log(averageValues["Fear"], averageValues["Fear"].score/averageValues["Fear"].count);
+  // console.log(averageValues["Joy"], averageValues["Joy"].score/averageValues["Joy"].count);
+  // console.log(averageValues["Sadness"], averageValues["Sadness"].score/averageValues["Sadness"].count);
+  // console.log(averageValues["Analytical"], averageValues["Analytical"].score/averageValues["Analytical"].count);
+  // console.log(averageValues["Confident"], averageValues["Confident"].score/averageValues["Confident"].count);
+  // console.log(averageValues["Tentative"], averageValues["Tentative"].score/averageValues["Tentative"].count);
+  // console.log(averageValues["Openness"], averageValues["Openness"].score/averageValues["Openness"].count);
+  // console.log(averageValues["Conscientiousness"], averageValues["Conscientiousness"].score/averageValues["Conscientiousness"].count);
+  // console.log(averageValues["Extraversion"], averageValues["Extraversion"].score/averageValues["Extraversion"].count);
+  // console.log(averageValues["Agreeableness"], averageValues["Agreeableness"].score/averageValues["Agreeableness"].count);
+  // console.log(averageValues["Emotional Range"], averageValues["Emotional Range"].score/averageValues["Emotional Range"].count);
 }
 
 /* sample response
