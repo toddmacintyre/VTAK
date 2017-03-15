@@ -24,9 +24,12 @@ exports.getTone = function (tweetString, callback) {
       callback(err);
     } else {
       getAverage(tone);
-      // return JSON.stringify(averageValues);
-      // console.log(averageValues);
       callback(err, averageValues);
+      // reset averageValues object for next search
+      for (var key in averageValues) {
+        averageValues[key].score = 0;
+        averageValues[key].count = 0;
+      }
     }
   });
 }
@@ -67,7 +70,7 @@ var negateZero = function(sentence){
         if(tone.score!==0 && tone.score!== undefined){
           averageValues[tone.tone_name].score += tone.score;
           averageValues[tone.tone_name].count +=1;
-          console.log(tone.score, tone.tone_name, "tonioioioi909090909090@@@");
+          //console.log(tone.score, tone.tone_name, "tonioioioi909090909090@@@");
         }
       })
     })
