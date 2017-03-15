@@ -33,7 +33,7 @@ angular.module('sentiment.ly',[])
 
 })
 
-.factory('archives', function () {
+.factory('archives', function ($http) {
 
     var lastFiveSearches = [];
 
@@ -43,6 +43,7 @@ angular.module('sentiment.ly',[])
         url: '/api/archives',
       })
       .then (function(data) {
+        console.log('in app.js, getArchives after GET req to /api/archives. data received = ', data);
         lastFiveSearches = [];
         for (var i=0; i<5; i++) {
           lastFiveSearches.push(data[i]);  //Doublecheck data structure

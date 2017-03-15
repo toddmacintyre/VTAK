@@ -3,6 +3,7 @@ var Promise = require('bluebird');
 var twitterOptions = require('./APIOptions/twitterOptions.js');
 var twitterController = require('./controllers/twitterApiController.js');
 var watson = require('./watson.js');
+var Tweet = require('./DB/models/tweetmodel.js'); // this fixes "ReferenceError: Tweet is not defined"
 
 // Promisify API calls
 var promiseTwitter = Promise.promisify(twitterController.getRequestTwitter);
@@ -35,6 +36,8 @@ module.exports = function(app, express) {
 	app.get('/api/timestamp/:timestamp', function(req, res) {
 		let timestamp = req.params.timestamp;
 		Tweet.findOne({'timestamp': timestamp}, function(err, tweet) {
+			console.log('in routes.js, app.get(api/archives/:timestamp), line 39. timestamp queried = ', timestamp);
+      console.log('in routes.js, app.get(api/archives/:timestamp), line 39. findOne data returned from db = ', tweet);
 			if (err) {
 				console.error(err);
 				res.status(400).send('whoops');
@@ -46,6 +49,7 @@ module.exports = function(app, express) {
 
 	app.get('/api/archives', function(req,res) {
 		Tweet.find({}).exec(function(err, archive){
+			console.log('in routes.js, app.get(api/archives), line 50. archive data returned from db = ', archive);
 			res.send(archive);
 		});
 	});
