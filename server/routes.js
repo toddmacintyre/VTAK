@@ -54,7 +54,7 @@ module.exports = function(app, express) {
 
   // what we had: Tweet.find({}).exec(function(err, archive){ // we want this to call the dbController, which connects to model, not model directly (similar to Shortly-Angular); line 7 updated
 	app.get('/api/archives', function(req,res) {
-		Tweet.getArchives() // bug here, it's returning no result: TypeError: Cannot read property 'then' of undefined
+		Tweet.getArchives()
       .then(function(archivesResults) {
 			console.log('in routes.js, app.get(api/archives/:timestamp), line 46. findOne data returned from db = ', findOneResult);
 			if (archivesResults === null) {
