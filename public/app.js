@@ -66,6 +66,7 @@ angular.module('sentiment.ly',[])
   $scope.showArchives = false;
   $scope.spinner = false;
   $scope.archivesData = [];
+  $scope.archive = {};
 
   $scope.searchRequest = function() {
     $scope.spinner = true;
