@@ -17,13 +17,18 @@ angular.module('sentiment.ly',[])
     "Conscientiousness":0,
     "Extraversion":0,
     "Agreeableness":0,
+    "Emotional Range":0,
     "EmotionalRange":0
   };
 
   var grabValues = function(data) {
     for (var key in averageValues) {
-      averageValues[key] = data[key];   // Doublecheck data structure
+      if(key !== 'EmotionalRange'){
+      // console.log(data, "dataioioioioioioi")
+      averageValues[key] = data[key]['score'];   // Doublecheck data structure
+      }
     }
+    averageValues['EmotionalRange'] = averageValues["Emotional Range"]
   };
 
   return {
