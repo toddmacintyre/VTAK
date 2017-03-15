@@ -21,6 +21,9 @@
       <form ng-submit="searchRequest()"> <!-- calls factory function that makes POST req w/ input value (twitter handle)  -->
         @&nbsp<input type="text" ng-model="searchRequestInput" placeholder="e.g., Journey4John" required>
         <input type="Submit">
+        <div ng-if="spinner">
+          <img ng-src="./spiffygif_46x46.gif">
+        </div>
       </form>
     </div>
       <hr style="width: 20%">
@@ -76,9 +79,9 @@
             <th>Twitter handle</th>
             <th>Time of search</th>
           </tr>
-          <tr ng-repeat="result in results" >
-            <td> {{ result.handle }} </td>
-            <td> {{ result.timestamp }} </td>
+          <tr ng-repeat="archive in archivesData" ng-click="getSaved(archive)">
+            <td> {{ archive.handle }} </td>
+            <td> {{ archive.timestamp }} </td>
           </tr>
         </table>
       </h4>

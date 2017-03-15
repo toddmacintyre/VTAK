@@ -55,8 +55,8 @@ var getAverage = function (sentences) {
     negateZero(sentence);
   })
   for (var key in averageValues) {
-    averageValues[key]['score'] = averageValues[key].score / averageValues[key].count;
-  };
+    averageValues[key]['score'] = Math.round(((averageValues[key].score / averageValues[key].count) + 0.00001)*100)/100;
+  }
 }
 
 var negateZero = function(sentence){
@@ -89,6 +89,8 @@ var negateZero = function(sentence){
 }
 
 /* sample response
+
+Math.round((num + 0.00001) * 100) / 100
 
 Sentence Mode Category Access:
 Emotion Tone
