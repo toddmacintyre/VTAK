@@ -14,10 +14,10 @@ var promiseWatson = Promise.promisify(watson.getTone);
 module.exports = function(app, express) {
 
 	app.post('/api/handle', function(req, res) {
-		
+
 		// Final object sent to front end that includes watson response object and user details
 		var frontEndResponse = {
-		};  
+		};
 		// Final object sent to front end that includes watson response object and user details
 
 		console.log(req.body, "I'M HERERERE")
@@ -39,7 +39,7 @@ module.exports = function(app, express) {
 			})
 			.catch(function(err) {
 				console.error(err);
-				res.status(400).send('whoops');
+				res.status(400).send(err.errors[0].code.toString());
 			});
 	});
 

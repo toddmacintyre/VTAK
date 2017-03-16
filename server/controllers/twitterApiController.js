@@ -44,9 +44,12 @@ module.exports = {
                 console.log(error, 'error in twitter API get request');
                 callback(error);
                 // throw new Error(error);
+            } else if (body.errors || body.length === 0) {
+                // console.log("ERROR CATCHER", body);
+                if (body.length > 0) {
+                    callback(body);
+                } else callback({"errors":[{"code": 999}]});
             } else {
-            	// console.log(body, "herioioioioioio")
-                // var responseObject = JSON.parse(body);
                 var responseObject = body;
                 var finalString = tweetParser(responseObject)
                 twitterAPIResponseObject.finalString = finalString;
@@ -72,7 +75,7 @@ module.exports = {
 
                 callback(error, twitterAPIResponseObject);
             }
-        })
+        });
     }
 };
 
