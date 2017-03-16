@@ -14,16 +14,23 @@ var promiseWatson = Promise.promisify(watson.getTone);
 module.exports = function(app, express) {
 
 	app.post('/api/handle', function(req, res) {
+		
+		// Final object sent to front end that includes watson response object and user details
+		var frontEndResponse = {
+		};  
+		// Final object sent to front end that includes watson response object and user details
+
 		console.log(req.body, "I'M HERERERE")
 		promiseTwitter(twitterOptions, req.body.handle)
 			.then(function(result) {
-				//  invoke watson API call here
-				promiseWatson(result)
+				frontEndResponse = result;
+				promiseWatson(result.finalString)
 					.then(function(result) {
-						console.log('\n\nin routes.js. promiseWatson result obj = ', result, '\n\n'); // see format below
 						// invoke dbController here, sending handle & watson results
 						Tweet.saveToDB(req.body.handle, result);
-						res.send(result);
+						frontEndResponse['watsonResponseObject'] = result;
+						// console.log('\n\nin routes.js. promiseWatson result obj = final Object*&*&*&*&*&*&*&*&', frontEndResponse, '\n\n'); // see format below
+						res.send(frontEndResponse);
 					})
 					.catch(function(err) {
 						console.error(err);
