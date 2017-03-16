@@ -98,6 +98,8 @@ angular.module('sentiment.ly',[])
       console.log(error);
       if(error.data === '34') {
         alert('There is no Twitter user with that handle.  Please try again.');
+      } else if (error.data === '999') {
+        alert('That user has no tweets.  Please try again.');
       }
     });
   };

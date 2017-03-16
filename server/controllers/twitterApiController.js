@@ -34,9 +34,11 @@ module.exports = {
                 console.log(error, 'error in twitter API get request');
                 callback(error);
                 // throw new Error(error);
-            } else if (body.errors) {
-                console.log('IN TWITTER API CONTROLLER', body);
-                callback(body);
+            } else if (body.errors || body.length === 0) {
+                // console.log("ERROR CATCHER", body);
+                if (body.length > 0) {
+                    callback(body);
+                } else callback({"errors":[{"code": 999}]});
             } else {
                 var responseObject = body;
                 var finalString = tweetParser(responseObject)
