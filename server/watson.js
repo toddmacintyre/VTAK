@@ -67,7 +67,7 @@ var negateZero = function(sentence){
         if(tone.score!==0 && tone.score!== undefined){
           averageValues[tone.tone_name].score += tone.score;
           averageValues[tone.tone_name].count +=1;
-          console.log(tone.score, tone.tone_name, "tonioioioi909090909090@@@");
+          // console.log(tone.score, tone.tone_name, "\n\nin watson.js negateZero, line 70. tonioioioi909090909090@@@");
         }
       })
     })

@@ -49,11 +49,16 @@ angular.module('sentiment.ly',[])
         url: '/api/archives',
       })
       .then (function(data) {
-        console.log('in app.js, getArchives after GET req to /api/archives. data received = ', data);
+        var arrLength = data.data.length;
+        console.log('in app.js, getArchives line 52, after GET req to /api/archives. data received = ', data.data);
+        console.log('in app.js, getArchives line 52, after GET req to /api/archives. array length = ', arrLength);
         lastFiveSearches = [];
-        for (var i=0; i<5; i++) {
-          lastFiveSearches.push(data[i]);  //Doublecheck data structure
+        // for (var i=arrLength-1; i<arrLength-5; i--) {
+          for (var i=arrLength-1; i>arrLength-6; i--) {
+          lastFiveSearches.push(data.data[i]);  //Doublecheck data structure. Good idea! It needed .data.
         }
+        console.log('in app.js, getArchives line 57, after lastFiveSearches push. lastFiveSearches = ', lastFiveSearches);
+        // return lastFiveSearches;
       });
     };
 
@@ -88,11 +93,18 @@ angular.module('sentiment.ly',[])
       $scope.averageValues = tone.averageValues;
       $scope.spinner = false;
       $scope.showResults = true;
-      archives.getArchives();
+      console.log('about to call getArchives');
       $scope.showArchives = false;
-      $scope.archivesData = archives.lastFiveSearches;
+
+      $scope.archivesData = archives.getArchives(); // I've tried several ways to get this scope data updated; with getArchives().then, error says getArchives() undefined, even though the data is in factory
+      console.log('in app.js, searchRequest, line 100. $scope.archivesData = ', $scope.archivesData);
       $scope.showArchives = true;
-    });
+
+      // archives.getArchives();
+      // $scope.archivesData = archives.lastFiveSearches;
+      // console.log('l 98: archives.lastFiveSearches = ', archives.lastFiveSearches);
+      // $scope.showArchives = true;
+      })
   };
 
   $scope.getSaved = function(archive) {
@@ -108,11 +120,12 @@ angular.module('sentiment.ly',[])
       $scope.averageValues = tone.averageValues;
       $scope.spinner = false;
       $scope.showResults = true;
-  });
-
-  archives.getArchives();
+    });
+  //
+  archives.getArchives(); // see note in line 96 about getting this value
   $scope.archivesData = archives.lastFiveSearches;
   $scope.showArchives = true;
-
-  };
-});
+   }
+   $scope.archivesData = archives.lastFiveSearches;
+   console.log('in app.js, l 130. $scope.archivesData = ', $scope.archivesData);
+}); // closes sentimentController
