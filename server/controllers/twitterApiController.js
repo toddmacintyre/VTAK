@@ -34,15 +34,16 @@ module.exports = {
                 console.log(error, 'error in twitter API get request');
                 callback(error);
                 // throw new Error(error);
+            } else if (body.errors) {
+                console.log('IN TWITTER API CONTROLLER', body);
+                callback(body);
             } else {
-            	// console.log(body, "herioioioioioio")
-                // var responseObject = JSON.parse(body);
                 var responseObject = body;
                 var finalString = tweetParser(responseObject)
                 console.log("\n\nin twitterApiController, FINAL STRINGINININIGIGIGI is: ", finalString);
                 callback(error, finalString);
             }
-        })
+        });
     }
 };
 

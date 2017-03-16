@@ -92,6 +92,13 @@ angular.module('sentiment.ly',[])
       $scope.showArchives = false;
       $scope.archivesData = archives.lastFiveSearches;
       $scope.showArchives = true;
+    })
+    .catch(function(error) {
+      $scope.spinner = false;
+      console.log(error);
+      if(error.data === '34') {
+        alert('There is no Twitter user with that handle.  Please try again.');
+      }
     });
   };
 

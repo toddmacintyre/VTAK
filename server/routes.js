@@ -17,22 +17,21 @@ module.exports = function(app, express) {
 		console.log(req.body, "I'M HERERERE")
 		promiseTwitter(twitterOptions, req.body.handle)
 			.then(function(result) {
-				//  invoke watson API call here
 				promiseWatson(result)
 					.then(function(result) {
-						console.log('\n\nin routes.js. promiseWatson result obj = ', result, '\n\n'); // see format below
-						// invoke dbController here, sending handle & watson results
-						Tweet.saveToDB(req.body.handle, result);
-						res.send(result);
-					})
-					.catch(function(err) {
-						console.error(err);
-						res.status(400).send('whoops');
-					});
+				  console.log('\n\nin routes.js. promiseWatson result obj = ', result, '\n\n'); // see format below
+				  // invoke dbController here, sending handle & watson results
+				  Tweet.saveToDB(req.body.handle, result);
+				  res.send(result);
+			  })
+			  .catch(function(err) {
+				  console.error(err);
+				  res.status(400).send('whoops');
+			  });
 			})
 			.catch(function(err) {
 				console.error(err);
-				res.status(400).send('whoops');
+				res.status(400).send(err.errors[0].code.toString());
 			});
 	});
 
