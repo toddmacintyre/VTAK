@@ -34,8 +34,8 @@
       <div>
         <img ng-src="{{ userData.profile_image_url }}" alt="Macaque in the trees" style='width:40%;' border="2" alt="Null">
       </div>
-      <div>Name: {{ userData.name }}</div>
-      <div>Handle: @{{ userData.screen_name || "none provided" }}</div>
+      <div>Name: {{ userData.name || "none provided"}}</div>
+      <div>Handle: @{{ userData.screen_name }}</div>
       <div>Location: {{ userData.location || "none provided" }}</div>
       <div>Description: {{ userData.description || "none provided" }}</div>
     </div>
