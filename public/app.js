@@ -49,7 +49,7 @@ angular.module('sentiment.ly',[])
         url: '/api/archives',
       })
       .then (function(data) {
-        console.log('in app.js, getArchives after GET req to /api/archives. data received = ', data);
+        // console.log('in app.js, getArchives after GET req to /api/archives. data received = ###%#%#%#%#%#%# ', data);
         lastFiveSearches = [];
         for (var i=0; i<5; i++) {
           lastFiveSearches.push(data[i]);  //Doublecheck data structure
@@ -82,9 +82,12 @@ angular.module('sentiment.ly',[])
       data: {handle: $scope.searchRequestInput}
     })
     .then (function(results) {
-      console.log('in app.js, searchRequest, line 76. results.data = ', results.data);
+      //Results.data has all the information about user in one object, including watson results as another
+      //object within this object => results.data.watsonResponseObject, results.data.name, results.data.profile_image_url
+      // can be used to access properties/info of that user.
+      console.log('in app.js, searchRequest, line 76. results.data = %$%$%$%$%$%$%$', results.data);
       $scope.showResults = false;
-      tone.grabValues(results.data);  // Doublecheck data structure
+      tone.grabValues(results.data.watsonResponseObject);  // Doublecheck data structure
       $scope.averageValues = tone.averageValues;
       $scope.spinner = false;
       $scope.showResults = true;
