@@ -17,33 +17,18 @@ module.exports = function(app, express) {
 		
 		// Final object sent to front end that includes watson response object and user details
 		var frontEndResponse = {
-			name:'',
-			screen_name:'',
-    		profile_image_url:'',
-    		location:'',
-    		description:'',
-    		followers_count:0,
-    		friends_count:0,
-    		watsonResponseObject:null
 		};  
 		// Final object sent to front end that includes watson response object and user details
 
 		console.log(req.body, "I'M HERERERE")
 		promiseTwitter(twitterOptions, req.body.handle)
 			.then(function(result) {
-				frontEndResponse.name = result.name,
-				frontEndResponse.screen_name = result.screen_name,
-	    		frontEndResponse.profile_image_url = result.profile_image_url,
-	    		frontEndResponse.location = result.location,
-	    		frontEndResponse.description = result.description,
-	    		frontEndResponse.followers_count = result.followers_count,
-	    		frontEndResponse.friends_count = result.friends_count,
-				//  invoke watson API call here
+				frontEndResponse = result;
 				promiseWatson(result.finalString)
 					.then(function(result) {
 						// invoke dbController here, sending handle & watson results
 						Tweet.saveToDB(req.body.handle, result);
-						frontEndResponse.watsonResponseObject = result;
+						frontEndResponse['watsonResponseObject'] = result;
 						// console.log('\n\nin routes.js. promiseWatson result obj = final Object*&*&*&*&*&*&*&*&', frontEndResponse, '\n\n'); // see format below
 						res.send(frontEndResponse);
 					})
