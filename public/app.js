@@ -50,6 +50,9 @@ angular.module('sentiment.ly',[])
       })
       .then (function(data) {
         // console.log('in app.js, getArchives after GET req to /api/archives. data received = ###%#%#%#%#%#%# ', data);
+        var arrLength = data.data.length;
+        console.log('in app.js, getArchives line 52, after GET req to /api/archives. data received = ', data.data);
+        console.log('in app.js, getArchives line 52, after GET req to /api/archives. array length = ', arrLength);
         lastFiveSearches = [];
         // for (var i=arrLength-1; i<arrLength-5; i--) {
           for (var i=arrLength-1; i>arrLength-6; i--) {
@@ -204,7 +207,9 @@ angular.module('sentiment.ly',[])
       $scope.showResults = true;
       console.log('about to call getArchives');
       $scope.showArchives = false;
-      $scope.archivesData = archives.lastFiveSearches;
+
+      $scope.archivesData = archives.getArchives(); // I've tried several ways to get this scope data updated; with getArchives().then, error says getArchives() undefined, even though the data is in factory
+      console.log('in app.js, searchRequest, line 100. $scope.archivesData = ', $scope.archivesData);
       $scope.showArchives = true;
       $scope.userData = results.data;
 
