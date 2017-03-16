@@ -1,10 +1,10 @@
 var Q = require('q');
-var savedSearch = require('../DB/models/tweetModel.js');
+var TweetModel = require('../DB/models/tweetModel.js');
 
 // Promisify mongoose methods with `q` promise library
-var findAllSearches = Q.nbind(savedSearch.find, savedSearch);
-var findOne = Q.nbind(savedSearch.findOne, savedSearch);
-var saveASearch = Q.nbind(savedSearch.create, savedSearch);
+var findAllSearches = Q.nbind(TweetModel.find, TweetModel);
+var findOne = Q.nbind(TweetModel.findOne, TweetModel);
+var saveASearch = Q.nbind(TweetModel.create, TweetModel);
 
 module.exports = {
   saveToDB: function(handle, watsonResults) {
