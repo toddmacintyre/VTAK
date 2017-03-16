@@ -46,7 +46,7 @@ module.exports = {
                 // throw new Error(error);
             } else if (body.errors || body.length === 0) {
                 // console.log("ERROR CATCHER", body);
-                if (body.length > 0) {
+                if (body.errors) {
                     callback(body);
                 } else callback({"errors":[{"code": 999}]});
             } else {
