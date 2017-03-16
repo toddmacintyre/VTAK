@@ -130,7 +130,7 @@ angular.module('sentiment.ly',[])
         .attr("height", yScale.rangeBand())
         .attr("class", "d3Bar") // reference the bars in css using the .d3Bar
         .attr("fill", function(d, i) { return colors(d[xColumn]); });
-        
+
       bars
         .attr("x", 0)
         .attr("y", function (d) { return yScale(d[yColumn]); })
@@ -204,6 +204,9 @@ angular.module('sentiment.ly',[])
       $scope.showResults = true;
       console.log('about to call getArchives');
       $scope.showArchives = false;
+      $scope.archivesData = archives.lastFiveSearches;
+      $scope.showArchives = true;
+      $scope.userData = results.data;
 
       $scope.archivesData = archives.getArchives(); // I've tried several ways to get this scope data updated; with getArchives().then, error says getArchives() undefined, even though the data is in factory
       console.log('in app.js, searchRequest, line 100. $scope.archivesData = ', $scope.archivesData);

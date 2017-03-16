@@ -30,6 +30,15 @@
     </div>
       <hr style="width: 20%">
     <div ng-if="showResults" style="text-align: center">
+    <div class = "userData" style="text-align: center">
+      <div>
+        <img ng-src="{{ userData.profile_image_url }}" alt="Macaque in the trees" style='width:40%;' border="2" alt="Null">
+      </div>
+      <div>Name: {{ userData.name }}</div>
+      <div>Handle: @{{ userData.screen_name }}</div>
+      <div>Location: {{ userData.location }}</div>
+      <div>Description: {{ userData.description }}</div>
+    </div>
       <!-- to see result of page when no results, remove ng-if above then copy back from here: ng-if="showResults" -->
       <h2>
         Tweet Analysis
