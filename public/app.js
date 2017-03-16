@@ -100,6 +100,7 @@ angular.module('sentiment.ly',[])
 
     var xScale = d3.scale.linear().range([0, innerWidth]);
     var yScale = d3.scale.ordinal().rangeBands([0, innerHeight], barPadding);
+    var colors = d3.scale.category20();
 
     var xAxis = d3.svg.axis().scale(xScale).orient("bottom")
       .ticks(5)
@@ -110,21 +111,31 @@ angular.module('sentiment.ly',[])
 
     var render = function(data) {
 
-      xScale.domain([0, d3.max(data, function (d) { return d[xColumn]; })]);
+      xScale.domain([0, d3.max(data, function (d) { return d[xColumn];})]);
       yScale.domain(data.map(function (d) { return d[yColumn]; }));
+      colors.domain([0, d3.max(data, function (d) { return d[xColumn];})]);
 
       xAxisG.call(xAxis);
       yAxisG.call(yAxis);
 
       var bars = g.selectAll("rect").data(data);
+
       bars.enter().append("rect")
+        // .transition()
+        // .duration(500)
+        // .ease()
         .attr("height", yScale.rangeBand())
-        .attr("class", "d3Bar"); // reference the bars in css using the .d3Bar
+        .attr("class", "d3Bar") // reference the bars in css using the .d3Bar
+        .attr("fill", function(d, i) { return colors(d[xColumn]); });
+        
       bars
         .attr("x", 0)
         .attr("y", function (d) { return yScale(d[yColumn]); })
         .attr("width", function (d) { return xScale(d[xColumn]); });
       bars.exit().remove();
+
+      // bars
+
     }
 
     // console.log(dataToRender);
