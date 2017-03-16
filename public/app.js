@@ -1,5 +1,3 @@
-// Need to agree upon module and scope variable names
-
 angular.module('sentiment.ly',[])
 
 .factory('tone', function() {
@@ -120,8 +118,8 @@ angular.module('sentiment.ly',[])
       $scope.spinner = false;
       $scope.showResults = true;
     });
-   $scope.archivesData = archives.getArchives(function(lastFiveSearches) {
+    $scope.archivesData = archives.getArchives(function(lastFiveSearches) {
     return lastFiveSearches;
-  });
+    });
    }
 }); // closes sentimentController
