@@ -197,8 +197,13 @@ angular.module('sentiment.ly',[])
       $scope.archivesData = archives.getArchives(); // I've tried several ways to get this scope data updated; with getArchives().then, error says getArchives() undefined, even though the data is in factory
       console.log('in app.js, searchRequest, line 100. $scope.archivesData = ', $scope.archivesData);
       $scope.showArchives = true;
-
-      render.renderData($scope.averageValues);
+    })
+    .catch(function(error) {
+      $scope.spinner = false;
+      console.log(error);
+      if(error.data === '34') {
+        alert('There is no Twitter user with that handle.  Please try again.');
+      }
     });
   };
 

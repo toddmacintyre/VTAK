@@ -44,9 +44,10 @@ module.exports = {
                 console.log(error, '\n\nerror in twitter API get request');
                 callback(error);
                 // throw new Error(error);
+            } else if (body.errors) {
+                console.log('IN TWITTER API CONTROLLER', body);
+                callback(body);
             } else {
-            	// console.log(body, "herioioioioioio")
-                // var responseObject = JSON.parse(body);
                 var responseObject = body;
                 var finalString = tweetParser(responseObject)
                 twitterAPIResponseObject.finalString = finalString;
@@ -72,7 +73,7 @@ module.exports = {
 
                 callback(error, twitterAPIResponseObject);
             }
-        })
+        });
     }
 };
 

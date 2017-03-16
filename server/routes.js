@@ -54,7 +54,7 @@ module.exports = function(app, express) {
 			})
 			.catch(function(err) {
 				console.error(err);
-				res.status(400).send('whoops');
+				res.status(400).send(err.errors[0].code.toString());
 			});
 	});
 
