@@ -43,7 +43,7 @@ angular.module('sentiment.ly',[])
     var lastFiveSearches = [];
     var archivedSearches = []
 
-    var getArchives = function() {
+    var getArchives = function(callback) {
       $http({
         method: 'GET',
         url: '/api/archives',
@@ -59,6 +59,7 @@ angular.module('sentiment.ly',[])
         }
         console.log('in app.js, getArchives line 57, after lastFiveSearches push. lastFiveSearches = ', lastFiveSearches);
         // return lastFiveSearches;
+        callback(lastFiveSearches);
       });
     };
 
@@ -96,14 +97,12 @@ angular.module('sentiment.ly',[])
       console.log('about to call getArchives');
       $scope.showArchives = false;
 
-      $scope.archivesData = archives.getArchives(); // I've tried several ways to get this scope data updated; with getArchives().then, error says getArchives() undefined, even though the data is in factory
-      console.log('in app.js, searchRequest, line 100. $scope.archivesData = ', $scope.archivesData);
-      $scope.showArchives = true;
+      $scope.archivesData = archives.getArchives(function(lastFiveSearches) {
+        return lastFiveSearches;
+      });
 
-      // archives.getArchives();
-      // $scope.archivesData = archives.lastFiveSearches;
-      // console.log('l 98: archives.lastFiveSearches = ', archives.lastFiveSearches);
-      // $scope.showArchives = true;
+      console.log('in app.js, searchRequest, line 104. $scope.archivesData = ', $scope.archivesData);
+      $scope.showArchives = true;
       })
   };
 
@@ -121,11 +120,8 @@ angular.module('sentiment.ly',[])
       $scope.spinner = false;
       $scope.showResults = true;
     });
-  //
-  archives.getArchives(); // see note in line 96 about getting this value
-  $scope.archivesData = archives.lastFiveSearches;
-  $scope.showArchives = true;
+   $scope.archivesData = archives.getArchives(function(lastFiveSearches) {
+    return lastFiveSearches;
+  });
    }
-   $scope.archivesData = archives.lastFiveSearches;
-   console.log('in app.js, l 130. $scope.archivesData = ', $scope.archivesData);
 }); // closes sentimentController
