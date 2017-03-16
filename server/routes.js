@@ -17,7 +17,7 @@ module.exports = function(app, express) {
 
 		// Final object sent to front end that includes watson response object and user details
 		var frontEndResponse = {
-		};  
+		};
 		// Final object sent to front end that includes watson response object and user details
 
 		console.log(req.body, "I'M HERERERE")
@@ -61,16 +61,16 @@ module.exports = function(app, express) {
 
   // what we had: Tweet.find({}).exec(function(err, archive){ // we want this to call the dbController, which connects to model, not model directly (similar to Shortly-Angular); line 7 updated
 	app.get('/api/archives', function(req,res) {
-		Tweet.getArchives(req, res) // bug here, it's returning no result: TypeError: Cannot read property 'then' of undefined; but the original (line 55) calling the model was working for Andrew...
-    //   .then(function(archivesResults) {
-		// 	console.log('in routes.js, app.get(api/archives), line 59. getArchives data returned from db = ', archivesResults);
-		// 	if (archivesResults === null) {
-		// 		console.log('in routes.js, app.get(/api/archives), line 61. archivesResults returned null');
-		// 		res.status(400).send('whoops');
-		// 		} else {
-		// 		res.send(archivesResults);
-		// 		}
-	  // });
+		Tweet.getArchives()
+      .then(function(archivesResults) {
+			console.log('in routes.js, app.get(api/archives/:timestamp), line 46. findOne data returned from db = ', findOneResult);
+			if (archivesResults === null) {
+				console.log('in routes.js, app.get(/api/archives), line 48. archivesResults returned null');
+				res.status(400).send('whoops');
+				} else {
+				res.send(archivesResults);
+				}
+	  });
   });
 };
 
