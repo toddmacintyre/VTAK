@@ -190,6 +190,8 @@ angular.module('sentiment.ly',[])
       $scope.showArchives = false;
       $scope.archivesData = archives.lastFiveSearches;
       $scope.showArchives = true;
+      $scope.userData = results.data;
+
       render.renderData($scope.averageValues);
     })
     .catch(function(error) {
