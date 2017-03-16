@@ -30,6 +30,16 @@ module.exports = {
         optionsTwitter.options.qs['screen_name'] = handle;
 
         request(optionsTwitter.options, function(error, response, body) {
+        	var twitterAPIResponseObject = {
+        		finalString:'',
+        		profile_image_url:'',
+        		name:'',
+        		screen_name:'',
+        		location:'',
+        		description:'',
+        		followers_count:0,
+        		friends_count:0
+        	};
             if (error) {
                 console.log(error, '\n\nerror in twitter API get request');
                 callback(error);
@@ -39,8 +49,28 @@ module.exports = {
                 // var responseObject = JSON.parse(body);
                 var responseObject = body;
                 var finalString = tweetParser(responseObject)
-                console.log("\n\nin twitterApiController, FINAL STRINGINININIGIGIGI is: ", finalString, '\n\n');
-                callback(error, finalString);
+                twitterAPIResponseObject.finalString = finalString;
+                twitterAPIResponseObject.profile_image_url= body[0].user.profile_image_url;
+                twitterAPIResponseObject.name=body[0].user.name;
+                twitterAPIResponseObject.screen_name=body[0].user.screen_name;
+                twitterAPIResponseObject.location=body[0].user.location;
+                twitterAPIResponseObject.description=body[0].user.description;
+                twitterAPIResponseObject.followers_count=body[0].user.followers_count;
+                twitterAPIResponseObject.friends_count=body[0].user.friends_count;
+                console.log("\n\nin twitterApiController, FINAL STRINGINININIGIGIGI is: ", finalString);
+
+                // console.logs for debugging
+
+                // console.log(twitterAPIResponseObject.finalString,"bodyo________*******&*&*&*")
+                // console.log(twitterAPIResponseObject.name,"bodyo________*******&*&*&*")
+                // console.log(twitterAPIResponseObject.profile_image_url,"bodyo________*******&*&*&*")
+                // console.log(twitterAPIResponseObject.screen_name,"bodyo________*******&*&*&*")
+                // console.log(twitterAPIResponseObject.location,"bodyo________*******&*&*&*")
+                // console.log(twitterAPIResponseObject.description,"bodyo________*******&*&*&*")
+                // console.log(twitterAPIResponseObject.followers_count,"bodyo________*******&*&*&*")
+                // console.log(twitterAPIResponseObject.friends_count,"bodyo________*******&*&*&*")
+
+                callback(error, twitterAPIResponseObject);
             }
         })
     }
