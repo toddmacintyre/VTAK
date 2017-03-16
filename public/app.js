@@ -1,5 +1,3 @@
-// Need to agree upon module and scope variable names
-
 angular.module('sentiment.ly',[])
 
 .factory('tone', function() {
@@ -43,7 +41,7 @@ angular.module('sentiment.ly',[])
     var lastFiveSearches = [];
     var archivedSearches = []
 
-    var getArchives = function() {
+    var getArchives = function(callback) {
       $http({
         method: 'GET',
         url: '/api/archives',
@@ -60,6 +58,7 @@ angular.module('sentiment.ly',[])
         }
         console.log('in app.js, getArchives line 57, after lastFiveSearches push. lastFiveSearches = ', lastFiveSearches);
         // return lastFiveSearches;
+        callback(lastFiveSearches);
       });
     };
 
@@ -208,24 +207,13 @@ angular.module('sentiment.ly',[])
       console.log('about to call getArchives');
       $scope.showArchives = false;
 
-      $scope.archivesData = archives.getArchives(); // I've tried several ways to get this scope data updated; with getArchives().then, error says getArchives() undefined, even though the data is in factory
-      console.log('in app.js, searchRequest, line 100. $scope.archivesData = ', $scope.archivesData);
-      $scope.showArchives = true;
-      $scope.userData = results.data;
+      $scope.archivesData = archives.getArchives(function(lastFiveSearches) {
+        return lastFiveSearches;
+      });
 
-      $scope.archivesData = archives.getArchives(); // I've tried several ways to get this scope data updated; with getArchives().then, error says getArchives() undefined, even though the data is in factory
-      console.log('in app.js, searchRequest, line 100. $scope.archivesData = ', $scope.archivesData);
+      console.log('in app.js, searchRequest, line 104. $scope.archivesData = ', $scope.archivesData);
       $scope.showArchives = true;
-    })
-    .catch(function(error) {
-      $scope.spinner = false;
-      console.log(error);
-      if(error.data === '34') {
-        alert('There is no Twitter user with that handle.  Please try again.');
-      } else if (error.data === '999') {
-        alert('That user has no tweets.  Please try again.');
-      }
-    });
+      })
   };
 
   $scope.getSaved = function(archive) {
