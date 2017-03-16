@@ -1,5 +1,3 @@
-// Need to agree upon module and scope variable names
-
 angular.module('sentiment.ly',[])
 
 .factory('tone', function() {
@@ -39,17 +37,23 @@ angular.module('sentiment.ly',[])
     var lastFiveSearches = [];
     var archivedSearches = []
 
-    var getArchives = function() {
+    var getArchives = function(callback) {
       $http({
         method: 'GET',
         url: '/api/archives',
       })
       .then (function(data) {
-        // console.log('in app.js, getArchives after GET req to /api/archives. data received = ###%#%#%#%#%#%# ', data);
+        var arrLength = data.data.length;
+        console.log('in app.js, getArchives line 52, after GET req to /api/archives. data received = ', data.data);
+        console.log('in app.js, getArchives line 52, after GET req to /api/archives. array length = ', arrLength);
         lastFiveSearches = [];
-        for (var i=0; i<5; i++) {
-          lastFiveSearches.push(data[i]);  //Doublecheck data structure
+        // for (var i=arrLength-1; i<arrLength-5; i--) {
+          for (var i=arrLength-1; i>arrLength-6; i--) {
+          lastFiveSearches.push(data.data[i]);  //Doublecheck data structure. Good idea! It needed .data.
         }
+        console.log('in app.js, getArchives line 57, after lastFiveSearches push. lastFiveSearches = ', lastFiveSearches);
+        // return lastFiveSearches;
+        callback(lastFiveSearches);
       });
     };
 
@@ -123,7 +127,7 @@ angular.module('sentiment.ly',[])
         .attr("height", yScale.rangeBand())
         .attr("class", "d3Bar") // reference the bars in css using the .d3Bar
         .attr("fill", function(d, i) { return colors(d[xColumn]); });
-        
+
       bars
         .attr("x", 0)
         .attr("y", function (d) { return yScale(d[yColumn]); })
@@ -197,9 +201,14 @@ angular.module('sentiment.ly',[])
       $scope.averageValues = tone.averageValues;
       $scope.spinner = false;
       $scope.showResults = true;
-      archives.getArchives();
+      console.log('about to call getArchives');
       $scope.showArchives = false;
-      $scope.archivesData = archives.lastFiveSearches;
+
+      $scope.archivesData = archives.getArchives(function(lastFiveSearches) {
+        return lastFiveSearches;
+      });
+
+      console.log('in app.js, searchRequest, line 104. $scope.archivesData = ', $scope.archivesData);
       $scope.showArchives = true;
       $scope.userData = results.data;
 
@@ -229,15 +238,9 @@ angular.module('sentiment.ly',[])
       $scope.averageValues = tone.averageValues;
       $scope.spinner = false;
       $scope.showResults = true;
-  });
-
-  archives.getArchives();
-  $scope.archivesData = archives.lastFiveSearches;
-  $scope.showArchives = true;
-
-  };
-}]);
-
-
-// create render factory
-// call render from within getSaved and searchRequest
+    });
+    $scope.archivesData = archives.getArchives(function(lastFiveSearches) {
+    return lastFiveSearches;
+    });
+   }
+}); // closes sentimentController

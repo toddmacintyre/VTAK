@@ -9,6 +9,8 @@ var Tweet = require('./controllers/dbController.js');
 var promiseTwitter = Promise.promisify(twitterController.getRequestTwitter);
 var promiseWatson = Promise.promisify(watson.getTone);
 
+// var promiseGetArchives = Promise.promisify(Tweet.getArchives);
+
 // var router = require('express').Router();
 
 module.exports = function(app, express) {
@@ -47,7 +49,7 @@ module.exports = function(app, express) {
 	app.get('/api/timestamp/:timestamp', function(req, res) {
 		let timestamp = req.params.timestamp;
 		console.log('in routes.js, app.get(api/archives/:timestamp), line 42. timestamp queried = ', timestamp);
-		Tweet.findResultsByTimestamp(timestamp)
+		Tweet.findResultsByTimestamp(req, res, timestamp)
 		  .then(function(findOneResult) {
       console.log('in routes.js, app.get(api/archives/:timestamp), line 46. findOne data returned from db = ', findOneResult);
 			if (findOneResult === null) {
@@ -59,20 +61,23 @@ module.exports = function(app, express) {
 		 });
 	});
 
-  // what we had: Tweet.find({}).exec(function(err, archive){ // we want this to call the dbController, which connects to model, not model directly (similar to Shortly-Angular); line 7 updated
 	app.get('/api/archives', function(req,res) {
-		Tweet.getArchives() // bug here, it's returning no result: TypeError: Cannot read property 'then' of undefined
-      .then(function(archivesResults) {
-			console.log('in routes.js, app.get(api/archives/:timestamp), line 46. findOne data returned from db = ', findOneResult);
-			if (archivesResults === null) {
-				console.log('in routes.js, app.get(/api/archives), line 48. archivesResults returned null');
-				res.status(400).send('whoops');
-				} else {
-				res.send(archivesResults);
-				}
-	  });
+		Tweet.getArchives();
+
   });
 };
+
+// tried approach of promisifying this call to dbController but it didn't work; reverting to res.send from dbController for now
+// promiseGetArchives()
+// 	.then(function(archivesResults) {
+// 	console.log('in routes.js, app.get(api/archives), line 58. getArchives data returned from db = \n', archivesResults);
+// 	if (archivesResults === null) {
+// 		console.log('in routes.js, app.get(/api/archives), line 61. archivesResults returned null');
+// 		res.status(400).send('whoops');
+// 		} else {
+// 		res.send(archivesResults);
+// 		}
+// });
 
 // promiseWatson result obj =  { Anger: 0.10487240677966098,
 //   Disgust: 0.07544283050847456,
