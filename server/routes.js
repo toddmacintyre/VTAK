@@ -61,8 +61,8 @@ module.exports = function(app, express) {
 		 });
 	});
 
-	app.get('/api/archives', function(req,res) {
-		Tweet.getArchives();
+	app.get('/api/archives', function(req, res) {
+		Tweet.getArchives(req, res);
 
   });
 };

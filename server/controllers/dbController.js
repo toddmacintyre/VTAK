@@ -17,32 +17,32 @@ module.exports = {
         console.log('\n\nin dbController, saveToDB, line 17. handle & watsonResults saved to db!!!!!!!');
       })
       .fail(function (error) {
-        console.log('\n\nin dbController, saveToDB, line 17. failed! error = ', error);
+        console.log('\n\nin dbController, saveToDB, line 20. failed! error = ', error);
         next(error);
        })  // Based on Q documentation, I think safest to use .fail here: "If you are writing JavaScript for modern engines only or using CoffeeScript, you may use catch instead of fail."
   },
 
   findResultsByTimestamp: function(req, res, timestamp) {
-    console.log('in dbController, findResultsByTimestamp, line 19. about to call findOne\n\n');
+    console.log('in dbController, findResultsByTimestamp, line 26. about to call findOne\n\n');
     findOne({timestamp: timestamp}, 'handle watsonResults timestamp',
     function (err, result) {
-       if (err) {console.error(err)}
+       if (err) {console.error(err); }
        console.log('database findOne query returned: ', result)
     }
   )
   .then(function(result) {
     res.status(200).send(result);
-  })
+  });
   },
   getArchives: function(req, res) {
-    console.log('\nin dbController, getArchives, line 25. about to call findAllSearches\n\n');
+    console.log('\nin dbController, getArchives, line 38. about to call findAllSearches\n\n');
     findAllSearches( { } )
       .then(function(returnedObj) {
-        console.log('\n\nin dbController, getArchives, line 38. database findAllSearches query returned this: ', returnedObj)
+        console.log('\n\nin dbController, getArchives, line 41. database findAllSearches query returned this: ', returnedObj);
         res.send(returnedObj);
       })
       .fail(function (error) {
-        console.log('\nin dbController, getArchives, line 42. error in findAllSearches = ', error); // will err until connected with updated watson results object (we changed the schema back to only hold results, not count)
+        console.log('\nin dbController, getArchives, line 45. error in findAllSearches = ', error); // will err until connected with updated watson results object (we changed the schema back to only hold results, not count)
         res.status(400).send('whoops');
       });
   }
