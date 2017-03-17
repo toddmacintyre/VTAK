@@ -13,7 +13,7 @@ angular.module('sentiment.ly-render',[])
       var outerWidth = 800;
       var outerHeight = 400;
       var margin = { left: 130, top: 0, right: 0, bottom: 30 };
-      var barPadding = 0.2;
+      var barPadding = 0.3;
 
       var xColumn = "value";
       var yColumn = "name";
@@ -73,7 +73,15 @@ angular.module('sentiment.ly-render',[])
           .attr("height", yScale.rangeBand())
           // .attr("class", "d3Bar") // reference the bars in css using the .d3Bar
           .attr("fill", function(d, i) { return colors(d[xColumn]); })
-          .attr("class", function(d, i) { return 'bar_' + d[yColumn] + ' ' + i;} )
+          .attr("class", function(d, i) {
+            if (i <= 4) {
+              return 'bar_' + d[yColumn] + ' emotional';
+            } else if (i <= 7) {
+              return 'bar_' + d[yColumn] + ' language';
+            } else {
+              return 'bar_' + d[yColumn] + '  social';
+            }
+          })
           .attr("data-score", function(d) { return d[xColumn];} );
           
         bars
