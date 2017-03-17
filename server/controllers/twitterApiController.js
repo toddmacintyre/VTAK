@@ -81,11 +81,11 @@ module.exports = {
 
 var tweetParser = function(twitterResponseArray) {
     var stringForWatson = '';
-    // console.log(twitterResponseArray, "RESP ARRAYAYAYAY")
+    console.log("\nRESP ARRAYAYAYAY... in twitterApiController, tweetParser func, line 84. twitterResponseArray = ", twitterResponseArray)
     twitterResponseArray.forEach(function(tweetObject) {
         stringForWatson += tweetObject.text + ". ";
     })
     // getting error when using Postman for api/handle: "TypeError: twitterResponseArray.forEach is not a function"
-    console.log('\n\nin twitterApiController, tweetParser func, line 55. after forEach, stringForWatson = ', stringForWatson);
+    console.log('\n\nin twitterApiController, tweetParser func, line 89. after forEach, stringForWatson = ', stringForWatson);
     return stringForWatson;
 };

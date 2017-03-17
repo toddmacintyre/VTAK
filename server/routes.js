@@ -22,14 +22,21 @@ module.exports = function(app, express) {
 		};
 		// Final object sent to front end that includes watson response object and user details
 
-		console.log(req.body, "I'M HERERERE")
+		console.log("I'M HERERERE...in routes.js, app.post(/api/handle). before promiseTwitter. req.body = ", req.body);
 		promiseTwitter(twitterOptions, req.body.handle)
 			.then(function(result) {
+				console.log('in routes.js, app.post(/api/handle), promiseTwitter, l 28. result about to be sent to watson = ', result);
 				frontEndResponse = result;
 				promiseWatson(result.finalString)
 					.then(function(result) {
-						// invoke dbController here, sending handle & watson results
+						console.log('in routes.js, app.post(/api/handle), promiseWatson, l 31. result about to be sent to db = ', result);
 						Tweet.saveToDB(req.body.handle, result);
+						// testing with this obj below confirmed that we are writing to db. But input for database needs to be updated to just include watson values, not score/count object currently ({ Anger: { score: 0, count: 0 })
+						// Tweet.saveToDB(req.body.handle,
+				// 			{ Anger: 0.09,
+	      //  Disgust: 0.16
+	      //  }
+						)
 						frontEndResponse['watsonResponseObject'] = result;
 						// console.log('\n\nin routes.js. promiseWatson result obj = final Object*&*&*&*&*&*&*&*&', frontEndResponse, '\n\n'); // see format below
 						res.send(frontEndResponse);

@@ -8,7 +8,7 @@ var saveASearch = Q.nbind(TweetModel.create, TweetModel);
 
 module.exports = {
   saveToDB: function(handle, watsonResults) {
-   console.log('in dbController, saveToDB, line 11. about to call saveASearch. handle...watsonResults = \n\n', handle, '...', watsonResults);
+   console.log('in dbController, saveToDB, line 11. about to call saveASearch. handle...watsonResults = \n', handle, '...', watsonResults);
     saveASearch({
       handle: handle,
       watsonResults: watsonResults  // watsonResults value is object returned from promiseWatson in routes.js line 23
@@ -38,7 +38,7 @@ module.exports = {
     console.log('\nin dbController, getArchives, line 38. about to call findAllSearches\n\n');
     findAllSearches( { } )
       .then(function(returnedObj) {
-        console.log('\n\nin dbController, getArchives, line 41. database findAllSearches query returned this: ', returnedObj);
+        console.log('\n\nin dbController, getArchives, line 41. database findAllSearches query returned this: \n', returnedObj);
         res.send(returnedObj);
       })
       .fail(function (error) {
