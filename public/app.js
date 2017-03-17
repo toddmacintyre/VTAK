@@ -180,6 +180,12 @@ angular.module('sentiment.ly',[])
   $scope.archivesData = [];
   $scope.archive = {};
 
+  $scope.errorCodes = {
+    "34": 'There is no Twitter user with that handle.  Please try again.',
+    "888": "That user's tweets are protected.  Please try again.",
+    "999": 'That user has no tweets.  Please try again.'
+  };
+
   $scope.searchRequest = function() {
     $scope.spinner = true;
     $http({
@@ -218,11 +224,7 @@ angular.module('sentiment.ly',[])
     .catch(function(error) {
       $scope.spinner = false;
       console.log(error);
-      if(error.data === '34') {
-        alert('There is no Twitter user with that handle.  Please try again.');
-      } else if (error.data === '999') {
-        alert('That user has no tweets.  Please try again.');
-      }
+      alert($scope.errorCodes[error.data]);
     });
   };
 
