@@ -17,7 +17,7 @@
   </head>
   <body ng-controller="sentimentController" class="centered">
     <div style="text-align: center">
-    <h1 style="color: green">Sentiment.ly - Twitter users analyzed</h1>
+      <h1 style="color: green">Sentiment.ly - Twitter users analyzed</h1>
 
       <br>
       What Twitter handle do you want to analyze?<br><br>
@@ -29,53 +29,54 @@
         </div>
       </form>
     </div>
-      <hr style="width: 20%">
+    <hr style="width: 20%">
     <div ng-if="showResults" style="text-align: center">
-    <div class = "userData" style="text-align: center">
-      <div>
-        <img ng-src="{{ userData.profile_image_url }}" alt="Macaque in the trees" style='width:40%;' border="2" alt="Null">
+      <div class = "userData" style="text-align: center">
+        <div>
+          <img ng-src="{{ userData.profile_image_url }}" alt="Macaque in the trees" style='width:40%;' border="2" alt="Null">
+        </div>
+        <div>Name: {{ userData.name || "none provided"}}</div>
+        <div>Handle: @{{ userData.screen_name }}</div>
+        <div>Location: {{ userData.location || "none provided" }}</div>
+        <div>Description: {{ userData.description || "none provided" }}</div>
       </div>
-      <div>Name: {{ userData.name || "none provided"}}</div>
-      <div>Handle: @{{ userData.screen_name }}</div>
-      <div>Location: {{ userData.location || "none provided" }}</div>
-      <div>Description: {{ userData.description || "none provided" }}</div>
-    </div>
       <!-- to see result of page when no results, remove ng-if above then copy back from here: ng-if="showResults" -->
       <h2>
         Tweet Analysis
       </h2>
       <h3>
         Emotional tone
+      </h3>
 
-        <ul style="list-style: none">
-         <li> Joy - has shades of enjoyment, satisfaction and pleasure: {{ averageValues.Joy  }} </li>
-         <li> Fear - shows a response to impending danger: {{ averageValues.Fear  }} </li>
-         <li> Sadness - indicates a feeling of loss and disadvantage: {{ averageValues.Sadness  }} </li>
-         <li> Disgust - an emotional response of revulsion to something considered offensive or unpleasant: {{ averageValues.Disgust  }} </li>
-         <li> Anger - evoked due to injustice, conflict, humiliation, negligence or betrayal: {{ averageValues.Anger   }} </li>
+      <ul style="list-style: none">
+        <li> Joy - has shades of enjoyment, satisfaction and pleasure: {{ averageValues.Joy  }} </li>
+        <li> Fear - shows a response to impending danger: {{ averageValues.Fear  }} </li>
+        <li> Sadness - indicates a feeling of loss and disadvantage: {{ averageValues.Sadness  }} </li>
+        <li> Disgust - an emotional response of revulsion to something considered offensive or unpleasant: {{ averageValues.Disgust  }} </li>
+        <li> Anger - evoked due to injustice, conflict, humiliation, negligence or betrayal: {{ averageValues.Anger   }} </li>
         </ul>
 
         Language tone
 
         <ul style="list-style: none">
-         <li> Analytical - reasoning and analytical attitude about things: {{ averageValues.Analytical  }} </li>
-         <li> Confidence - degree of certainty: {{ averageValues.Confident  }} </li>
-         <li> Tentative - degree of inhibition: {{ averageValues.Tentative  }} </li>
+        <li> Analytical - reasoning and analytical attitude about things: {{ averageValues.Analytical  }} </li>
+        <li> Confidence - degree of certainty: {{ averageValues.Confident  }} </li>
+        <li> Tentative - degree of inhibition: {{ averageValues.Tentative  }} </li>
         </ul>
 
         Social tone
 
         <ul style="list-style: none">
-         <li> Openness - open to experience a variety of activities: {{ averageValues.Openness  }} </li>
-         <li> Conscientiousness - tendency to act in an organized or thoughtful way: {{ averageValues.Conscientiousness  }} </li>
-         <li> Extraversion - tendency to seek stimulation in the company of others: {{ averageValues.Extraversion  }} </li>
-         <li> Agreeableness - tendency to be compassionate and cooperative: {{ averageValues.Agreeableness  }} </li>
-         <li> Emotional Range - extent a person's emotion is sensitive to the environment: {{ averageValues['Emotional Range']   }} </li>
-        </ul>
-      </h3>
+        <li> Openness - open to experience a variety of activities: {{ averageValues.Openness  }} </li>
+        <li> Conscientiousness - tendency to act in an organized or thoughtful way: {{ averageValues.Conscientiousness  }} </li>
+        <li> Extraversion - tendency to seek stimulation in the company of others: {{ averageValues.Extraversion  }} </li>
+        <li> Agreeableness - tendency to be compassionate and cooperative: {{ averageValues.Agreeableness  }} </li>
+        <li> Emotional Range - extent a person's emotion is sensitive to the environment: {{ averageValues['Emotional Range']   }} </li>
+      </ul>
+      
     </div>
 
-    <div class="d3Display"></div>
+    <div id="d3Display"></div>
 
     <div ng-if="showResults" style="text-align: center">
       <!-- to see result of page when no results, remove ng-if above then copy back from here: ng-if="showArchives" -->
