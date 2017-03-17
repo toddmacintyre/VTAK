@@ -37,22 +37,21 @@ angular.module('sentiment.ly',[])
     var lastFiveSearches = [];
     var archivedSearches = []
 
-    var getArchives = function(callback) {
+    var getArchives = function() {
       $http({
         method: 'GET',
         url: '/api/archives',
       })
       .then (function(data) {
         var arrLength = data.data.length;
-        console.log('in app.js, getArchives line 52, after GET req to /api/archives. data received = ', data.data);
-        console.log('in app.js, getArchives line 52, after GET req to /api/archives. array length = ', arrLength);
+        console.log('in app.js, getArchives line 47, after GET req to /api/archives. data received = ', data.data);
+        console.log('in app.js, getArchives line 48, after GET req to /api/archives. array length = ', arrLength);
         lastFiveSearches = [];
           for (var i=arrLength-1; i>arrLength-6; i--) {
           lastFiveSearches.push(data.data[i]);  //Doublecheck data structure. Good idea! It needed .data.
         }
-        console.log('in app.js, getArchives line 57, after lastFiveSearches push. lastFiveSearches = ', lastFiveSearches);
+        console.log('in app.js, getArchives line 53, after lastFiveSearches push. lastFiveSearches = ', lastFiveSearches);
         // return lastFiveSearches;
-        callback(lastFiveSearches);
       });
     };
 
@@ -194,23 +193,27 @@ angular.module('sentiment.ly',[])
       //object within this object => results.data.watsonResponseObject, results.data.name, results.data.profile_image_url
       // can be used to access properties/info of that user.
 
-      console.log('in app.js, searchRequest, line 76. results.data = %$%$%$%$%$%$%$', results.data);
+      console.log('in app.js, searchRequest, line 197. results.data = %$%$%$%$%$%$%$', results.data);
       $scope.showResults = false;
       tone.grabValues(results.data.watsonResponseObject);  // Doublecheck data structure
       $scope.averageValues = tone.averageValues;
+      console.log('in app.js, searchRequest, line 200. $scope.averageValues = ', $scope.averageValues);
       $scope.spinner = false;
       $scope.showResults = true;
       console.log('about to call getArchives');
+      archives.getArchives();
+
       $scope.showArchives = false;
 
-      $scope.archivesData = archives.getArchives(function(lastFiveSearches) {
-        return lastFiveSearches;
-      });
+      $scope.archivesData = archives.lastFiveSearches;
+      // $scope.archivesData = archives.getArchives(function(lastFiveSearches) { // callback doesn't work; can't get lastFiveSearches value
+      //   return lastFiveSearches;
+      // });
 
-      console.log('in app.js, searchRequest, line 104. $scope.archivesData = ', $scope.archivesData);
+      console.log('in app.js, searchRequest, line 213. $scope.archivesData = ', $scope.archivesData);
       $scope.showArchives = true;
       $scope.userData = results.data;
-
+      console.log('in app.js, searchRequest, line 215. about to render. $scope.averageValues = ', $scope.averageValues);
       render.renderData($scope.averageValues);
     })
     .catch(function(error) {
@@ -238,8 +241,8 @@ angular.module('sentiment.ly',[])
       $scope.spinner = false;
       $scope.showResults = true;
     });
-    $scope.archivesData = archives.getArchives(function(lastFiveSearches) {
-    return lastFiveSearches;
-    });
+    archives.getArchives();
+    $scope.archivesData = archives.lastFiveSearches;
+    $scope.showArchives = true;
    }
 }]); // closes sentimentController

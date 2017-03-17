@@ -36,9 +36,8 @@ module.exports = function(app, express) {
 				// 			{ Anger: 0.09,
 	      //  Disgust: 0.16
 	      //  }
-						)
 						frontEndResponse['watsonResponseObject'] = result;
-						// console.log('\n\nin routes.js. promiseWatson result obj = final Object*&*&*&*&*&*&*&*&', frontEndResponse, '\n\n'); // see format below
+						console.log('\n\nin routes.js. l 40. promiseWatson result obj = final Object*&*&*&*&*&*&*&*&', frontEndResponse, '\n\n'); // see format below
 						res.send(frontEndResponse);
 					})
 					.catch(function(err) {
