@@ -1,6 +1,6 @@
 angular.module('sentiment.ly',['sentiment.ly-tone', 'sentiment.ly-render'])
 
-.controller('sentimentController', function ($scope,$http,tone,render) {
+.controller('sentimentController', ['$scope', '$http', 'tone', 'render', function ($scope,$http,tone,render) {
 
   $scope.averageValues = {};
   $scope.showResults = false;
@@ -93,7 +93,7 @@ $scope.getSaved = function(archive) {
 $scope.getArchives(); // see note in line 96 about getting this value
 $scope.showArchives = true;
 
-});
+}]);
 
 
 // create render factory
