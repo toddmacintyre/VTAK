@@ -21,7 +21,7 @@ angular.module('sentiment.ly-render',[])
       var innerWidth = outerWidth - margin.left - margin.right;
       var innerHeight = outerHeight - margin.top - margin.bottom;
 
-      var svg = d3.select(".d3Display").append("svg")
+      var svg = d3.select("#d3Display").append("svg")
         .attr("width", outerWidth)
         .attr("height", outerHeight);
       var g = svg.append("g")
@@ -41,7 +41,8 @@ angular.module('sentiment.ly-render',[])
       var xAxis = d3.svg.axis().scale(xScale).orient("bottom")
         .ticks(10)
         .tickFormat(d3.format("p"))
-        .outerTickSize(0);
+        .outerTickSize(0)
+        // .format('f2');
       var yAxis = d3.svg.axis().scale(yScale).orient("left")
         .outerTickSize(0);
 
