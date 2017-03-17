@@ -2,7 +2,7 @@ var mongoose = require('mongoose'); // do we need to require this again?
 var Promise = require('bluebird');
 var twitterOptions = require('./APIOptions/twitterOptions.js');
 var twitterController = require('./controllers/twitterApiController.js');
-var watson = require('./watson.js');
+var watson = require('./controllers/watson.js');
 var Tweet = require('./controllers/dbController.js');
 
 // Promisify API calls
