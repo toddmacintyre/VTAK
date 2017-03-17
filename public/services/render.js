@@ -22,6 +22,7 @@ angular.module('sentiment.ly-render',[])
       var innerHeight = outerHeight - margin.top - margin.bottom;
 
       var svg = d3.select("#d3Display").append("svg")
+        .attr("class", "d3SVG")
         .attr("width", outerWidth)
         .attr("height", outerHeight);
       var g = svg.append("g")
@@ -40,7 +41,15 @@ angular.module('sentiment.ly-render',[])
 
       var xAxis = d3.svg.axis().scale(xScale).orient("bottom")
         .ticks(10)
-        .tickFormat(d3.format("p"))
+        // .tickFormat(d3.format("p"))
+        .tickFormat(function(d) {
+          // console.log(d);
+          if (d !== 100) {
+            return (d * 100).toString().slice(0,2) + "%";
+          } else {
+            return ("100%");
+          }
+        })
         .outerTickSize(0)
         // .format('f2');
       var yAxis = d3.svg.axis().scale(yScale).orient("left")
