@@ -30,7 +30,8 @@ module.exports = {
         optionsTwitter.options.qs['screen_name'] = handle;
 
         request(optionsTwitter.options, function(error, response, body) {
-        	var twitterAPIResponseObject = {
+        	// console.log('******TWITTER-API*******', body);
+            var twitterAPIResponseObject = {
         		finalString:'',
         		profile_image_url:'',
         		name:'',
@@ -44,11 +45,15 @@ module.exports = {
                 console.log(error, 'error in twitter API get request');
                 callback(error);
                 // throw new Error(error);
-            } else if (body.errors || body.length === 0) {
+            } else if (body.errors || body.error || body.length === 0) {
                 // console.log("ERROR CATCHER", body);
                 if (body.errors) {
                     callback(body);
-                } else callback({"errors":[{"code": 999}]});
+                } else if (body.error) {
+                    callback({"errors":[{"code": 888}]});
+                } else {
+                    callback({"errors":[{"code": 999}]});
+                }
             } else {
                 var responseObject = body;
                 var finalString = tweetParser(responseObject)
