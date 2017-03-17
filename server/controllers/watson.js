@@ -20,7 +20,6 @@ exports.getTone = function (tweetString, callback) {
   function (err, tone) {
     // console.log(tone);
     if (err) {
-      // console.log(err);
       callback(err);
     } else {
       getAverage(tone);

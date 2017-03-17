@@ -1,6 +1,6 @@
-angular.module('sentiment.ly',['sentiment.ly-tone', 'sentiment.ly-archives', 'sentiment.ly-render'])
+angular.module('sentiment.ly',['sentiment.ly-tone', 'sentiment.ly-render'])
 
-.controller('sentimentController', ['$scope', '$http', 'tone', 'archives', 'render', function ($scope,$http,tone,archives,render) {
+.controller('sentimentController', function ($scope,$http,tone,render) {
 
   $scope.averageValues = {};
   $scope.showResults = false;
@@ -24,21 +24,17 @@ angular.module('sentiment.ly',['sentiment.ly-tone', 'sentiment.ly-archives', 'se
       data: {handle: $scope.searchRequestInput}
     })
     .then (function(results) {
-      //Results.data has all the information about user in one object, including watson results as another
-      //object within this object => results.data.watsonResponseObject, results.data.name, results.data.profile_image_url
-      // can be used to access properties/info of that user.
-      console.log('in app.js, searchRequest, line 76. results.data = %$%$%$%$%$%$%$', results.data);
       $scope.showResults = false;
       $scope.userData = results.data;
       tone.grabValues(results.data.watsonResults);  // Doublecheck data structure
       $scope.averageValues = tone.averageValues;
-      console.log('in app.js, searchRequest, line 200. $scope.averageValues = ', $scope.averageValues);
       $scope.spinner = false;
       $scope.showResults = true;
       console.log('about to call getArchives');
       $scope.showArchives = false
       $scope.getArchives();
       render.renderData($scope.averageValues);
+      $scope.searchRequestInput = '';
     })
     .catch(function(error) {
       $scope.spinner = false;
@@ -61,6 +57,10 @@ $scope.getArchives = function() {
       $scope.archivesData.push(data.data[i]);
     }
     console.log('ARCHIVES DATA =', $scope.archivesData)
+    $scope.archivesData.forEach(function(entry) {
+      var cleanTime = entry.timestamp.slice(11,16) + '  ' + entry.timestamp.slice(5,7) + '/' + entry.timestamp.slice(8,10) + '/' + entry.timestamp.slice(0,4);
+      entry.timestamp = cleanTime;
+    });
     $scope.showArchives = true;
   })
   .catch(function(error) {
@@ -93,7 +93,7 @@ $scope.getSaved = function(archive) {
 $scope.getArchives(); // see note in line 96 about getting this value
 $scope.showArchives = true;
 
-}]);
+});
 
 
 // create render factory

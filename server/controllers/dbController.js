@@ -9,23 +9,12 @@ var empty = Q.nbind(TweetModel.remove, TweetModel);
 
 module.exports = {
   saveToDB: function(resultsObject) {
-   // console.log('in dbController, saveToDB, line 11. about to call saveASearch. handle...watsonResults = \n', handle, '...', watsonResults);
    console.log('IN SAVE-TO-DB, ABOUT TO SAVE ', resultsObject);
    new TweetModel(resultsObject)
      .save(function (e) {
        console.log('Item saved in database');
      });
-    // saveASearch({
-    //   handle: handle,
-    //   watsonResults: watsonResults  // watsonResults value is object returned from promiseWatson in routes.js line 23
-    // })
-    //   .then(function() {
-    //     console.log('\n\nin dbController, saveToDB, line 17. handle & watsonResults saved to db!!!!!!!');
-    //   })
-    //   .fail(function (error) {
-    //     console.log('\n\nin dbController, saveToDB, line 20. failed! error = '/*, error*/);
-    //     next(error);
-    //    })  // Based on Q documentation, I think safest to use .fail here: "If you are writing JavaScript for modern engines only or using CoffeeScript, you may use catch instead of fail."
+    // Based on Q documentation, I think safest to use .fail here: "If you are writing JavaScript for modern engines only or using CoffeeScript, you may use catch instead of fail."
   },
 
   findResultsById: function(req, res, id) {

@@ -9,8 +9,6 @@ var Tweet = require('./controllers/dbController.js');
 var promiseTwitter = Promise.promisify(twitterController.getRequestTwitter);
 var promiseWatson = Promise.promisify(watson.getTone);
 
-// var promiseGetArchives = Promise.promisify(Tweet.getArchives);
-
 // var router = require('express').Router();
 
 module.exports = function(app, express) {
@@ -18,9 +16,7 @@ module.exports = function(app, express) {
 	app.post('/api/handle', function(req, res) {
 
 		// Final object sent to front end that includes watson response object and user details
-		var frontEndResponse = {
-		};
-		// Final object sent to front end that includes watson response object and user details
+		var frontEndResponse = {};
 
 		console.log("I'M HERERERE...in routes.js, app.post(/api/handle). before promiseTwitter. req.body = ", req.body);
 		promiseTwitter(twitterOptions, req.body.handle)
@@ -37,17 +33,10 @@ module.exports = function(app, express) {
 				promiseWatson(result.finalString)
 					.then(function(result) {
 						console.log('in routes.js, app.post(/api/handle), promiseWatson, l 31. result about to be sent to db = ', result);
-						// Tweet.saveToDB(req.body.handle, result);
-						// testing with this obj below confirmed that we are writing to db. But input for database needs to be updated to just include watson values, not score/count object currently ({ Anger: { score: 0, count: 0 })
-						// Tweet.saveToDB(req.body.handle,
-				// 			{ Anger: 0.09,
-	      //  Disgust: 0.16
-	      //  }
-	      		for (var key in result) {
+						for (var key in result) {
 	      			frontEndResponse.watsonResults[key] = result[key].score;
 	      		}
-						// frontEndResponse['watsonResponseObject'] = result;
-						console.log('\n\nin routes.js. l 40. promiseWatson result obj = final Object*&*&*&*&*&*&*&*&', frontEndResponse, '\n\n'); // see format below
+						console.log('\n\nin routes.js. l 40. promiseWatson result obj = final Object*&*&*&*&*&*&*&*&', frontEndResponse, '\n\n');
 						Tweet.saveToDB(frontEndResponse);
 						res.send(frontEndResponse);
 					})
@@ -62,20 +51,10 @@ module.exports = function(app, express) {
 			});
 	});
 
-	// what we had: Tweet.findOne({'timestamp': timestamp}, function(err, tweet) { // we want this to call the dbController, which connects to model, not model directly (similar to Shortly-Angular); also updated from callback to promise
 	app.post('/api/id/:id', function(req, res) {
 		let id = req.params.id;
 		console.log('in routes.js, app.get(api/archives/:id), line 42. id queried = ', id);
 		Tweet.findResultsById(req, res, id)
-		 //  .then(function(findOneResult) {
-   //    console.log('in routes.js, app.get(api/archives/:id), line 46. findOne data returned from db = ', findOneResult);
-			// if (findOneResult === null) {
-			// 	console.log('in routes.js, app.get(api/archives/:id), line 48. findOneResult returned null');
-			// 	res.status(400).send('whoops');
-			//   } else {
-			// 	res.send(findOneResult);
-			//   }
-		 // });
 	});
 
 	app.get('/api/archives', function(req, res) {
@@ -88,17 +67,7 @@ module.exports = function(app, express) {
   })
 };
 
-// tried approach of promisifying this call to dbController but it didn't work; reverting to res.send from dbController for now
-// promiseGetArchives()
-// 	.then(function(archivesResults) {
-// 	console.log('in routes.js, app.get(api/archives), line 58. getArchives data returned from db = \n', archivesResults);
-// 	if (archivesResults === null) {
-// 		console.log('in routes.js, app.get(/api/archives), line 61. archivesResults returned null');
-// 		res.status(400).send('whoops');
-// 		} else {
-// 		res.send(archivesResults);
-// 		}
-// });
+
 
 // promiseWatson result obj =  { Anger: 0.10487240677966098,
 //   Disgust: 0.07544283050847456,
