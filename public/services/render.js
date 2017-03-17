@@ -39,7 +39,7 @@ angular.module('sentiment.ly-render',[])
       var colors = d3.scale.category20();
 
       var xAxis = d3.svg.axis().scale(xScale).orient("bottom")
-        .ticks(5)
+        .ticks(10)
         .tickFormat(d3.format("p"))
         .outerTickSize(0);
       var yAxis = d3.svg.axis().scale(yScale).orient("left")
@@ -61,20 +61,18 @@ angular.module('sentiment.ly-render',[])
           // .duration(500)
           // .ease()
           .attr("height", yScale.rangeBand())
-          .attr("class", "d3Bar") // reference the bars in css using the .d3Bar
-          .attr("fill", function(d, i) { return colors(d[xColumn]); });
-
+          // .attr("class", "d3Bar") // reference the bars in css using the .d3Bar
+          .attr("fill", function(d, i) { return colors(d[xColumn]); })
+          .attr("class", function(d, i) { return 'bar_' + d[yColumn] + ' ' + i;} )
+          .attr("data-score", function(d) { return d[xColumn];} );
+          
         bars
           .attr("x", 0)
           .attr("y", function (d) { return yScale(d[yColumn]); })
           .attr("width", function (d) { return xScale(d[xColumn]); });
         bars.exit().remove();
-
-        // bars
-
       }
 
-      // console.log(dataToRender);
       // turn into format that's easy to work with in d3
       let d3JSON_arr = [];
       for (let key in dataToRender) {
