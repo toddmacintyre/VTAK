@@ -29,33 +29,60 @@ angular.module('sentiment.ly',['sentiment.ly-tone', 'sentiment.ly-archives', 'se
       // can be used to access properties/info of that user.
       console.log('in app.js, searchRequest, line 76. results.data = %$%$%$%$%$%$%$', results.data);
       $scope.showResults = false;
+      $scope.userData = results.data;
       tone.grabValues(results.data.watsonResponseObject);  // Doublecheck data structure
       $scope.averageValues = tone.averageValues;
       console.log('in app.js, searchRequest, line 200. $scope.averageValues = ', $scope.averageValues);
       $scope.spinner = false;
       $scope.showResults = true;
       console.log('about to call getArchives');
-      archives.getArchives();
+      $scope.showArchives = false
+      $scope.getArchives();
+      render.renderData($scope.averageValues);
+    })
 
-      $scope.showArchives = false;
 
-      $scope.archivesData = archives.lastFiveSearches;
+
+
       // $scope.archivesData = archives.getArchives(function(lastFiveSearches) { // callback doesn't work; can't get lastFiveSearches value
       //   return lastFiveSearches;
       // });
 
-      console.log('in app.js, searchRequest, line 213. $scope.archivesData = ', $scope.archivesData);
-      $scope.showArchives = true;
-      $scope.userData = results.data;
-      console.log('in app.js, searchRequest, line 215. about to render. $scope.averageValues = ', $scope.averageValues);
-      render.renderData($scope.averageValues);
-    })
+      // console.log('in app.js, searchRequest, line 213. $scope.archivesData = ', $scope.archivesData);
+
+
+      // console.log('in app.js, searchRequest, line 215. about to render. $scope.averageValues = ', $scope.averageValues);
+
+
     .catch(function(error) {
       $scope.spinner = false;
       console.log(error);
       alert($scope.errorCodes[error.data]);
     });
   };
+
+$scope.getArchives = function() {
+  $http({
+          method: 'GET',
+          url: '/api/archives',
+        })
+        .then (function(data) {
+          console.log('IN GET ARCHIVES')
+          var arrLength = data.data.length;
+          $scope.archivesData = [];
+            for (var i=arrLength-1; i>arrLength-6; i--) {
+            $scope.archivesData.push(data.data[i]);
+          }
+          console.log('ARCHIVES DATA =', $scope.archivesData)
+          $scope.showArchives = true;
+        })
+        .catch(function(error) {
+          console.log('GETTING ARCHIVES ERROR: ', error);
+        });
+  };
+
+
+
 
   $scope.getSaved = function(archive) {
     $http({
