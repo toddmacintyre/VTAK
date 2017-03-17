@@ -24,6 +24,7 @@ exports.getTone = function (tweetString, callback) {
       callback(err);
     } else {
       getAverage(tone);
+      console.log('watson.js getTone l 27. value of averageValues before callback = ', averageValues);
       callback(err, averageValues);
       // reset averageValues object for next search
       for (var key in averageValues) {
