@@ -25,7 +25,7 @@ module.exports = function(app, express) {
 		console.log("I'M HERERERE...in routes.js, app.post(/api/handle). before promiseTwitter. req.body = ", req.body);
 		promiseTwitter(twitterOptions, req.body.handle)
 			.then(function(result) {
-				console.log('in routes.js, app.post(/api/handle), promiseTwitter, l 28. result about to be sent to watson = ', result);
+				// console.log('in routes.js, app.post(/api/handle), promiseTwitter, l 28. result about to be sent to watson = ', result);
 				frontEndResponse = result;
 				promiseWatson(result.finalString)
 					.then(function(result) {
@@ -52,19 +52,19 @@ module.exports = function(app, express) {
 	});
 
 	// what we had: Tweet.findOne({'timestamp': timestamp}, function(err, tweet) { // we want this to call the dbController, which connects to model, not model directly (similar to Shortly-Angular); also updated from callback to promise
-	app.get('/api/timestamp/:timestamp', function(req, res) {
-		let timestamp = req.params.timestamp;
-		console.log('in routes.js, app.get(api/archives/:timestamp), line 42. timestamp queried = ', timestamp);
-		Tweet.findResultsByTimestamp(req, res, timestamp)
-		  .then(function(findOneResult) {
-      console.log('in routes.js, app.get(api/archives/:timestamp), line 46. findOne data returned from db = ', findOneResult);
-			if (findOneResult === null) {
-				console.log('in routes.js, app.get(api/archives/:timestamp), line 48. findOneResult returned null');
-				res.status(400).send('whoops');
-			  } else {
-				res.send(findOneResult);
-			  }
-		 });
+	app.post('/api/id/:id', function(req, res) {
+		let id = req.params.id;
+		console.log('in routes.js, app.get(api/archives/:id), line 42. id queried = ', id);
+		Tweet.findResultsById(req, res, id)
+		 //  .then(function(findOneResult) {
+   //    console.log('in routes.js, app.get(api/archives/:id), line 46. findOne data returned from db = ', findOneResult);
+			// if (findOneResult === null) {
+			// 	console.log('in routes.js, app.get(api/archives/:id), line 48. findOneResult returned null');
+			// 	res.status(400).send('whoops');
+			//   } else {
+			// 	res.send(findOneResult);
+			//   }
+		 // });
 	});
 
 	app.get('/api/archives', function(req, res) {
