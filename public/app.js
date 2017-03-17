@@ -47,7 +47,6 @@ angular.module('sentiment.ly',[])
         console.log('in app.js, getArchives line 52, after GET req to /api/archives. data received = ', data.data);
         console.log('in app.js, getArchives line 52, after GET req to /api/archives. array length = ', arrLength);
         lastFiveSearches = [];
-        // for (var i=arrLength-1; i<arrLength-5; i--) {
           for (var i=arrLength-1; i>arrLength-6; i--) {
           lastFiveSearches.push(data.data[i]);  //Doublecheck data structure. Good idea! It needed .data.
         }
@@ -243,4 +242,4 @@ angular.module('sentiment.ly',[])
     return lastFiveSearches;
     });
    }
-}); // closes sentimentController
+}]); // closes sentimentController
