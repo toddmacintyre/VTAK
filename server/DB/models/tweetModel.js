@@ -17,9 +17,12 @@ var tweetSchema = new mongoose.Schema({
 		Sadness: Number,
 		Tentative: Number},
 	timestamp: {type : Date, default: Date.now},
-	imageUrl: String, // we're not using these 3 yet
-	tweet: String, // we're not using these 3 yet
-	location: String // we're not using these 3 yet
+	imageUrl: String,
+	location: String,
+	name: String,
+	description: String,
+	followers: Number,
+	friends: Number
 });
 
 var TweetModel = mongoose.model('Tweet', tweetSchema);
