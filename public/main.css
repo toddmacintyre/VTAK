@@ -1,2 +1,72 @@
 /*Main CSS file*/
 
+/*.emotional {
+  stroke-width: 5;
+  fill: #ff7f0e;
+}
+
+.language {
+  stroke-width: 5;
+  fill: #98df8a;
+}
+
+.social {
+  stroke-width: 5;
+  fill: #ff9896;
+}*/
+
+
+/*Set individual styles for the bars.*/
+.bar_Anger {
+
+}
+
+.bar_Disgust {
+
+}
+
+.bar_Fear {
+
+}
+
+.bar_Joy {
+
+}
+
+.bar_Sadness {
+
+}
+
+.bar_Analytical {
+
+}
+
+.bar_Confident {
+
+}
+
+.bar_Tentative {
+
+}
+
+.bar_Openness {
+
+}
+
+.bar_Conscientiousness {
+
+}
+
+.bar_Extraversion {
+
+}
+
+.bar_Agreeableness {
+
+}
+
+/*Emotional Range*/
+.bar_Range {
+
+}
+
