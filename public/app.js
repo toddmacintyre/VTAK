@@ -1,5 +1,3 @@
-// Need to agree upon module and scope variable names
-
 angular.module('sentiment.ly',[])
 
 .factory('tone', function() {
@@ -46,10 +44,15 @@ angular.module('sentiment.ly',[])
       })
       .then (function(data) {
         // console.log('in app.js, getArchives after GET req to /api/archives. data received = ###%#%#%#%#%#%# ', data);
+        var arrLength = data.data.length;
+        console.log('in app.js, getArchives line 47, after GET req to /api/archives. data received = ', data.data);
+        console.log('in app.js, getArchives line 48, after GET req to /api/archives. array length = ', arrLength);
         lastFiveSearches = [];
-        for (var i=0; i<5; i++) {
-          lastFiveSearches.push(data[i]);  //Doublecheck data structure
+          for (var i=arrLength-1; i>arrLength-6; i--) {
+          lastFiveSearches.push(data.data[i]);  //Doublecheck data structure. Good idea! It needed .data.
         }
+        console.log('in app.js, getArchives line 53, after lastFiveSearches push. lastFiveSearches = ', lastFiveSearches);
+        // return lastFiveSearches;
       });
     };
 
@@ -123,7 +126,7 @@ angular.module('sentiment.ly',[])
         .attr("height", yScale.rangeBand())
         .attr("class", "d3Bar") // reference the bars in css using the .d3Bar
         .attr("fill", function(d, i) { return colors(d[xColumn]); });
-        
+
       bars
         .attr("x", 0)
         .attr("y", function (d) { return yScale(d[yColumn]); })
@@ -186,23 +189,30 @@ angular.module('sentiment.ly',[])
       data: {handle: $scope.searchRequestInput}
     })
     .then (function(results) {
-
       //Results.data has all the information about user in one object, including watson results as another
       //object within this object => results.data.watsonResponseObject, results.data.name, results.data.profile_image_url
       // can be used to access properties/info of that user.
-
       console.log('in app.js, searchRequest, line 76. results.data = %$%$%$%$%$%$%$', results.data);
       $scope.showResults = false;
       tone.grabValues(results.data.watsonResponseObject);  // Doublecheck data structure
       $scope.averageValues = tone.averageValues;
+      console.log('in app.js, searchRequest, line 200. $scope.averageValues = ', $scope.averageValues);
       $scope.spinner = false;
       $scope.showResults = true;
+      console.log('about to call getArchives');
       archives.getArchives();
+
       $scope.showArchives = false;
+
       $scope.archivesData = archives.lastFiveSearches;
+      // $scope.archivesData = archives.getArchives(function(lastFiveSearches) { // callback doesn't work; can't get lastFiveSearches value
+      //   return lastFiveSearches;
+      // });
+
+      console.log('in app.js, searchRequest, line 213. $scope.archivesData = ', $scope.archivesData);
       $scope.showArchives = true;
       $scope.userData = results.data;
-
+      console.log('in app.js, searchRequest, line 215. about to render. $scope.averageValues = ', $scope.averageValues);
       render.renderData($scope.averageValues);
     })
     .catch(function(error) {
@@ -229,9 +239,9 @@ angular.module('sentiment.ly',[])
       $scope.averageValues = tone.averageValues;
       $scope.spinner = false;
       $scope.showResults = true;
-  });
-
-  archives.getArchives();
+    });
+  //
+  archives.getArchives(); // see note in line 96 about getting this value
   $scope.archivesData = archives.lastFiveSearches;
   $scope.showArchives = true;
 

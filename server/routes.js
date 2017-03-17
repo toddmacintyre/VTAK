@@ -9,6 +9,8 @@ var Tweet = require('./controllers/dbController.js');
 var promiseTwitter = Promise.promisify(twitterController.getRequestTwitter);
 var promiseWatson = Promise.promisify(watson.getTone);
 
+// var promiseGetArchives = Promise.promisify(Tweet.getArchives);
+
 // var router = require('express').Router();
 
 module.exports = function(app, express) {
@@ -20,16 +22,22 @@ module.exports = function(app, express) {
 		};
 		// Final object sent to front end that includes watson response object and user details
 
-		console.log(req.body, "I'M HERERERE")
+		console.log("I'M HERERERE...in routes.js, app.post(/api/handle). before promiseTwitter. req.body = ", req.body);
 		promiseTwitter(twitterOptions, req.body.handle)
 			.then(function(result) {
+				console.log('in routes.js, app.post(/api/handle), promiseTwitter, l 28. result about to be sent to watson = ', result);
 				frontEndResponse = result;
 				promiseWatson(result.finalString)
 					.then(function(result) {
-						// invoke dbController here, sending handle & watson results
+						console.log('in routes.js, app.post(/api/handle), promiseWatson, l 31. result about to be sent to db = ', result);
 						Tweet.saveToDB(req.body.handle, result);
+						// testing with this obj below confirmed that we are writing to db. But input for database needs to be updated to just include watson values, not score/count object currently ({ Anger: { score: 0, count: 0 })
+						// Tweet.saveToDB(req.body.handle,
+				// 			{ Anger: 0.09,
+	      //  Disgust: 0.16
+	      //  }
 						frontEndResponse['watsonResponseObject'] = result;
-						// console.log('\n\nin routes.js. promiseWatson result obj = final Object*&*&*&*&*&*&*&*&', frontEndResponse, '\n\n'); // see format below
+						console.log('\n\nin routes.js. l 40. promiseWatson result obj = final Object*&*&*&*&*&*&*&*&', frontEndResponse, '\n\n'); // see format below
 						res.send(frontEndResponse);
 					})
 					.catch(function(err) {
@@ -47,7 +55,7 @@ module.exports = function(app, express) {
 	app.get('/api/timestamp/:timestamp', function(req, res) {
 		let timestamp = req.params.timestamp;
 		console.log('in routes.js, app.get(api/archives/:timestamp), line 42. timestamp queried = ', timestamp);
-		Tweet.findResultsByTimestamp(timestamp)
+		Tweet.findResultsByTimestamp(req, res, timestamp)
 		  .then(function(findOneResult) {
       console.log('in routes.js, app.get(api/archives/:timestamp), line 46. findOne data returned from db = ', findOneResult);
 			if (findOneResult === null) {
@@ -59,20 +67,23 @@ module.exports = function(app, express) {
 		 });
 	});
 
-  // what we had: Tweet.find({}).exec(function(err, archive){ // we want this to call the dbController, which connects to model, not model directly (similar to Shortly-Angular); line 7 updated
-	app.get('/api/archives', function(req,res) {
-		Tweet.getArchives() // bug here, it's returning no result: TypeError: Cannot read property 'then' of undefined
-      .then(function(archivesResults) {
-			console.log('in routes.js, app.get(api/archives/:timestamp), line 46. findOne data returned from db = ', findOneResult);
-			if (archivesResults === null) {
-				console.log('in routes.js, app.get(/api/archives), line 48. archivesResults returned null');
-				res.status(400).send('whoops');
-				} else {
-				res.send(archivesResults);
-				}
-	  });
+	app.get('/api/archives', function(req, res) {
+		Tweet.getArchives(req, res);
+
   });
 };
+
+// tried approach of promisifying this call to dbController but it didn't work; reverting to res.send from dbController for now
+// promiseGetArchives()
+// 	.then(function(archivesResults) {
+// 	console.log('in routes.js, app.get(api/archives), line 58. getArchives data returned from db = \n', archivesResults);
+// 	if (archivesResults === null) {
+// 		console.log('in routes.js, app.get(/api/archives), line 61. archivesResults returned null');
+// 		res.status(400).send('whoops');
+// 		} else {
+// 		res.send(archivesResults);
+// 		}
+// });
 
 // promiseWatson result obj =  { Anger: 0.10487240677966098,
 //   Disgust: 0.07544283050847456,
