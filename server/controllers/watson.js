@@ -1,7 +1,7 @@
 // Requires IBM's Watson's npm module (already required in package.json)
 var watson = require('watson-developer-cloud');
-require('./server.js');
-var envVars = require('../env.json');
+//require('../server.js');
+var envVars = require('../../env.json');
 console.log('envVars.watson_username', envVars.watson_username); // to test that the env variables are exporting
 
 // Below functions required per IBM documentation
