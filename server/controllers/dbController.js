@@ -17,7 +17,7 @@ module.exports = {
         console.log('\n\nin dbController, saveToDB, line 17. handle & watsonResults saved to db!!!!!!!');
       })
       .fail(function (error) {
-        console.log('\n\nin dbController, saveToDB, line 20. failed! error = ', error);
+        console.log('\n\nin dbController, saveToDB, line 20. failed! error = '/*, error*/);
         next(error);
        })  // Based on Q documentation, I think safest to use .fail here: "If you are writing JavaScript for modern engines only or using CoffeeScript, you may use catch instead of fail."
   },
@@ -39,7 +39,7 @@ module.exports = {
     console.log('\nin dbController, getArchives, line 38. about to call findAllSearches\n\n');
     findAllSearches( { } )
       .then(function(returnedObj) {
-        console.log('\n\nin dbController, getArchives, line 41. database findAllSearches query returned this: \n', returnedObj);
+        // console.log('\n\nin dbController, getArchives, line 41. database findAllSearches query returned this: \n', returnedObj);
         res.send(returnedObj);
       })
       .fail(function (error) {

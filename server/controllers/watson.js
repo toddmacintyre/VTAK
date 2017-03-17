@@ -2,7 +2,7 @@
 var watson = require('watson-developer-cloud');
 //require('../server.js');
 var envVars = require('../../env.json');
-console.log('envVars.watson_username', envVars.watson_username); // to test that the env variables are exporting
+// console.log('envVars.watson_username', envVars.watson_username); // to test that the env variables are exporting
 
 // Below functions required per IBM documentation
 var tone_analyzer = watson.tone_analyzer({
@@ -20,7 +20,7 @@ exports.getTone = function (tweetString, callback) {
   function (err, tone) {
     // console.log(tone);
     if (err) {
-      console.log(err);
+      // console.log(err);
       callback(err);
     } else {
       getAverage(tone);
