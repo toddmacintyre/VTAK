@@ -43,6 +43,7 @@ angular.module('sentiment.ly',[])
         url: '/api/archives',
       })
       .then (function(data) {
+        // console.log('in app.js, getArchives after GET req to /api/archives. data received = ###%#%#%#%#%#%# ', data);
         var arrLength = data.data.length;
         console.log('in app.js, getArchives line 47, after GET req to /api/archives. data received = ', data.data);
         console.log('in app.js, getArchives line 48, after GET req to /api/archives. array length = ', arrLength);
@@ -188,12 +189,10 @@ angular.module('sentiment.ly',[])
       data: {handle: $scope.searchRequestInput}
     })
     .then (function(results) {
-
       //Results.data has all the information about user in one object, including watson results as another
       //object within this object => results.data.watsonResponseObject, results.data.name, results.data.profile_image_url
       // can be used to access properties/info of that user.
-
-      console.log('in app.js, searchRequest, line 197. results.data = %$%$%$%$%$%$%$', results.data);
+      console.log('in app.js, searchRequest, line 76. results.data = %$%$%$%$%$%$%$', results.data);
       $scope.showResults = false;
       tone.grabValues(results.data.watsonResponseObject);  // Doublecheck data structure
       $scope.averageValues = tone.averageValues;
@@ -241,8 +240,14 @@ angular.module('sentiment.ly',[])
       $scope.spinner = false;
       $scope.showResults = true;
     });
-    archives.getArchives();
-    $scope.archivesData = archives.lastFiveSearches;
-    $scope.showArchives = true;
-   }
-}]); // closes sentimentController
+  //
+  archives.getArchives(); // see note in line 96 about getting this value
+  $scope.archivesData = archives.lastFiveSearches;
+  $scope.showArchives = true;
+
+  };
+}]);
+
+
+// create render factory
+// call render from within getSaved and searchRequest
