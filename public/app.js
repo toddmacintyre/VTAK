@@ -40,26 +40,13 @@ angular.module('sentiment.ly',['sentiment.ly-tone', 'sentiment.ly-archives', 'se
       $scope.getArchives();
       render.renderData($scope.averageValues);
     })
-
-
-
-
-      // $scope.archivesData = archives.getArchives(function(lastFiveSearches) { // callback doesn't work; can't get lastFiveSearches value
-      //   return lastFiveSearches;
-      // });
-
-      // console.log('in app.js, searchRequest, line 213. $scope.archivesData = ', $scope.archivesData);
-
-
-      // console.log('in app.js, searchRequest, line 215. about to render. $scope.averageValues = ', $scope.averageValues);
-
-
     .catch(function(error) {
       $scope.spinner = false;
       console.log(error);
       alert($scope.errorCodes[error.data]);
     });
   };
+
 
 $scope.getArchives = function() {
   $http({
@@ -83,27 +70,27 @@ $scope.getArchives = function() {
 
 
 
+$scope.getSaved = function(archive) {
+  console.log('IN GET SAVED', archive);
+  $http({
+    method: 'POST',
+    url: '/api/id/'+archive._id,
+    headers: { 'Content-Type': 'application/json' }
+  })
+  .then (function(results) {
+    $scope.showResults = false;
+    $scope.spinner = true;
+    tone.grabValues(results.data);   // Doublecheck data structure
+    $scope.averageValues = tone.averageValues;
+    $scope.spinner = false;
+    $scope.showResults = true;
+  });
+};
 
-  $scope.getSaved = function(archive) {
-    $http({
-      method: 'POST',
-      url: '/api/timestamp/'+$archive.timestamp,
-      headers: { 'Content-Type': 'application/json' }
-    })
-    .then (function(results) {
-      $scope.showResults = false;
-      $scope.spinner = true;
-      tone.grabValues(results.data);   // Doublecheck data structure
-      $scope.averageValues = tone.averageValues;
-      $scope.spinner = false;
-      $scope.showResults = true;
-    });
   //
-  archives.getArchives(); // see note in line 96 about getting this value
-  $scope.archivesData = archives.lastFiveSearches;
-  $scope.showArchives = true;
+$scope.getArchives(); // see note in line 96 about getting this value
+$scope.showArchives = true;
 
-  };
 }]);
 
 

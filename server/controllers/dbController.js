@@ -22,18 +22,19 @@ module.exports = {
        })  // Based on Q documentation, I think safest to use .fail here: "If you are writing JavaScript for modern engines only or using CoffeeScript, you may use catch instead of fail."
   },
 
-  findResultsByTimestamp: function(req, res, timestamp) {
-    console.log('in dbController, findResultsByTimestamp, line 26. about to call findOne\n\n');
-    findOne({timestamp: timestamp}, 'handle watsonResults timestamp',
-    function (err, result) {
-       if (err) {console.error(err); }
-       console.log('database findOne query returned: ', result)
-    }
-  )
-  .then(function(result) {
-    res.status(200).send(result);
-  });
+  findResultsById: function(req, res, id) {
+    console.log('in dbController, findResultsById, line 26. about to call findOne\n\n');
+    findOne({_id: id}, 'handle watsonResults id')
+      .then(function(result) {
+        console.log('IN FIND BY ID THEN, RESULT =', result);
+        res.send(result);
+      })
+      .fail(function (error) {
+        console.log('FIND RESULT BY ID ERROR ', error);
+        res.status(400).send('whoops');
+      });
   },
+
   getArchives: function(req, res) {
     console.log('\nin dbController, getArchives, line 38. about to call findAllSearches\n\n');
     findAllSearches( { } )
