@@ -20,8 +20,9 @@ angular.module('sentiment.ly-tone',[])
     };
 
     var grabValues = function(data) {
+      console.log('IN TONE; DATA = ', data)
       for (var key in averageValues) {
-        averageValues[key] = data[key]['score'];   // Doublecheck data structure
+        averageValues[key] = data[key];   // Doublecheck data structure
       }
     };
 
