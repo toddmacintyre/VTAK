@@ -26,18 +26,29 @@ module.exports = function(app, express) {
 		promiseTwitter(twitterOptions, req.body.handle)
 			.then(function(result) {
 				// console.log('in routes.js, app.post(/api/handle), promiseTwitter, l 28. result about to be sent to watson = ', result);
-				frontEndResponse = result;
+				frontEndResponse.handle = result.screen_name;
+				frontEndResponse.imageUrl = result.profile_image_url;
+				frontEndResponse.location = result.location;
+				frontEndResponse.name = result.name;
+				frontEndResponse.description = result.description;
+				frontEndResponse.followers = result.followers_count;
+				frontEndResponse.friends = result.friends_count;
+				frontEndResponse.watsonResults = {};
 				promiseWatson(result.finalString)
 					.then(function(result) {
 						console.log('in routes.js, app.post(/api/handle), promiseWatson, l 31. result about to be sent to db = ', result);
-						Tweet.saveToDB(req.body.handle, result);
+						// Tweet.saveToDB(req.body.handle, result);
 						// testing with this obj below confirmed that we are writing to db. But input for database needs to be updated to just include watson values, not score/count object currently ({ Anger: { score: 0, count: 0 })
 						// Tweet.saveToDB(req.body.handle,
 				// 			{ Anger: 0.09,
 	      //  Disgust: 0.16
 	      //  }
-						frontEndResponse['watsonResponseObject'] = result;
+	      		for (var key in result) {
+	      			frontEndResponse.watsonResults[key] = result[key].score;
+	      		}
+						// frontEndResponse['watsonResponseObject'] = result;
 						console.log('\n\nin routes.js. l 40. promiseWatson result obj = final Object*&*&*&*&*&*&*&*&', frontEndResponse, '\n\n'); // see format below
+						Tweet.saveToDB(frontEndResponse);
 						res.send(frontEndResponse);
 					})
 					.catch(function(err) {
@@ -71,6 +82,10 @@ module.exports = function(app, express) {
 		Tweet.getArchives(req, res);
 
   });
+
+  app.get('/api/killdb', function(req, res) {
+  	Tweet.emptyDatabase(req, res);
+  })
 };
 
 // tried approach of promisifying this call to dbController but it didn't work; reverting to res.send from dbController for now

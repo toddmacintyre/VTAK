@@ -30,7 +30,7 @@ angular.module('sentiment.ly',['sentiment.ly-tone', 'sentiment.ly-archives', 'se
       console.log('in app.js, searchRequest, line 76. results.data = %$%$%$%$%$%$%$', results.data);
       $scope.showResults = false;
       $scope.userData = results.data;
-      tone.grabValues(results.data.watsonResponseObject);  // Doublecheck data structure
+      tone.grabValues(results.data.watsonResults);  // Doublecheck data structure
       $scope.averageValues = tone.averageValues;
       console.log('in app.js, searchRequest, line 200. $scope.averageValues = ', $scope.averageValues);
       $scope.spinner = false;
@@ -50,23 +50,23 @@ angular.module('sentiment.ly',['sentiment.ly-tone', 'sentiment.ly-archives', 'se
 
 $scope.getArchives = function() {
   $http({
-          method: 'GET',
-          url: '/api/archives',
-        })
-        .then (function(data) {
-          console.log('IN GET ARCHIVES')
-          var arrLength = data.data.length;
-          $scope.archivesData = [];
-            for (var i=arrLength-1; i>arrLength-6; i--) {
-            $scope.archivesData.push(data.data[i]);
-          }
-          console.log('ARCHIVES DATA =', $scope.archivesData)
-          $scope.showArchives = true;
-        })
-        .catch(function(error) {
-          console.log('GETTING ARCHIVES ERROR: ', error);
-        });
-  };
+    method: 'GET',
+    url: '/api/archives',
+  })
+  .then (function(data) {
+    console.log('IN GET ARCHIVES')
+    var arrLength = data.data.length;
+    $scope.archivesData = [];
+    for (var i=arrLength-1; i>arrLength-6; i--) {
+      $scope.archivesData.push(data.data[i]);
+    }
+    console.log('ARCHIVES DATA =', $scope.archivesData)
+    $scope.showArchives = true;
+  })
+  .catch(function(error) {
+    console.log('GETTING ARCHIVES ERROR: ', error);
+  });
+};
 
 
 
@@ -80,10 +80,12 @@ $scope.getSaved = function(archive) {
   .then (function(results) {
     $scope.showResults = false;
     $scope.spinner = true;
-    tone.grabValues(results.data);   // Doublecheck data structure
+    tone.grabValues(results.data.watsonResults);   // Doublecheck data structure
     $scope.averageValues = tone.averageValues;
+    $scope.userData = results.data;
     $scope.spinner = false;
     $scope.showResults = true;
+    render.renderData($scope.averageValues);
   });
 };
 
