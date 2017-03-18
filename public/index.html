@@ -3,97 +3,142 @@
   <head>
     <meta charset='utf-8' />
     <title>Sentiment.ly</title>
-       <!-- later add CSS:  <link rel="stylesheet" type="text/css" href=.....   /> -->
-      <style type="text/css">
-        .centered {
-         width:900px;
-         margin:0 auto;
-         text-align:left;
-         }
-    </style>
+
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.7.3/d3.min.js"></script>d3 cdn-->
     <link rel="stylesheet" href="main.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
   </head>
   <body ng-controller="sentimentController" class="centered">
-    <div style="text-align: center">
-      <h1 style="color: green">Sentiment.ly - Twitter users analyzed</h1>
 
-      <br>
-      What Twitter handle do you want to analyze?<br><br>
+    <div>
+    <header>
+      <h1 style="color: green">Sentiment.ly - Twitter users analyzed</h1>
+      <h3 style="font-style: italic; color: brown ">What Twitter handle do you want to analyze?</h3>
       <form ng-submit="searchRequest()"> <!-- calls factory function that makes POST req w/ input value (twitter handle)  -->
         @&nbsp<input type="text" ng-model="searchRequestInput" placeholder="e.g., Journey4John" required>
-        <input type="Submit">
+        <input type="Submit" style="color: brown"><br><br>
         <div ng-if="spinner">
           <img ng-src="./spiffygif_46x46.gif">
         </div>
       </form>
     </div>
     <hr style="width: 20%">
-    <div ng-if="showResults" style="text-align: center">
-      <div class = "userData" style="text-align: center">
-      <div>
-        <img ng-src="{{ userData.imageUrl }}" alt="Macaque in the trees" style='width:40%;' border="2" alt="Null">
-      </div>
-      <div>Name: {{ userData.name || "none provided"}}</div>
-      <div>Handle: @{{ userData.handle }}</div>
-      <div>Location: {{ userData.location || "none provided" }}</div>
-      <div>Description: {{ userData.description || "none provided" }}</div>
-      <div>Followers: {{ userData.followers }}</div>
+  </header>
+    <div class="analysis">
+    <div class="tooltip">
+      <h2>Tweet Analysis</h2>
+      <span class="tooltiptext">IBM Watson's Tone Analyzer uses linguistic analysis to detect three types of tones in written text: emotions, social tendencies and writing style</span> </div>
     </div>
-      <!-- to see result of page when no results, remove ng-if above then copy back from here: ng-if="showResults" -->
-      <h2>
-        Tweet Analysis
-      </h2>
+
+    <section>
+      <div ng-if="showResults">
+        <div class = "userData"  id="profile">
+        <div>
+            <img ng-src="{{ userData.profile_image_url }}" alt="Macaque in the trees" style='width:40%;' border="2" alt="Null">
+        </div>
+        <div>Name: {{ userData.name || "none provided"}}</div>
+        <div>Handle: @{{ userData.screen_name }}</div>
+        <div>Location: {{ userData.location || "none provided" }}</div>
+        <div>Description: {{ userData.description || "none provided" }}</div>
+        </div>
+      </div>
+    </section>
+
+    <aside>
+         <div id="d3Display"></div>
+    </aside>
+
+    <br><br><br><br>
+    <footer>
+    <!-- <div> -->
+    <!-- <div>
+      <br>
+      <hr style="width: 20%">
+=======
+
+</code>
+  </header>
+
+  <div class="analysis">
+  <h2>
+    Tweet Analysis
+  </h2>
+ </div>
+
+<!-- style="text-align: center" -->
+  <section>
+    <code>
+      <div ng-if="showResults"> <!-- add back ng-if="showResults"  -->
+        <div class = "userData"  id="profile">
+          <div>
+            <img ng-src="{{ userData.profile_image_url }}" alt="Macaque in the trees" style='width:40%;' border="2" alt="Null">
+          </div>
+          <div>Name: {{ userData.name || "none provided"}}</div>
+          <div>Handle: @{{ userData.screen_name }}</div>
+          <div>Location: {{ userData.location || "none provided" }}</div>
+          <div>Description: {{ userData.description || "none provided" }}</div>
+        </div>
+      </div>
+    </code>
+    </section>
+
+    <aside><code>
+         <div id="d3Display"></div>
+      </code>
+    </aside>
+
+  <br><br><br><br>
+
+
+  <footer>
+    <code>
+    <!-- <div> -->
+    <div>
+      <br>
+      <hr style="width: 20%">
       <h3>
         Emotional tone
       </h3>
-
       <ul style="list-style: none">
         <li> Joy - has shades of enjoyment, satisfaction and pleasure: {{ averageValues.Joy  }} </li>
         <li> Fear - shows a response to impending danger: {{ averageValues.Fear  }} </li>
         <li> Sadness - indicates a feeling of loss and disadvantage: {{ averageValues.Sadness  }} </li>
         <li> Disgust - an emotional response of revulsion to something considered offensive or unpleasant: {{ averageValues.Disgust  }} </li>
         <li> Anger - evoked due to injustice, conflict, humiliation, negligence or betrayal: {{ averageValues.Anger   }} </li>
-        </ul>
-
+      </ul>
+      <h3>
         Language tone
-
-        <ul style="list-style: none">
+      </h3>
+      <ul style="list-style: none">
         <li> Analytical - reasoning and analytical attitude about things: {{ averageValues.Analytical  }} </li>
         <li> Confidence - degree of certainty: {{ averageValues.Confident  }} </li>
         <li> Tentative - degree of inhibition: {{ averageValues.Tentative  }} </li>
-        </ul>
-
+      </ul>
+      <h3>
         Social tone
-
-        <ul style="list-style: none">
+      </h3>
+      <ul style="list-style: none">
         <li> Openness - open to experience a variety of activities: {{ averageValues.Openness  }} </li>
         <li> Conscientiousness - tendency to act in an organized or thoughtful way: {{ averageValues.Conscientiousness  }} </li>
         <li> Extraversion - tendency to seek stimulation in the company of others: {{ averageValues.Extraversion  }} </li>
         <li> Agreeableness - tendency to be compassionate and cooperative: {{ averageValues.Agreeableness  }} </li>
         <li> Emotional Range - extent a person's emotion is sensitive to the environment: {{ averageValues['Emotional Range']   }} </li>
       </ul>
+   </div> -->
+<!-- </div> -->
 
-    </div>
-
-    <div id="d3Display"></div>
-
-    <div ng-if="showArchives" style="text-align: center">
-      <!-- to see result of page when no results, remove ng-if above then copy back from here: ng-if="showArchives" -->
+    <div > <!-- add back ng-if="showResults"  style="text-align: center" -->
       <br>
-      <hr style="width: 20%">
-      <h2>
-        Saved Analyses
-      </h2>
+        <hr style="width: 20%">
+      <h2>Saved Analyses</h2>
       <h4 style="font-style: italic">
-        Click on an item to view results
+        <a style="color: brown">Click on an item to view results</a>
       </h4>
       <h4>
-        <table align="center" border="3">
+        <table align="center" border="3" width="400px" bgcolor="CEEDB6">
           <tr>
-            <th>Twitter handle</th>
-            <th>Time of search</th>
+            <th style="color: white"; bgcolor="#30C0EE">Twitter handle</th>
+            <th style="color: white" bgcolor="#30C0EE">Time of search</th>
           </tr>
           <tr ng-repeat="archive in archivesData" ng-click="getSaved(archive)">
             <td> {{ archive.handle }} </td>
@@ -102,7 +147,7 @@
         </table>
       </h4>
     </div>
-
+ </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.js"></script>
     <script src="services/tone.js"></script>

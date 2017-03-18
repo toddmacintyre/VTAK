@@ -69,4 +69,68 @@
 .bar_Range {
 
 }
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
 
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 500px;
+    font: 14px/24px "Source Code Pro", Inconsolata, "Lucida Console", Terminal, "Courier New", Courier;
+    background-color: #30C0EE;
+    color: #fff;
+    text-align: center;
+    border-radius: 12px;
+    padding: 5px 0;
+    top: 100%;
+    left: 50%;
+    margin-left: -250px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 5;
+}
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+.nounderline{text-decoration: none}
+
+body {font: 14px/24px "Source Code Pro", Inconsolata, "Lucida Console", Terminal, "Courier New", Courier;
+  text-align: center;
+},
+  .centered {
+     width:1200px;
+     margin:0 auto;
+  },
+  .analysis {
+     text-align: center;
+  },
+code {
+  display: block;
+  font: 14px/24px "Source Code Pro", Inconsolata, "Lucida Console", Terminal, "Courier New", Courier;             text-align: center;
+}
+header {text-align: center},
+section,
+aside,
+footer {
+  margin: 0 1.5% 24px 1.5%;
+}
+section {
+  float: left;
+  width: 30%;
+  margin-left: 40px
+}
+aside {
+  float: right;
+  width: 65%;
+  margin-right: 10px
+}
+footer {
+  clear: both;
+  margin-bottom: 20;
+  text-align: center
+}
