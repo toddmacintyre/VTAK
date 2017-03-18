@@ -1,2 +1,36 @@
 /*Main CSS file*/
-
+body {font: 14px/24px "Source Code Pro", Inconsolata, "Lucida Console", Terminal, "Courier New", Courier;
+  text-align: center;
+},
+  .centered {
+     width:1200px;
+     margin:0 auto;
+  },
+  .analysis {
+     text-align: center;
+  },
+code {
+  display: block;
+  font: 14px/24px "Source Code Pro", Inconsolata, "Lucida Console", Terminal, "Courier New", Courier;             text-align: center;
+}
+header {text-align: center},
+section,
+aside,
+footer {
+  margin: 0 1.5% 24px 1.5%;
+}
+section {
+  float: left;
+  width: 30%;
+  margin-left: 40px
+}
+aside {
+  float: right;
+  width: 65%;
+  margin-right: 10px
+}
+footer {
+  clear: both;
+  margin-bottom: 20;
+  text-align: center
+}

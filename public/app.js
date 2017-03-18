@@ -57,7 +57,7 @@ $scope.getArchives = function() {
           console.log('IN GET ARCHIVES')
           var arrLength = data.data.length;
           $scope.archivesData = [];
-            for (var i=arrLength-1; i>arrLength-6; i--) {
+            for (var i=arrLength-1; i>arrLength-16; i--) {
             $scope.archivesData.push(data.data[i]);
           }
           console.log('ARCHIVES DATA =', $scope.archivesData)
