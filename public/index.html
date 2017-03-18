@@ -54,6 +54,48 @@
     <!-- <div>
       <br>
       <hr style="width: 20%">
+=======
+
+</code>
+  </header>
+
+  <div class="analysis">
+  <h2>
+    Tweet Analysis
+  </h2>
+ </div>
+
+<!-- style="text-align: center" -->
+  <section>
+    <code>
+      <div ng-if="showResults"> <!-- add back ng-if="showResults"  -->
+        <div class = "userData"  id="profile">
+          <div>
+            <img ng-src="{{ userData.profile_image_url }}" alt="Macaque in the trees" style='width:40%;' border="2" alt="Null">
+          </div>
+          <div>Name: {{ userData.name || "none provided"}}</div>
+          <div>Handle: @{{ userData.screen_name }}</div>
+          <div>Location: {{ userData.location || "none provided" }}</div>
+          <div>Description: {{ userData.description || "none provided" }}</div>
+        </div>
+      </div>
+    </code>
+    </section>
+
+    <aside><code>
+         <div id="d3Display"></div>
+      </code>
+    </aside>
+
+  <br><br><br><br>
+
+
+  <footer>
+    <code>
+    <!-- <div> -->
+    <div>
+      <br>
+      <hr style="width: 20%">
       <h3>
         Emotional tone
       </h3>
