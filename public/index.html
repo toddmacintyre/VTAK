@@ -3,48 +3,7 @@
   <head>
     <meta charset='utf-8' />
     <title>Sentiment.ly</title>
-       <!-- later add CSS:  <link rel="stylesheet" type="text/css" href=.....   /> -->
-      <style type="text/css">
-      body {font: 14px/24px "Source Code Pro", Inconsolata, "Lucida Console", Terminal, "Courier New", Courier;
-        text-align: center;
-     },
-        .centered {
-         width:1150px;
-         margin:0 auto;
-         /*text-align:left;*/
-         },
-        .analysis {
-           text-align: center;
-           font: 14px/24px "Source Code Pro", Inconsolata, "Lucida Console", Terminal, "Courier New", Courier;
-         },
-                     code {
-               display: block;
-               font: 14px/24px "Source Code Pro", Inconsolata, "Lucida Console", Terminal, "Courier New", Courier;
-               text-align: center;
-             }
-             header {text-align: center},
-             section,
-             aside,
-             footer {
-               margin: 0 1.5% 24px 1.5%;
-             }
-             section {
-               float: left;
-               width: 30%;
-               margin-left: 40px
-             }
-             aside {
-               float: right;
-               width: 65%;
-               margin-left: 0px
-
-             }
-             footer {
-               clear: both;
-               margin-bottom: 20;
-                  text-align: center
-             }
-    </style>
+    
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.7.3/d3.min.js"></script>d3 cdn-->
     <link rel="stylesheet" href="main.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
@@ -56,7 +15,7 @@
         <header><code>
       <h1 style="color: green">Sentiment.ly - Twitter users analyzed</h1>
 
-      What Twitter handle do you want to analyze?<br><br>
+      <a style="font-style: italic">What Twitter handle do you want to analyze?</a><br><br>
       <form ng-submit="searchRequest()"> <!-- calls factory function that makes POST req w/ input value (twitter handle)  -->
         @&nbsp<input type="text" ng-model="searchRequestInput" placeholder="e.g., Journey4John" required>
         <input type="Submit" style="color: brown"><br>
@@ -79,8 +38,8 @@
 <!-- style="text-align: center" -->
   <section>
     <code>
-      <div> <!-- add back ng-if="showResults"  -->
-        <div class = "userData" style="text-align: center" id="profile">
+      <div ng-if="showResults"> <!-- add back ng-if="showResults"  -->
+        <div class = "userData"  id="profile">
           <div>
             <img ng-src="{{ userData.profile_image_url }}" alt="Macaque in the trees" style='width:40%;' border="2" alt="Null">
           </div>
@@ -110,7 +69,6 @@
       <h3>
         Emotional tone
       </h3>
-
       <ul style="list-style: none">
         <li> Joy - has shades of enjoyment, satisfaction and pleasure: {{ averageValues.Joy  }} </li>
         <li> Fear - shows a response to impending danger: {{ averageValues.Fear  }} </li>

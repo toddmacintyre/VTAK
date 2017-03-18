@@ -10,10 +10,10 @@ angular.module('sentiment.ly-render',[])
 
       clearRender();
 
-      var outerWidth = 780;
+      var outerWidth = 800;
       var outerHeight = 400;
-      var margin = { left: 130, top: 0, right: 0, bottom: 30 };
-      var barPadding = 0.3;
+      var margin = { left: 155, top: 0, right: 0, bottom: 30 }; // I had to increase left bc some tone names were cut off
+      var barPadding = 0.2;
 
       var xColumn = "value";
       var yColumn = "name";
