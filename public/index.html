@@ -3,67 +3,55 @@
   <head>
     <meta charset='utf-8' />
     <title>Sentiment.ly</title>
-    
+
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.7.3/d3.min.js"></script>d3 cdn-->
     <link rel="stylesheet" href="main.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
   </head>
   <body ng-controller="sentimentController" class="centered">
 
-    <!-- <div style="text-align: center"> -->
     <div>
-        <header><code>
+    <header>
       <h1 style="color: green">Sentiment.ly - Twitter users analyzed</h1>
-
-      <a style="font-style: italic">What Twitter handle do you want to analyze?</a><br><br>
+      <h3 style="font-style: italic; color: brown ">What Twitter handle do you want to analyze?</h3>
       <form ng-submit="searchRequest()"> <!-- calls factory function that makes POST req w/ input value (twitter handle)  -->
         @&nbsp<input type="text" ng-model="searchRequestInput" placeholder="e.g., Journey4John" required>
-        <input type="Submit" style="color: brown"><br>
+        <input type="Submit" style="color: brown"><br><br>
         <div ng-if="spinner">
           <img ng-src="./spiffygif_46x46.gif">
         </div>
       </form>
     </div>
     <hr style="width: 20%">
-
-</code>
   </header>
+    <div class="analysis">
+    <div class="tooltip">
+      <h2>Tweet Analysis</h2>
+      <span class="tooltiptext">IBM Watson's Tone Analyzer uses linguistic analysis to detect three types of tones in written text: emotions, social tendencies and writing style</span> </div>
+    </div>
 
-  <div class="analysis">
-  <h2>
-    Tweet Analysis
-  </h2>
- </div>
-
-<!-- style="text-align: center" -->
-  <section>
-    <code>
-      <div ng-if="showResults"> <!-- add back ng-if="showResults"  -->
+    <section>
+      <div ng-if="showResults">
         <div class = "userData"  id="profile">
-          <div>
+        <div>
             <img ng-src="{{ userData.profile_image_url }}" alt="Macaque in the trees" style='width:40%;' border="2" alt="Null">
-          </div>
-          <div>Name: {{ userData.name || "none provided"}}</div>
-          <div>Handle: @{{ userData.screen_name }}</div>
-          <div>Location: {{ userData.location || "none provided" }}</div>
-          <div>Description: {{ userData.description || "none provided" }}</div>
+        </div>
+        <div>Name: {{ userData.name || "none provided"}}</div>
+        <div>Handle: @{{ userData.screen_name }}</div>
+        <div>Location: {{ userData.location || "none provided" }}</div>
+        <div>Description: {{ userData.description || "none provided" }}</div>
         </div>
       </div>
-    </code>
     </section>
 
-    <aside><code>
+    <aside>
          <div id="d3Display"></div>
-      </code>
     </aside>
 
-  <br><br><br><br>
-
-
-  <footer>
-    <code>
+    <br><br><br><br>
+    <footer>
     <!-- <div> -->
-    <div>
+    <!-- <div>
       <br>
       <hr style="width: 20%">
       <h3>
@@ -94,27 +82,21 @@
         <li> Agreeableness - tendency to be compassionate and cooperative: {{ averageValues.Agreeableness  }} </li>
         <li> Emotional Range - extent a person's emotion is sensitive to the environment: {{ averageValues['Emotional Range']   }} </li>
       </ul>
-   </div>
-
+   </div> -->
 <!-- </div> -->
 
-
-
     <div > <!-- add back ng-if="showResults"  style="text-align: center" -->
-
       <br>
-      <hr style="width: 20%">
-      <h2>
-        Saved Analyses
-      </h2>
+        <hr style="width: 20%">
+      <h2>Saved Analyses</h2>
       <h4 style="font-style: italic">
-        Click on an item to view results
+        <a style="color: brown">Click on an item to view results</a>
       </h4>
       <h4>
-        <table align="center" border="3">
+        <table align="center" border="3" width="400px" bgcolor="CEEDB6">
           <tr>
-            <th>Twitter handle</th>
-            <th>Time of search</th>
+            <th style="color: white"; bgcolor="#30C0EE">Twitter handle</th>
+            <th style="color: white" bgcolor="#30C0EE">Time of search</th>
           </tr>
           <tr ng-repeat="archive in archivesData" ng-click="getSaved(archive)">
             <td> {{ archive.handle }} </td>
@@ -123,7 +105,6 @@
         </table>
       </h4>
     </div>
-  </code>
  </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.js"></script>
