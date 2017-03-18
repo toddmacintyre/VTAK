@@ -10,7 +10,7 @@ angular.module('sentiment.ly-render',[])
 
       clearRender();
 
-      var outerWidth = 800;
+      var outerWidth = 780;
       var outerHeight = 400;
       var margin = { left: 130, top: 0, right: 0, bottom: 30 };
       var barPadding = 0.2;
@@ -75,7 +75,7 @@ angular.module('sentiment.ly-render',[])
           .attr("fill", function(d, i) { return colors(d[xColumn]); })
           .attr("class", function(d, i) { return 'bar_' + d[yColumn] + ' ' + i;} )
           .attr("data-score", function(d) { return d[xColumn];} );
-          
+
         bars
           .attr("x", 0)
           .attr("y", function (d) { return yScale(d[yColumn]); })
