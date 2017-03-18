@@ -12,8 +12,8 @@ angular.module('sentiment.ly-render',[])
 
       var outerWidth = 800;
       var outerHeight = 400;
-      var margin = { left: 130, top: 0, right: 0, bottom: 30 };
-      var barPadding = 0.3;
+      var margin = { left: 155, top: 0, right: 0, bottom: 30 }; // I had to increase left bc some tone names were cut off
+      var barPadding = 0.2;
 
       var xColumn = "value";
       var yColumn = "name";
@@ -83,7 +83,7 @@ angular.module('sentiment.ly-render',[])
             }
           })
           .attr("data-score", function(d) { return d[xColumn];} );
-          
+
         bars
           .attr("x", 0)
           .attr("y", function (d) { return yScale(d[yColumn]); })

@@ -15,7 +15,7 @@ angular.module('sentiment.ly-archives',[])
           // console.log('in app.js, getArchives line 47, after GET req to /api/archives. data received = ', data.data);
           // console.log('in app.js, getArchives line 48, after GET req to /api/archives. array length = ', arrLength);
           lastFiveSearches = [];
-            for (var i=arrLength-1; i>arrLength-6; i--) {
+            for (var i=arrLength-1; i>arrLength-16; i--) {
             lastFiveSearches.push(data.data[i]);  //Doublecheck data structure. Good idea! It needed .data.
           }
           console.log('in app.js, getArchives line 53, after lastFiveSearches push. lastFiveSearches = ', lastFiveSearches);
