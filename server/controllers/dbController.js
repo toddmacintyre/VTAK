@@ -34,7 +34,7 @@ module.exports = {
     console.log('\nin dbController, getArchives, line 38. about to call findAllSearches\n\n');
     findAllSearches( { } )
       .then(function(returnedObj) {
-        // console.log('\n\nin dbController, getArchives, line 41. database findAllSearches query returned this: \n', returnedObj);
+        console.log('\n\nin dbController, getArchives, line 37. database findAllSearches query returned this: \n', returnedObj);
         res.send(returnedObj);
       })
       .fail(function (error) {

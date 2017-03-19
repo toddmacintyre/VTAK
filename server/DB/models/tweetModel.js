@@ -9,7 +9,7 @@ var tweetSchema = new mongoose.Schema({
 		Confident: Number,
 		Conscientiousness: Number,
 		Disgust: Number,
-		EmotionalRange: Number,
+		'Emotional Range': Number,
 		Extraversion: Number,
 		Fear: Number,
 		Joy: Number,
