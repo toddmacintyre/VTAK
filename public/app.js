@@ -3,6 +3,7 @@ angular.module('sentiment.ly',['sentiment.ly-tone', 'sentiment.ly-render'])
 .controller('sentimentController', ['$scope', '$http', 'tone', 'render', function ($scope,$http,tone,render) {
 
   $scope.averageValues = {};
+  $scope.bootup = true;
   $scope.showResults = false;
   $scope.showArchives = false;
   $scope.spinner = false;
@@ -29,6 +30,7 @@ angular.module('sentiment.ly',['sentiment.ly-tone', 'sentiment.ly-render'])
       tone.grabValues(results.data.watsonResults);  // Doublecheck data structure
       $scope.averageValues = tone.averageValues;
       $scope.spinner = false;
+      $scope.bootup = false;
       $scope.showResults = true;
       console.log('about to call getArchives');
       $scope.showArchives = false
@@ -84,6 +86,7 @@ $scope.getSaved = function(archive) {
     $scope.averageValues = tone.averageValues;
     $scope.userData = results.data;
     $scope.spinner = false;
+    $scope.bootup = false;
     $scope.showResults = true;
     render.renderData($scope.averageValues);
   });
