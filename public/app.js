@@ -9,6 +9,7 @@ angular.module('sentiment.ly',['sentiment.ly-tone', 'sentiment.ly-render'])
   $scope.spinner = false;
   $scope.archivesData = [];
   $scope.archive = {};
+  $scope.showTestDriveGif = false;
 
   $scope.errorCodes = {
     "34": 'There is no Twitter user with that handle.  Please try again.',
@@ -17,6 +18,7 @@ angular.module('sentiment.ly',['sentiment.ly-tone', 'sentiment.ly-render'])
   };
 
   $scope.searchRequest = function() {
+    $scope.showTestDriveGif = false;
     $scope.spinner = true;
     $http({
       method: 'POST',
@@ -73,6 +75,7 @@ $scope.getArchives = function() {
 
 
 $scope.getSaved = function(archive) {
+  $scope.showTestDriveGif = false;
   // console.log('IN GET SAVED', archive);
   $http({
     method: 'POST',
@@ -94,6 +97,7 @@ $scope.getSaved = function(archive) {
 
 $scope.sampleRequest = function() {
   $scope.spinner = true;
+  $scope.showResults = false;
   $http({
           method: 'POST',
           url: '/api/sample',
@@ -104,6 +108,7 @@ $scope.sampleRequest = function() {
       .then(function(data) {
         $scope.spinner = false;
         $scope.bootup = false;
+        $scope.showTestDriveGif = true;
         console.log('IN SAMPLE REQUEST')
         console.log(data, "IN APP.JSSSSSSSS#$#$$#$#")
         render.renderData(data.data);
