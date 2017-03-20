@@ -13,10 +13,9 @@ module.exports = {
    new TweetModel(resultsObject)
      .save(function (error) {
       if (error) {
-        console.log(e);
+        console.log(error);
       } else console.log('Item saved in database');
-      }
-     });
+      });
     // Based on Q documentation, I think safest to use .fail here: "If you are writing JavaScript for modern engines only or using CoffeeScript, you may use catch instead of fail."
   },
 

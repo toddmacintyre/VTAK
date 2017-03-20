@@ -52,13 +52,13 @@ $scope.getArchives = function() {
     url: '/api/archives',
   })
   .then (function(data) {
-    console.log('IN GET ARCHIVES')
     var arrLength = data.data.length;
     $scope.archivesData = [];
     for (var i=arrLength-1; i>arrLength-16; i--) {
-      $scope.archivesData.push(data.data[i]);
+      if (data.data[i]) {
+        $scope.archivesData.push(data.data[i]);
+      }
     }
-    console.log('ARCHIVES DATA =', $scope.archivesData)
     $scope.archivesData.forEach(function(entry) {
       var cleanTime = entry.timestamp.slice(11,16) + '  ' + entry.timestamp.slice(5,7) + '/' + entry.timestamp.slice(8,10) + '/' + entry.timestamp.slice(0,4);
       entry.timestamp = cleanTime;
@@ -73,7 +73,6 @@ $scope.getArchives = function() {
 
 
 $scope.getSaved = function(archive) {
-  console.log('IN GET SAVED', archive);
   $http({
     method: 'POST',
     url: '/api/id/'+archive._id,
@@ -92,12 +91,10 @@ $scope.getSaved = function(archive) {
   });
 };
 
-  //
-$scope.getArchives(); // see note in line 96 about getting this value
+
+$scope.getArchives();
 $scope.showArchives = true;
 
 }]);
 
 
-// create render factory
-// call render from within getSaved and searchRequest

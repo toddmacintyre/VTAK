@@ -32,7 +32,7 @@ module.exports = function(app, express) {
 					.then(function(result) {
 						console.log('in routes.js, app.post(/api/handle), promiseWatson, l 31. result about to be sent to db = ', result);
 						for (var key in result) {
-	      			frontEndResponse.watsonResults[key] = result[key].score;
+	      			frontEndResponse.watsonResults[key] = (result[key].score !== result[key].score) ? 0 : result[key].score;
 	      		}
 						console.log('\n\nin routes.js. l 40. promiseWatson result obj = final Object*&*&*&*&*&*&*&*&', frontEndResponse, '\n\n');
 						Tweet.saveToDB(frontEndResponse);
