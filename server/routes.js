@@ -18,7 +18,7 @@ module.exports = function(app, express) {
 		// Final object sent to front end that includes watson response object and user details
 		var frontEndResponse = {};
 
-		console.log("I'M HERERERE...in routes.js, app.post(/api/handle). before promiseTwitter. req.body = ", req.body);
+		// console.log("I'M HERERERE...in routes.js, app.post(/api/handle). before promiseTwitter. req.body = ", req.body);
 		promiseTwitter(twitterOptions, req.body.handle)
 			.then(function(result) {
 				// console.log('in routes.js, app.post(/api/handle), promiseTwitter, l 28. result about to be sent to watson = ', result);
@@ -32,11 +32,11 @@ module.exports = function(app, express) {
 				frontEndResponse.watsonResults = {};
 				promiseWatson(result.finalString)
 					.then(function(result) {
-						console.log('in routes.js, app.post(/api/handle), promiseWatson, l 31. result about to be sent to db = ', result);
+						// console.log('in routes.js, app.post(/api/handle), promiseWatson, l 31. result about to be sent to db = ', result);
 						for (var key in result) {
 	      			frontEndResponse.watsonResults[key] = result[key].score;
 	      		}
-						console.log('\n\nin routes.js. l 40. promiseWatson result obj = final Object*&*&*&*&*&*&*&*&', frontEndResponse, '\n\n');
+						// console.log('\n\nin routes.js. l 40. promiseWatson result obj = final Object*&*&*&*&*&*&*&*&', frontEndResponse, '\n\n');
 						Tweet.saveToDB(frontEndResponse);
 						res.send(frontEndResponse);
 					})
@@ -64,7 +64,26 @@ module.exports = function(app, express) {
 
   app.get('/api/killdb', function(req, res) {
   	Tweet.emptyDatabase(req, res);
-  })
+  });
+
+  app.post('/api/sample', function(req, res) {
+		var sampleResponse={}
+		console.log('ROUTES>JS $$$$$$$ TEXTTT', req.body.sample)
+	    promiseWatson(req.body.sample)
+	        .then(function(result) {
+	            console.log('i********* sample RESULT --->>>>>>', result);
+	            for (var key in result) {
+	                sampleResponse[key] = result[key].score;
+	            }
+	            console.log('\n\n***** sample RESPONSE ---- >>>>', sampleResponse, '\n\n');
+	            // Tweet.saveToDB(frontEndResponse);
+	            res.send(sampleResponse);
+	        })
+	        .catch(function(err) {
+	            console.error(err);
+	            res.status(400).send('whoops');
+	        });
+	});
 };
 
 
