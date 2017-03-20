@@ -66,12 +66,21 @@ angular.module('sentiment.ly-render',[])
 
         var bars = g.selectAll("rect").data(data);
 
+        // bars.enter().append("g")
+        //   .attr("class", "d3Tooltip")
+        //   .attr("transform", "translate(20, 20)")
+        //   .attr("opacity", "0.9")
+        //   .append("rect")
+        //     .attr("rx", "5")
+        //     .attr("width", "100")
+        //     .attr("height", "25");
+        // bars.enter().append("text")
+        //   .attr("x", "15")
+        //   .attr("y", "16")
+        //   .text("Hello");
+
         bars.enter().append("rect")
-          // .transition()
-          // .duration(500)
-          // .ease()
           .attr("height", yScale.rangeBand())
-          // .attr("class", "d3Bar") // reference the bars in css using the .d3Bar
           .attr("fill", function(d, i) { return colors(d[xColumn]); })
           .attr("class", function(d, i) {
             if (i <= 4) {
@@ -82,7 +91,10 @@ angular.module('sentiment.ly-render',[])
               return 'bar_' + d[yColumn] + '  social';
             }
           })
-          .attr("data-score", function(d) { return d[xColumn];} );
+          .attr("data-score", function(d) { return d[xColumn];} )
+          .append("title")
+            .text(function(d) { return d['description'] })
+            .attr("class", "d3Tooltip");
 
         bars
           .attr("x", 0)
@@ -91,10 +103,29 @@ angular.module('sentiment.ly-render',[])
         bars.exit().remove();
       }
 
+      // Map out descriptions
+
+      descriptionMap = {
+        "Anger": "Anger - evoked due to injustice, conflict, humiliation, negligence or betrayal",
+        "Disgust": "Disgust - an emotional response of revulsion to something considered offensive or unpleasant",
+        "Fear": "Fear - shows a response to impending danger",
+        "Joy": "Joy - has shades of enjoyment, satisfaction and pleasure",
+        "Sadness": "Sadness - indicates a feeling of loss and disadvantage",
+        "Analytical": "Analytical - reasoning and analytical attitude about things",
+        "Confident": "Confidence - degree of certainty",
+        "Tentative": "Tentative - degree of inhibition",
+        "Openness": "Openness - open to experience a variety of activities",
+        "Conscientiousness": "Conscientiousness - tendency to act in an organized or thoughtful way",
+        "Extraversion": "Extraversion - tendency to seek stimulation in the company of others",
+        "Agreeableness": "Agreeableness - tendency to be compassionate and cooperative",
+        "Emotional Range": "Emotional Range - extent a person's emotion is sensitive to the environment"
+      }
+
+
       // turn into format that's easy to work with in d3
       let d3JSON_arr = [];
       for (let key in dataToRender) {
-        d3JSON_arr.push({'name': key, 'value': dataToRender[key]});
+        d3JSON_arr.push({'name': key, 'value': dataToRender[key], 'description': descriptionMap[key]});
       }
 
       render(d3JSON_arr);
@@ -122,4 +153,6 @@ angular.module('sentiment.ly-render',[])
       clearRender: clearRender
     }
 
-  })
+  });
+
+
