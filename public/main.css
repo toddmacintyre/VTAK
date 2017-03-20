@@ -1,5 +1,9 @@
 /*Main CSS file*/
 
+
+
+
+
 /*.emotional {
   stroke-width: 5;
   fill: #ff7f0e;
@@ -27,7 +31,7 @@
   display: inline;
 }
 
-.bar_Anger {
+/*.bar_Anger {
 
 }
 
@@ -75,10 +79,31 @@
 
 }
 
-/*Emotional Range*/
 .bar_Range {
 
+}*/
+
+/*.d3Tooltip {
+  color: blue;
+}*/
+
+
+/*svg .d3Ttooltip {visibility: hidden}
+svg:hover .d3Tooltip {
+    visibility: visible;
 }
+.d3Tooltip text {
+    fill: black;
+    font-size: 12px;
+    font-family: sans-serif;
+}
+.d3Tooltip rect {
+    fill: yellow;
+    stroke: blue;
+}*/
+
+/*-------------------------------------*/
+
 .tooltip {
     position: relative;
     display: inline-block;
