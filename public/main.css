@@ -17,6 +17,16 @@
 
 
 /*Set individual styles for the bars.*/
+
+.tonesB {
+  font-weight: bold;
+  display: inline;
+}
+
+.tonesR {
+  display: inline;
+}
+
 .bar_Anger {
 
 }
@@ -133,4 +143,14 @@ footer {
   clear: both;
   margin-bottom: 20;
   text-align: center
+}
+
+.archivelist {
+  cursor: pointer;
+}
+
+.tableheader {
+  color: white;
+  background-color: #30C0EE;
+  padding: 10px;
 }

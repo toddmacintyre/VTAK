@@ -12,8 +12,10 @@
 
     <div>
     <header>
-      <h1 style="color: green">Sentiment.ly - Twitter users analyzed</h1>
-      <h3 style="font-style: italic; color: brown ">What Twitter handle do you want to analyze?</h3>
+      <h1 style="color: green">Sentiment.ly</h1>
+      <h2 style="color: green">Twitter users analyzed, using the brains of</h2>
+      <img ng-src="./ibmwatson.jpg" width="300px" height="45px">
+      <h2 style="font-style: italic; color: brown ">What Twitter handle do you want to analyze?</h2>
       <form ng-submit="searchRequest()"> <!-- calls factory function that makes POST req w/ input value (twitter handle)  -->
         @&nbsp<input type="text" ng-model="searchRequestInput" placeholder="e.g., Journey4John" required>
         <input type="Submit" style="color: brown"><br><br>
@@ -28,6 +30,15 @@
     <div class="tooltip">
       <h2>Tweet Analysis</h2>
       <span class="tooltiptext">IBM Watson's Tone Analyzer uses linguistic analysis to detect three types of tones in written text: emotions, social tendencies and writing style</span> </div>
+      <div ng-if="bootup">
+          <br>
+          <br>
+          <br>
+          <br>
+          <h2 class="tonesB">Emotional tone: </h2><h3 class="tonesR">Joy, Fear, Sadness, Disgust, Anger</h3><br><br>
+          <h2 class="tonesB">Language tone: </h2><h3 class="tonesR">Analytical, Confidence, Tentativeness</h3><br><br>
+          <h2 class="tonesB">Social tone: </h2><h3 class="tonesR">Openness, Conscientiousness, Extraversion, Agreeableness, Emotional Range</h3>
+      </div>
     </div>
 
     <aside>
@@ -40,10 +51,10 @@
           <div>
             <img ng-src="{{ userData.imageUrl }}" alt="Macaque in the trees" style='width:40%;' border="2" alt="Null">
         </div>
-        <div>Name: {{ userData.name || "none provided"}}</div>
+        <div>Name: {{ userData.name }}</div>
         <div>Handle: @{{ userData.handle }}</div>
-        <div>Location: {{ userData.location || "none provided" }}</div>
-        <div>Description: {{ userData.description || "none provided" }}</div>
+        <div>Location: {{ userData.location }}</div>
+        <div>Description: {{ userData.description }}</div>
         <div>Followers: {{userData.followers }}</div>
         </div>
       </div>
@@ -97,10 +108,12 @@
       <h4>
         <table align="center" border="3" width="400px" bgcolor="CEEDB6">
           <tr>
-            <th style="color: white"; bgcolor="#30C0EE">Twitter handle</th>
-            <th style="color: white" bgcolor="#30C0EE">Time of search</th>
+            <th></th>
+            <th class='tableheader'>Twitter handle</th>
+            <th class='tableheader'>Time of search</th>
           </tr>
-          <tr ng-repeat="archive in archivesData" ng-click="getSaved(archive)">
+          <tr ng-repeat="archive in archivesData" ng-click="getSaved(archive)" class="archivelist">
+            <td> <img ng-src="{{ archive.imageUrl }}" width="60px" height="60px"></td>
             <td> {{ archive.handle }} </td>
             <td> {{ archive.timestamp }} </td>
           </tr>
