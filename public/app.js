@@ -18,7 +18,6 @@ angular.module('sentiment.ly',['sentiment.ly-tone', 'sentiment.ly-render'])
   };
 
   $scope.searchRequest = function() {
-    $scope.showTestDriveGif = false;
     $scope.spinner = true;
     $http({
       method: 'POST',
@@ -33,6 +32,7 @@ angular.module('sentiment.ly',['sentiment.ly-tone', 'sentiment.ly-render'])
       $scope.averageValues = tone.averageValues;
       $scope.spinner = false;
       $scope.bootup = false;
+      $scope.showTestDriveGif = false;
       $scope.showResults = true;
       console.log('about to call getArchives');
       $scope.showArchives = false
@@ -54,13 +54,13 @@ $scope.getArchives = function() {
     url: '/api/archives',
   })
   .then (function(data) {
-    // console.log('IN GET ARCHIVES')
     var arrLength = data.data.length;
     $scope.archivesData = [];
     for (var i=arrLength-1; i>arrLength-16; i--) {
-      $scope.archivesData.push(data.data[i]);
+      if (data.data[i]) {
+        $scope.archivesData.push(data.data[i]);
+      }
     }
-    // console.log('ARCHIVES DATA =', $scope.archivesData)
     $scope.archivesData.forEach(function(entry) {
       var cleanTime = entry.timestamp.slice(11,16) + '  ' + entry.timestamp.slice(5,7) + '/' + entry.timestamp.slice(8,10) + '/' + entry.timestamp.slice(0,4);
       entry.timestamp = cleanTime;
@@ -76,7 +76,6 @@ $scope.getArchives = function() {
 
 $scope.getSaved = function(archive) {
   $scope.showTestDriveGif = false;
-  // console.log('IN GET SAVED', archive);
   $http({
     method: 'POST',
     url: '/api/id/'+archive._id,
@@ -109,23 +108,17 @@ $scope.sampleRequest = function() {
         $scope.spinner2 = false;
         $scope.bootup = false;
         $scope.showTestDriveGif = true;
-        console.log('IN SAMPLE REQUEST')
-        console.log(data, "IN APP.JSSSSSSSS#$#$$#$#")
         render.renderData(data.data);
         $scope.sampleTweetInput = '';
-        // $scope.showArchives = true;
       })
       .catch(function(error) {
           console.log('GETTING ARCHIVES ERROR: ', error);
       });
-}
+};
 
-  //
-$scope.getArchives(); // see note in line 96 about getting this value
+$scope.getArchives();
 $scope.showArchives = true;
 
 }]);
 
 
-// create render factory
-// call render from within getSaved and searchRequest

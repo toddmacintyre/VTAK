@@ -11,9 +11,11 @@ module.exports = {
   saveToDB: function(resultsObject) {
    console.log('IN SAVE-TO-DB, ABOUT TO SAVE ', resultsObject);
    new TweetModel(resultsObject)
-     .save(function (e) {
-       console.log('Item saved in database');
-     });
+     .save(function (error) {
+      if (error) {
+        console.log(error);
+      } else console.log('Item saved in database');
+      });
     // Based on Q documentation, I think safest to use .fail here: "If you are writing JavaScript for modern engines only or using CoffeeScript, you may use catch instead of fail."
   },
 
@@ -21,24 +23,19 @@ module.exports = {
     console.log('in dbController, findResultsById, line 26. about to call findOne\n\n');
     findOne({_id: id})
       .then(function(result) {
-        console.log('IN FIND BY ID THEN, RESULT =', result);
         res.send(result);
       })
       .fail(function (error) {
-        console.log('FIND RESULT BY ID ERROR ', error);
         res.status(400).send('whoops');
       });
   },
 
   getArchives: function(req, res) {
-    console.log('\nin dbController, getArchives, line 38. about to call findAllSearches\n\n');
     findAllSearches( { } )
       .then(function(returnedObj) {
-        console.log('\n\nin dbController, getArchives, line 37. database findAllSearches query returned this: \n', returnedObj);
         res.send(returnedObj);
       })
       .fail(function (error) {
-        console.log('\nin dbController, getArchives, line 45. error in findAllSearches = ', error); // will err until connected with updated watson results object (we changed the schema back to only hold results, not count)
         res.status(400).send('whoops');
       });
   },
@@ -61,9 +58,3 @@ module.exports = {
 
 };
 
-
-// Mongoose: find each person with a last name matching 'Ghost', selecting the `name` and `occupation` fields
-// Person.findOne({ 'name.last': 'Ghost' }, 'name occupation', function (err, person) {
-//   if (err) return handleError(err);
-//   console.log('%s %s is a %s.', person.name.first, person.name.last, person.occupation) // Space Ghost is a talk show host.
-// })
