@@ -22,7 +22,8 @@ var tweetSchema = new mongoose.Schema({
 	name: String,
 	description: String,
 	followers: Number,
-	friends: Number
+	friends: Number,
+	tweets: [String]
 });
 
 var TweetModel = mongoose.model('Tweet', tweetSchema);
