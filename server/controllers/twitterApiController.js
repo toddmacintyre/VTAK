@@ -39,7 +39,8 @@ module.exports = {
         		location:'',
         		description:'',
         		followers_count:0,
-        		friends_count:0
+        		friends_count:0,
+                tweets: []
         	};
             if (error) {
                 console.log(error, '\n\nerror in twitter API get request');
@@ -56,8 +57,9 @@ module.exports = {
                 }
             } else {
                 var responseObject = body;
-                var finalString = tweetParser(responseObject)
-                twitterAPIResponseObject.finalString = finalString;
+                var parsed = tweetParser(responseObject)
+                twitterAPIResponseObject.finalString = parsed[0];
+                twitterAPIResponseObject.tweets = parsed[1];
                 twitterAPIResponseObject.profile_image_url= body[0].user.profile_image_url.replace("_normal","");
                 twitterAPIResponseObject.name=body[0].user.name;
                 twitterAPIResponseObject.screen_name=body[0].user.screen_name;
@@ -86,11 +88,13 @@ module.exports = {
 
 var tweetParser = function(twitterResponseArray) {
     var stringForWatson = '';
+    var tweets = [];
     // console.log("\nRESP ARRAYAYAYAY... in twitterApiController, tweetParser func, line 84. twitterResponseArray = ", twitterResponseArray)
     twitterResponseArray.forEach(function(tweetObject) {
         stringForWatson += tweetObject.text + ". ";
+        tweets.push(tweetObject.text);
     })
     // getting error when using Postman for api/handle: "TypeError: twitterResponseArray.forEach is not a function"
     // console.log('\n\nin twitterApiController, tweetParser func, line 89. after forEach, stringForWatson = ', stringForWatson);
-    return stringForWatson;
+    return [stringForWatson,tweets];
 };

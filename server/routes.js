@@ -30,6 +30,7 @@ module.exports = function(app, express) {
 				frontEndResponse.followers = result.followers_count;
 				frontEndResponse.friends = result.friends_count;
 				frontEndResponse.watsonResults = {};
+				frontEndResponse.tweets = result.tweets;
 				promiseWatson(result.finalString)
 					.then(function(result) {
 						console.log('in routes.js, app.post(/api/handle), promiseWatson, l 31. result about to be sent to db = ', result);
