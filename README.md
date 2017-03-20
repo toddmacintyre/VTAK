@@ -1,13 +1,13 @@
 # Sentiment.ly
 
 > Twitter users analyzed, using the brains of IBM Watson's Tone Analyzer.
-
+>
 > Wouldn't it be great if there were a web app where you could "test drive" a social media post or text message and have IBM Watson's powerful sentiment analysis tool tell you how that text is likely to be perceived?
-
+>
 > Wouldn't you love it if you could run someone's tweets through Watson and find out how their expressed sentiments will ACTUALLY be perceived?
-
+>
 > Enter [*Sentiment.ly!*](http://sample-env.zhtjbs6sdb.us-west-2.elasticbeanstalk.com/)
-
+>
 ***
 
 
@@ -66,10 +66,6 @@ From within the root directory:
 ```sh
 npm install
 ```
-
-### Roadmap
-
-View the project roadmap [here](ROADMAP.md)
 
 
 ## Contributing
