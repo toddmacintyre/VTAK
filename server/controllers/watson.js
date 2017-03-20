@@ -23,7 +23,7 @@ exports.getTone = function (tweetString, callback) {
       callback(err);
     } else {
       getAverage(tone);
-      console.log('watson.js getTone l 27. value of averageValues before callback = ', averageValues);
+      // console.log('watson.js getTone l 27. value of averageValues before callback = ', averageValues);
       callback(err, averageValues);
       // reset averageValues object for next search
       for (var key in averageValues) {
@@ -53,16 +53,34 @@ var averageValues = {
 
 // This is the helper function that will calculate and assign values to the averageValues object
 var getAverage = function (sentences) {
-  // console.log(sentences['sentences_tone'][0].tone_categories, "herioioioioioioio");
-  sentences['sentences_tone'].forEach(function(sentence){
+  console.log(sentences,'SENTENCES ERROR HERERERERE $$$$$$$$')
+  if(sentences['sentences_tone'] === undefined){
+    negateZero(sentences);
+  } else {
+    sentences['sentences_tone'].forEach(function(sentence){
     negateZero(sentence);
-  })
+    })
+  }
+  // console.log(sentences['sentences_tone'][0].tone_categories, "herioioioioioioio");
   for (var key in averageValues) {
     averageValues[key]['score'] = Math.round(((averageValues[key].score / averageValues[key].count) + 0.00001)*100)/100;
   }
 }
 
 var negateZero = function(sentence){
+  if(sentence.tone_categories === undefined){
+    sentence.document_tone.tone_categories.forEach(function(tones){
+      // console.log(tones,"tones909090909090");
+      tones.tones.forEach(function(tone, index){
+        // console.log(tone.score, tone.tone_name, "tonioioioi909090909090@@@");
+        if(tone.score!==0 && tone.score!== undefined){
+          averageValues[tone.tone_name].score += tone.score;
+          averageValues[tone.tone_name].count +=1;
+          // console.log(tone.score, tone.tone_name, "\n\nin watson.js negateZero, line 70. tonioioioi909090909090@@@");
+        }
+      })
+    })
+  } else {
     sentence.tone_categories.forEach(function(tones){
       // console.log(tones,"tones909090909090");
       tones.tones.forEach(function(tone, index){
@@ -74,6 +92,7 @@ var negateZero = function(sentence){
         }
       })
     })
+  }
 
   //***** For Testing Various Console.Logs
   // console.log(averageValues["Anger"], averageValues["Anger"].score/averageValues["Anger"].count);
