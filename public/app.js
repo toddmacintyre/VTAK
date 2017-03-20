@@ -96,7 +96,7 @@ $scope.getSaved = function(archive) {
 };
 
 $scope.sampleRequest = function() {
-  $scope.spinner = true;
+  $scope.spinner2 = true;
   $scope.showResults = false;
   $http({
           method: 'POST',
@@ -106,7 +106,7 @@ $scope.sampleRequest = function() {
             }
       })
       .then(function(data) {
-        $scope.spinner = false;
+        $scope.spinner2 = false;
         $scope.bootup = false;
         $scope.showTestDriveGif = true;
         console.log('IN SAMPLE REQUEST')
