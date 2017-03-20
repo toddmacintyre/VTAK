@@ -1,6 +1,5 @@
 // Requires IBM's Watson's npm module (already required in package.json)
 var watson = require('watson-developer-cloud');
-//require('../server.js');
 var envVars = require('../../env.json');
 // console.log('envVars.watson_username', envVars.watson_username); // to test that the env variables are exporting
 
@@ -53,7 +52,6 @@ var averageValues = {
 
 // This is the helper function that will calculate and assign values to the averageValues object
 var getAverage = function (sentences) {
-  // console.log(sentences['sentences_tone'][0].tone_categories, "herioioioioioioio");
   sentences['sentences_tone'].forEach(function(sentence){
     negateZero(sentence);
   })
@@ -64,31 +62,14 @@ var getAverage = function (sentences) {
 
 var negateZero = function(sentence){
     sentence.tone_categories.forEach(function(tones){
-      // console.log(tones,"tones909090909090");
       tones.tones.forEach(function(tone, index){
-        // console.log(tone.score, tone.tone_name, "tonioioioi909090909090@@@");
         if(tone.score!==0 && tone.score!== undefined){
           averageValues[tone.tone_name].score += tone.score;
           averageValues[tone.tone_name].count +=1;
-          // console.log(tone.score, tone.tone_name, "\n\nin watson.js negateZero, line 70. tonioioioi909090909090@@@");
         }
       })
     })
 
-  //***** For Testing Various Console.Logs
-  // console.log(averageValues["Anger"], averageValues["Anger"].score/averageValues["Anger"].count);
-  // console.log(averageValues["Disgust"], averageValues["Disgust"].score/averageValues["Disgust"].count);
-  // console.log(averageValues["Fear"], averageValues["Fear"].score/averageValues["Fear"].count);
-  // console.log(averageValues["Joy"], averageValues["Joy"].score/averageValues["Joy"].count);
-  // console.log(averageValues["Sadness"], averageValues["Sadness"].score/averageValues["Sadness"].count);
-  // console.log(averageValues["Analytical"], averageValues["Analytical"].score/averageValues["Analytical"].count);
-  // console.log(averageValues["Confident"], averageValues["Confident"].score/averageValues["Confident"].count);
-  // console.log(averageValues["Tentative"], averageValues["Tentative"].score/averageValues["Tentative"].count);
-  // console.log(averageValues["Openness"], averageValues["Openness"].score/averageValues["Openness"].count);
-  // console.log(averageValues["Conscientiousness"], averageValues["Conscientiousness"].score/averageValues["Conscientiousness"].count);
-  // console.log(averageValues["Extraversion"], averageValues["Extraversion"].score/averageValues["Extraversion"].count);
-  // console.log(averageValues["Agreeableness"], averageValues["Agreeableness"].score/averageValues["Agreeableness"].count);
-  // console.log(averageValues["Emotional Range"], averageValues["Emotional Range"].score/averageValues["Emotional Range"].count);
 }
 
 /* sample response

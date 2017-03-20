@@ -30,8 +30,7 @@ module.exports = {
         optionsTwitter.options.qs['screen_name'] = handle;
 
         request(optionsTwitter.options, function(error, response, body) {
-        	// console.log('******TWITTER-API*******', body);
-            var twitterAPIResponseObject = {
+        	var twitterAPIResponseObject = {
         		finalString:'',
         		profile_image_url:'',
         		name:'',
@@ -45,9 +44,7 @@ module.exports = {
             if (error) {
                 console.log(error, '\n\nerror in twitter API get request');
                 callback(error);
-                // throw new Error(error);
             } else if (body.errors || body.error || body.length === 0) {
-                // console.log("ERROR CATCHER", body);
                 if (body.errors) {
                     callback(body);
                 } else if (body.error) {
@@ -67,19 +64,6 @@ module.exports = {
                 twitterAPIResponseObject.description=body[0].user.description;
                 twitterAPIResponseObject.followers_count=body[0].user.followers_count;
                 twitterAPIResponseObject.friends_count=body[0].user.friends_count;
-                // console.log("\n\nin twitterApiController, FINAL STRINGINININIGIGIGI is: ", finalString);
-
-                // console.logs for debugging
-
-                // console.log(twitterAPIResponseObject.finalString,"bodyo________*******&*&*&*")
-                // console.log(twitterAPIResponseObject.name,"bodyo________*******&*&*&*")
-                // console.log(twitterAPIResponseObject.profile_image_url,"bodyo________*******&*&*&*")
-                // console.log(twitterAPIResponseObject.screen_name,"bodyo________*******&*&*&*")
-                // console.log(twitterAPIResponseObject.location,"bodyo________*******&*&*&*")
-                // console.log(twitterAPIResponseObject.description,"bodyo________*******&*&*&*")
-                // console.log(twitterAPIResponseObject.followers_count,"bodyo________*******&*&*&*")
-                // console.log(twitterAPIResponseObject.friends_count,"bodyo________*******&*&*&*")
-
                 callback(error, twitterAPIResponseObject);
             }
         });
@@ -89,12 +73,9 @@ module.exports = {
 var tweetParser = function(twitterResponseArray) {
     var stringForWatson = '';
     var tweets = [];
-    // console.log("\nRESP ARRAYAYAYAY... in twitterApiController, tweetParser func, line 84. twitterResponseArray = ", twitterResponseArray)
     twitterResponseArray.forEach(function(tweetObject) {
         stringForWatson += tweetObject.text + ". ";
         tweets.push(tweetObject.text);
-    })
-    // getting error when using Postman for api/handle: "TypeError: twitterResponseArray.forEach is not a function"
-    // console.log('\n\nin twitterApiController, tweetParser func, line 89. after forEach, stringForWatson = ', stringForWatson);
+    });
     return [stringForWatson,tweets];
 };

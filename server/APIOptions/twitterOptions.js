@@ -7,7 +7,7 @@ module.exports = {
         url: 'https://api.twitter.com/1.1/statuses/user_timeline.json',
         qs: {
             screen_name: "jpackel",
-            count:'30'
+            count:'50'
 
         },
         json: true,

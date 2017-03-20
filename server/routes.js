@@ -9,8 +9,6 @@ var Tweet = require('./controllers/dbController.js');
 var promiseTwitter = Promise.promisify(twitterController.getRequestTwitter);
 var promiseWatson = Promise.promisify(watson.getTone);
 
-// var router = require('express').Router();
-
 module.exports = function(app, express) {
 
 	app.post('/api/handle', function(req, res) {
@@ -21,7 +19,6 @@ module.exports = function(app, express) {
 		console.log("I'M HERERERE...in routes.js, app.post(/api/handle). before promiseTwitter. req.body = ", req.body);
 		promiseTwitter(twitterOptions, req.body.handle)
 			.then(function(result) {
-				// console.log('in routes.js, app.post(/api/handle), promiseTwitter, l 28. result about to be sent to watson = ', result);
 				frontEndResponse.handle = result.screen_name;
 				frontEndResponse.imageUrl = result.profile_image_url;
 				frontEndResponse.location = result.location || "none provided";
@@ -67,19 +64,3 @@ module.exports = function(app, express) {
   	Tweet.emptyDatabase(req, res);
   })
 };
-
-
-
-// promiseWatson result obj =  { Anger: 0.10487240677966098,
-//   Disgust: 0.07544283050847456,
-//   Fear: 0.11776201694915257,
-//   Joy: 0.3082714576271186,
-//   Sadness: 0.2667793728813559,
-//   Analytical: 0.13726845762711865,
-//   Confident: 0.10520130508474576,
-//   Tentative: 0.10431433898305084,
-//   Openness: 0.32089301694915257,
-//   Conscientiousness: 0.3026000677966102,
-//   Extraversion: 0.4355325762711864,
-//   Agreeableness: 0.44270649152542374,
-//   EmotionalRange: 0.3916283898305084 }
