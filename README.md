@@ -71,3 +71,5 @@ npm install
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+
+https://cloud.githubusercontent.com/assets/19581802/24165435/c010acae-0e46-11e7-86bc-8379c48e81d1.png
