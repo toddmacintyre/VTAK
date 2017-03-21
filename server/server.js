@@ -8,7 +8,6 @@ var envVars = require('../env.json');
 
 // Initialize express
 var app = express();
-Access-Control-Allow-Origin: *;
 
 // make connection to mongoose database
 var username = envVars.mlab_username;
