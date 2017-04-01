@@ -31,7 +31,7 @@ Sentiment.ly uses an intuitive and fun interface - a single page web app - to al
 
 All one needs to do to feel the power of Sentiment.ly is go to bit.do/vtak (short for the developer team, "Vue.js to a Kill"), type in a Twitter handle or a phrase in one of the two boxes and hit "submit".
 
-"The way you get a better world is, you don’t put up with substandard anything. Test drive your social posts with Sentiment.ly before your put them out into the world.”
+"The way you get a better world is, you don’t put up with substandard anything. Test drive your social posts with Sentiment.ly before you put them out into the world.”
    - Joe Strummer, singer, lyricist and guitar player in the seminal punk rock band The Clash
 
 Click on bit.do/vtak now to let Sentiment.ly start powering your posts and helping you find out what any tweeter is REALLY saying!
