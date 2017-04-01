@@ -21,7 +21,7 @@ Sentiment.ly uses an intuitive and fun interface - a single page web app - to al
 
 - type a phrase or sentence and receive the same analysis for text that you want to "test drive"
 
-- click on any previously run search and bring that analysis back to the screen
+- click on any previously-run search and bring that analysis back to the screen
 
 - view the Twitter profile picture and read the profile details for any search you run
 
