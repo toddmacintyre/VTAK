@@ -1,4 +1,5 @@
 Sentiment.ly
+
 Twitter users analyzed, using the brains of IBM Watson's Tone Analyzer
 
 We live in a digital age - and so much of our communication is no longer face-to-face but instead mediated by screens, smartphones, web services and more. Most of us have experienced a situation where a text message or social media post was perceived differently by different people - and at times even interpreted as having the opposite sentiment from the one the author intended.
