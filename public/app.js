@@ -56,7 +56,7 @@ $scope.getArchives = function() {
   .then (function(data) {
     var arrLength = data.data.length;
     $scope.archivesData = [];
-    for (var i=arrLength-1; i>arrLength-16; i--) {
+    for (var i=arrLength-1; i>arrLength-66; i--) {
       if (data.data[i]) {
         $scope.archivesData.push(data.data[i]);
       }
@@ -120,5 +120,3 @@ $scope.getArchives();
 $scope.showArchives = true;
 
 }]);
-
-
