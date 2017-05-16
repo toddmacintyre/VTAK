@@ -13,9 +13,9 @@
 
 ## Our Team
 
-  - __Product Owner__: [John Packel](https://twitter.com/jpackel)
-  - __Scrum Master__: [Todd MacIntyre](https://twitter.com/toddmacintyre)
-  - __Development Team Members__: [Andrew Fechner](https://twitter.com/AndrewFechner), [Aamir Yousuf](https://twitter.com/whyaamir)
+  - __Developer & Product Owner__: [John Packel](https://twitter.com/jpackel)
+  - __Developer & Scrum Master__: [Todd MacIntyre](https://twitter.com/toddmacintyre)
+  - __Developers__: [Andrew Fechner](https://twitter.com/AndrewFechner), [Aamir Yousuf](https://twitter.com/whyaamir)
 
 
 ## Table of Contents
@@ -40,7 +40,7 @@
 ### Test drive a tweet
 
 #### Entering text into the test drive input field will:
-  * Analyze the text as if it were a tweet by running it through IBM Watson's sentiment analyzer.
+  * Analyze the text as if it were a tweet by running it through [IBM Watson](https://www.ibm.com/watson/) sentiment analyzer.
   * Displays dynamic [d3](https://d3js.org/) rendering for the individual tweet.
 
 
@@ -72,6 +72,4 @@ npm install
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 
-![See Sentiment.ly tech stack file above, since it apparently doesn't feel like loading here today](
-https://cloud.githubusercontent.com/assets/19581802/24165435/c010acae-0e46-11e7-86bc-8379c48e81d1.png)
-
+![Tech Stack](http://i.imgur.com/cKI21yl.png)
