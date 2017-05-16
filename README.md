@@ -40,7 +40,7 @@
 ### Test drive a tweet
 
 #### Entering text into the test drive input field will:
-  * Analyze the text as if it were a tweet by running it through [IBM Watson](https://www.ibm.com/watson/) sentiment analyzer.
+  * Analyze the text as if it were a tweet by running it through [IBM Watson](https://www.ibm.com/watson/)'s sentiment analyzer.
   * Displays dynamic [d3](https://d3js.org/) rendering for the individual tweet.
 
 
