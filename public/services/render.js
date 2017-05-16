@@ -1,5 +1,4 @@
 angular.module('sentiment.ly-render',[])
-
   .factory('render', function() {
 
     var clearRender = function() {
@@ -7,12 +6,11 @@ angular.module('sentiment.ly-render',[])
     }
 
     var renderData = function(dataToRender) {
-
       clearRender();
 
       var outerWidth = 800;
       var outerHeight = 400;
-      var margin = { left: 155, top: 0, right: 0, bottom: 30 }; // I had to increase left bc some tone names were cut off
+      var margin = { left: 155, top: 0, right: 0, bottom: 30 };
       var barPadding = 0.2;
 
       var xColumn = "value";
@@ -121,8 +119,6 @@ angular.module('sentiment.ly-render',[])
         "Emotional Range": "Emotional Range - extent a person's emotion is sensitive to the environment"
       }
 
-
-      // turn into format that's easy to work with in d3
       let d3JSON_arr = [];
       for (let key in dataToRender) {
         d3JSON_arr.push({'name': key, 'value': dataToRender[key], 'description': descriptionMap[key]});
